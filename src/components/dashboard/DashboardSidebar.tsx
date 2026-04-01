@@ -416,7 +416,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
                 <>
                   <button
                     onClick={() => { onNavigate("overview"); onMobileClose?.(); }}
-                    className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors font-medium px-3 mb-3"
+                    className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors font-medium px-3 py-1.5 mb-3 rounded-full hover:bg-secondary/60"
                   >
                     <ArrowLeft className="h-3.5 w-3.5" />
                     Back to Dashboard
