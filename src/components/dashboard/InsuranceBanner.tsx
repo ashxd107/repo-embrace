@@ -42,7 +42,7 @@ const InsuranceBanner = ({ variant = "default" }: InsuranceBannerProps) => {
         <p className="text-body text-xs leading-relaxed">{c.body}</p>
       </div>
       <Button
-        className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-5 py-2 h-auto font-semibold text-sm shrink-0"
+        className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2 h-auto font-semibold text-sm shrink-0"
       >
         {c.cta}
         <ArrowRight className="ml-1.5 h-4 w-4" />

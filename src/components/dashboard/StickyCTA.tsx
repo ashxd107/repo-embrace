@@ -34,14 +34,14 @@ const StickyCTA = ({ onClick }: StickyCTAProps) => {
             <Button
               onClick={onClick}
               size="sm"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 font-semibold text-xs h-8"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 font-semibold text-xs h-8"
             >
               Unlock for ₹99
               <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
             </Button>
             <button
               onClick={() => setDismissed(true)}
-              className="h-7 w-7 rounded-lg hover:bg-secondary/60 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+              className="h-7 w-7 rounded-full hover:bg-secondary/60 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
             >
               <X className="h-3.5 w-3.5" />
             </button>
@@ -66,13 +66,13 @@ const StickyCTA = ({ onClick }: StickyCTAProps) => {
           <Button
             onClick={onClick}
             size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-3 font-semibold text-xs h-8 shrink-0"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 font-semibold text-xs h-8 shrink-0"
           >
             ₹99
           </Button>
           <button
             onClick={() => setDismissed(true)}
-            className="h-7 w-7 rounded-lg hover:bg-secondary/60 flex items-center justify-center text-muted-foreground shrink-0"
+            className="h-7 w-7 rounded-full hover:bg-secondary/60 flex items-center justify-center text-muted-foreground shrink-0"
           >
             <X className="h-3 w-3" />
           </button>
