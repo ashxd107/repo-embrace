@@ -119,7 +119,6 @@ const Dashboard = () => {
             insurancePurchased={insurancePurchased}
             policyReady={policyReady}
             onExploreInsurance={() => { setInsurancePurchased(true); }}
-            onExploreInsurance={() => { setInsurancePurchased(true); }}
             onDownloadPolicy={() => window.open("#", "_blank")}
             onViewPurchases={() => setActiveItem("call-assistance")}
           />
