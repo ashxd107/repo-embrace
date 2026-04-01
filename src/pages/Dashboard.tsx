@@ -118,8 +118,7 @@ const Dashboard = () => {
             onSimulateReportReady={handleReportReady}
             insurancePurchased={insurancePurchased}
             policyReady={policyReady}
-            paymentFailed={paymentFailed}
-            onRetryPayment={() => { setPaymentFailed(false); setPaymentModalOpen(true); }}
+            onExploreInsurance={() => { setInsurancePurchased(true); }}
             onExploreInsurance={() => { setInsurancePurchased(true); }}
             onDownloadPolicy={() => window.open("#", "_blank")}
             onViewPurchases={() => setActiveItem("call-assistance")}
