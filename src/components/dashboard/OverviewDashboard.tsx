@@ -34,8 +34,6 @@ interface OverviewDashboardProps {
   onSimulateReportReady?: () => void;
   insurancePurchased?: boolean;
   policyReady?: boolean;
-  paymentFailed?: boolean;
-  onRetryPayment?: () => void;
   onExploreInsurance?: () => void;
   onDownloadPolicy?: () => void;
   onViewPurchases?: () => void;
@@ -93,8 +91,6 @@ const OverviewDashboard = ({
   onSimulateReportReady,
   insurancePurchased = false,
   policyReady = false,
-  paymentFailed = false,
-  onRetryPayment,
   onExploreInsurance,
   onDownloadPolicy,
   onViewPurchases,
@@ -115,7 +111,6 @@ const OverviewDashboard = ({
 
   // Resolve dynamic card state using priority logic
   const cardState: CardState = resolveCardState({
-    paymentFailed,
     policyReady,
     insurancePurchased,
     comprehensiveReportReady,
@@ -158,7 +153,7 @@ const OverviewDashboard = ({
             onViewPurchases={onViewPurchases}
             onExploreInsurance={onExploreInsurance}
             onDownloadPolicy={onDownloadPolicy}
-            onRetryPayment={onRetryPayment}
+            
             onSimulateReportReady={onSimulateReportReady}
           />
         </div>

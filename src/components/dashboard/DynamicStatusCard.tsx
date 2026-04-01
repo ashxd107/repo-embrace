@@ -1,5 +1,5 @@
 import {
-  Lock, Clock, ShieldCheck, FileText, Download, AlertCircle, ArrowRight,
+  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,7 @@ export type CardState =
   | "report-in-progress"
   | "buy-insurance"
   | "policy-in-progress"
-  | "download-policy"
-  | "payment-failed";
+  | "download-policy";
 
 interface DynamicStatusCardProps {
   state: CardState;
@@ -80,8 +79,6 @@ const stateConfig: Record<
     support: "For queries, contact contact@mitigata.com",
     primaryLabel: "View Purchases",
     primaryAction: "onViewPurchases",
-    secondaryLabel: "Check Status",
-    secondaryAction: "onCheckStatus",
   },
   "download-policy": {
     badge: "Ready",
@@ -92,18 +89,6 @@ const stateConfig: Record<
     support: "Policy shared successfully.",
     primaryLabel: "Download Policy",
     primaryAction: "onDownloadPolicy",
-    secondaryLabel: "View Purchases",
-    secondaryAction: "onViewPurchases",
-  },
-  "payment-failed": {
-    badge: "Failed",
-    badgeClass: "bg-destructive/20 text-destructive border-destructive/30",
-    icon: AlertCircle,
-    title: "Payment failed",
-    body: "Your payment could not be completed. Please try again.",
-    support: "For queries, contact contact@mitigata.com",
-    primaryLabel: "Try Again",
-    primaryAction: "onRetryPayment",
     secondaryLabel: "View Purchases",
     secondaryAction: "onViewPurchases",
   },
@@ -185,19 +170,16 @@ export default DynamicStatusCard;
  * 6. No purchase → Pay ₹99
  */
 export function resolveCardState({
-  paymentFailed,
   policyReady,
   insurancePurchased,
   comprehensiveReportReady,
   comprehensivePurchased,
 }: {
-  paymentFailed: boolean;
   policyReady: boolean;
   insurancePurchased: boolean;
   comprehensiveReportReady: boolean;
   comprehensivePurchased: boolean;
 }): CardState {
-  if (paymentFailed) return "payment-failed";
   if (policyReady) return "download-policy";
   if (insurancePurchased && !policyReady) return "policy-in-progress";
   if (comprehensivePurchased && !comprehensiveReportReady) return "report-in-progress";
