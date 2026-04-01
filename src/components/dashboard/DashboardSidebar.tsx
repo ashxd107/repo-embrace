@@ -493,7 +493,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
         <NavList menuItems={menuItems} activeItem={activeItem} onNavigate={onNavigate} />
       </nav>
       {onRiskScoreChange && <RiskScoreControl score={riskScore} onChange={onRiskScoreChange} />}
-      <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+      <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} onOpenPurchases={onOpenPurchases} />
     </aside>
   );
 };
