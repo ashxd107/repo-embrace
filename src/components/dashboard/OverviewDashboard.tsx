@@ -10,6 +10,7 @@ import ExposureBreakdownChart from "./ExposureBreakdownChart";
 import { getRiskContent, emptyStates } from "@/lib/riskContent";
 import LockedOverlay from "./LockedOverlay";
 import InsuranceBanner from "./InsuranceBanner";
+import DynamicStatusCard, { resolveCardState, type CardState } from "./DynamicStatusCard";
 import type { FlowType } from "@/types/flow";
 
 const fadeIn = {
