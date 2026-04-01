@@ -58,7 +58,6 @@ const stateConfig: Record<
     primaryLabel: "Check Status",
     primaryAction: "onCheckStatus",
   },
-  },
   "buy-insurance": {
     badge: "Active",
     badgeClass: "bg-primary/20 text-primary border-primary/30",
