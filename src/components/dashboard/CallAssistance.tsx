@@ -80,7 +80,7 @@ const CallAssistance = () => {
             <Button
               asChild
               variant="outline"
-              className="rounded-xl px-6 font-semibold flex-1 h-12 text-base"
+              className="px-6 font-semibold flex-1 h-12 text-base"
             >
               <a href="mailto:support@mitigata.com">
                 <Mail className="mr-2 h-4 w-4" />
