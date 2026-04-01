@@ -314,7 +314,7 @@ const CompSubNavPanel = ({ activeItem, onNavigate, onBack }: {
     <div className="px-5 pt-6 pb-4">
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors font-medium mb-4"
+        className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors font-medium mb-4 rounded-full px-3 py-1.5 hover:bg-secondary/60"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to Dashboard
