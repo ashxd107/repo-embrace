@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface PaymentFailureModalProps {
@@ -11,24 +11,21 @@ interface PaymentFailureModalProps {
 
 export const ReportPaymentFailureModal = ({ open, onClose, onRetry }: PaymentFailureModalProps) => (
   <Dialog open={open} onOpenChange={onClose}>
-    <DialogContent className="sm:max-w-[400px] p-0 rounded-[20px] border-border/30 overflow-hidden gap-0 [&>button]:hidden">
+    <DialogContent className="sm:max-w-[360px] p-0 rounded-[20px] border-border/30 overflow-hidden gap-0 [&>button]:hidden">
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
-        className="p-6 py-10 flex flex-col items-center text-center"
+        className="p-8 flex flex-col items-center text-center"
       >
-        <div className="h-14 w-14 rounded-full bg-destructive/10 flex items-center justify-center mb-5">
-          <AlertCircle className="h-7 w-7 text-destructive" strokeWidth={1.5} />
+        <div className="h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center mb-4">
+          <AlertCircle className="h-6 w-6 text-destructive" strokeWidth={1.5} />
         </div>
-        <h3 className="text-display text-lg mb-2">Payment failed</h3>
-        <p className="text-body text-sm max-w-[300px] mb-2 leading-relaxed">
-          Your ₹99 payment for the comprehensive report could not be completed.
+        <h3 className="text-foreground font-semibold text-base mb-1.5">Payment failed</h3>
+        <p className="text-muted-foreground text-sm mb-6">
+          ₹99 report payment could not be completed.
         </p>
-        <p className="text-body text-xs text-muted-foreground mb-6">
-          Please try again or contact contact@mitigata.com if the issue continues.
-        </p>
-        <div className="flex gap-3 w-full max-w-[260px]">
+        <div className="flex gap-3 w-full">
           <Button
             variant="outline"
             onClick={onClose}
@@ -50,24 +47,21 @@ export const ReportPaymentFailureModal = ({ open, onClose, onRetry }: PaymentFai
 
 export const InsurancePaymentFailureModal = ({ open, onClose, onRetry }: PaymentFailureModalProps) => (
   <Dialog open={open} onOpenChange={onClose}>
-    <DialogContent className="sm:max-w-[400px] p-0 rounded-[20px] border-border/30 overflow-hidden gap-0 [&>button]:hidden">
+    <DialogContent className="sm:max-w-[360px] p-0 rounded-[20px] border-border/30 overflow-hidden gap-0 [&>button]:hidden">
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
-        className="p-6 py-10 flex flex-col items-center text-center"
+        className="p-8 flex flex-col items-center text-center"
       >
-        <div className="h-14 w-14 rounded-full bg-destructive/10 flex items-center justify-center mb-5">
-          <AlertCircle className="h-7 w-7 text-destructive" strokeWidth={1.5} />
+        <div className="h-12 w-12 rounded-full bg-destructive/10 flex items-center justify-center mb-4">
+          <AlertCircle className="h-6 w-6 text-destructive" strokeWidth={1.5} />
         </div>
-        <h3 className="text-display text-lg mb-2">Insurance payment failed</h3>
-        <p className="text-body text-sm max-w-[300px] mb-2 leading-relaxed">
+        <h3 className="text-foreground font-semibold text-base mb-1.5">Insurance payment failed</h3>
+        <p className="text-muted-foreground text-sm mb-6">
           Your cyber insurance payment could not be completed.
         </p>
-        <p className="text-body text-xs text-muted-foreground mb-6">
-          Please try again or contact contact@mitigata.com for support.
-        </p>
-        <div className="flex gap-3 w-full max-w-[260px]">
+        <div className="flex gap-3 w-full">
           <Button
             variant="outline"
             onClick={onClose}
