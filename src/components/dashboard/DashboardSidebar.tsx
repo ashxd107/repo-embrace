@@ -103,10 +103,9 @@ const RiskScoreControl = ({ score, onChange }: { score: number; onChange: (v: nu
   </div>
 );
 
-const ProfileRow = ({ collapsed = false, flowType = "free" as FlowType, comprehensivePurchased = false, comprehensiveReportReady = false }: { collapsed?: boolean; flowType?: FlowType; comprehensivePurchased?: boolean; comprehensiveReportReady?: boolean }) => {
+const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolean; flowType?: FlowType; comprehensivePurchased?: boolean; comprehensiveReportReady?: boolean; onOpenPurchases?: () => void }) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-  const [purchasesOpen, setPurchasesOpen] = useState(false);
 
   if (collapsed) {
     return (
