@@ -406,7 +406,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between p-4">
               <img src={mitigataLogo} alt="Mitigata" className="h-7 w-auto" />
-              <button onClick={onMobileClose} className="h-8 w-8 rounded-lg bg-secondary/60 flex items-center justify-center">
+              <button onClick={onMobileClose} className="h-8 w-8 rounded-full bg-secondary/60 flex items-center justify-center">
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
             </div>
