@@ -163,7 +163,7 @@ const ReportCard = ({ purchase }: { purchase: ReportPurchase }) => (
 
     <div className="flex gap-2">
       {purchase.invoiceAvailable && (
-        <Button variant="outline" size="sm" className="flex-1 rounded-xl text-xs h-9 gap-2">
+        <Button variant="outline" size="sm" className="flex-1 text-xs h-9 gap-2">
           <Download className="h-3.5 w-3.5" />
           Download Invoice
         </Button>
