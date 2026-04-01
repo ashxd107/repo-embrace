@@ -135,7 +135,7 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
             onClick={secondaryHandler}
             size="sm"
             variant="outline"
-            className="rounded-lg px-4 w-fit font-semibold text-xs border-primary/20 text-primary hover:bg-primary/10"
+            className="px-4 w-fit font-semibold text-xs border-primary/20 text-primary hover:bg-primary/10"
           >
             {config.secondaryLabel}
           </Button>
