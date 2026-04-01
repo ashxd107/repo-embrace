@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import {
-  ArrowRight, AlertTriangle, Key, Database, ShieldX,
-  ShieldCheck, ShieldAlert, CheckCircle2, Lock, Eye, Clock, FileSearch,
+  AlertTriangle, Key, Database, ShieldX,
+  ShieldCheck, CheckCircle2, Lock, Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiskScoreMeter from "./RiskScoreMeter";
@@ -10,6 +10,7 @@ import ExposureBreakdownChart from "./ExposureBreakdownChart";
 import { getRiskContent, emptyStates } from "@/lib/riskContent";
 import LockedOverlay from "./LockedOverlay";
 import InsuranceBanner from "./InsuranceBanner";
+import DynamicStatusCard, { resolveCardState, type CardState } from "./DynamicStatusCard";
 import type { FlowType } from "@/types/flow";
 
 const fadeIn = {
@@ -31,6 +32,13 @@ interface OverviewDashboardProps {
   comprehensiveReportReady?: boolean;
   comprehensivePurchased?: boolean;
   onSimulateReportReady?: () => void;
+  insurancePurchased?: boolean;
+  policyReady?: boolean;
+  paymentFailed?: boolean;
+  onRetryPayment?: () => void;
+  onExploreInsurance?: () => void;
+  onDownloadPolicy?: () => void;
+  onViewPurchases?: () => void;
 }
 
 const EXPOSURE_COUNT = 24;
@@ -83,6 +91,13 @@ const OverviewDashboard = ({
   comprehensiveReportReady = false,
   comprehensivePurchased = false,
   onSimulateReportReady,
+  insurancePurchased = false,
+  policyReady = false,
+  paymentFailed = false,
+  onRetryPayment,
+  onExploreInsurance,
+  onDownloadPolicy,
+  onViewPurchases,
 }: OverviewDashboardProps) => {
   const riskContent = getRiskContent(RISK_SCORE);
   const hasExposures = EXPOSURE_COUNT > 0;
@@ -98,157 +113,14 @@ const OverviewDashboard = ({
     ? `${EXPOSURE_COUNT} exposures found across ${LEAK_SOURCE_COUNT} leak sources`
     : "No active exposures detected";
 
-  const renderRightCard = () => {
-    // FLOW 1 — Free user
-    if (flowType === "free") {
-      if (comprehensivePurchased) {
-        // After payment — show pending or ready
-      if (comprehensiveReportReady) {
-          return (
-            <>
-              <ShieldCheck className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-              <h3 className="text-sm font-semibold mb-1">Get cyber insurance</h3>
-              <p className="text-xs opacity-60 mb-4 leading-relaxed">
-                Protect yourself against digital fraud, identity misuse, and financial loss.
-              </p>
-              <Button
-                size="sm"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 w-fit font-semibold text-xs"
-              >
-                Explore Cyber Insurance
-                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-              </Button>
-            </>
-          );
-        }
-        return (
-          <>
-            <Clock className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-            <h3 className="text-sm font-semibold mb-1">Comprehensive report in progress</h3>
-            <p className="text-xs opacity-60 mb-3 leading-relaxed">
-              Your deeper exposure report is being prepared. We'll notify you by email once it is ready.
-            </p>
-            <p className="text-[10px] opacity-40 mb-4">
-              For queries, contact contact@mitigata.com
-            </p>
-            <div className="flex gap-2">
-              <Button
-                onClick={() => onNavigate("comprehensive-report")}
-                size="sm"
-                variant="outline"
-                className="rounded-lg px-4 w-fit font-semibold text-xs border-primary/20 text-primary hover:bg-primary/10"
-              >
-                Check Status
-              </Button>
-              {onSimulateReportReady && (
-                <Button
-                  onClick={onSimulateReportReady}
-                  size="sm"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-3 w-fit font-semibold text-[10px]"
-                >
-                  Simulate Ready
-                </Button>
-              )}
-            </div>
-          </>
-        );
-      }
-      // Not paid yet — show unlock CTA
-      return (
-        <>
-          <Lock className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-          <h3 className="text-sm font-semibold mb-1">Unlock comprehensive report</h3>
-          <p className="text-xs opacity-60 mb-4 leading-relaxed">
-            Request deeper identity, document, breach-source, and password intelligence.
-          </p>
-          <Button
-            onClick={onUnlock}
-            size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 w-fit font-semibold text-xs"
-          >
-            Unlock for ₹99
-            <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-          </Button>
-          <p className="text-[10px] opacity-40 mt-2">Your comprehensive report will be prepared and shared within 8 hours.</p>
-        </>
-      );
-    }
-
-    // FLOW 2 — Policy Basic — Cyber Insurance CTA
-    if (flowType === "policy-basic") {
-      return (
-        <>
-          <ShieldCheck className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-          <h3 className="text-sm font-semibold mb-1">Get cyber insurance</h3>
-          <p className="text-xs opacity-60 mb-4 leading-relaxed">
-            Strengthen your protection against digital fraud, identity misuse, and online financial risk.
-          </p>
-          <Button
-            size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 w-fit font-semibold text-xs"
-          >
-            Explore Cyber Insurance
-            <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-          </Button>
-        </>
-      );
-    }
-
-    // FLOW 3 — Policy Comprehensive
-    if (flowType === "policy-comprehensive") {
-      if (comprehensiveReportReady) {
-        return (
-          <>
-            <ShieldCheck className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-            <h3 className="text-sm font-semibold mb-1">Get cyber insurance</h3>
-            <p className="text-xs opacity-60 mb-4 leading-relaxed">
-              Add protection against digital fraud, identity misuse, and financial loss.
-            </p>
-            <Button
-              size="sm"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 w-fit font-semibold text-xs"
-            >
-              Explore Cyber Insurance
-              <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-            </Button>
-          </>
-        );
-      }
-      return (
-        <>
-          <Clock className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-          <h3 className="text-sm font-semibold mb-1">Comprehensive report in progress</h3>
-          <p className="text-xs opacity-60 mb-3 leading-relaxed">
-            Your deeper exposure report is being prepared. We'll notify you by email once it is ready.
-          </p>
-          <p className="text-[10px] opacity-40 mb-4">
-            For queries, contact contact@mitigata.com
-          </p>
-          <div className="flex gap-2">
-            <Button
-              onClick={() => onNavigate("comprehensive-report")}
-              size="sm"
-              variant="outline"
-              className="rounded-lg px-4 w-fit font-semibold text-xs border-primary/20 text-primary hover:bg-primary/10"
-            >
-              Check Status
-            </Button>
-            {onSimulateReportReady && (
-              <Button
-                onClick={onSimulateReportReady}
-                size="sm"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-3 w-fit font-semibold text-[10px]"
-              >
-                Simulate Ready
-              </Button>
-            )}
-          </div>
-        </>
-      );
-    }
-
-    return null;
-  };
+  // Resolve dynamic card state using priority logic
+  const cardState: CardState = resolveCardState({
+    paymentFailed,
+    policyReady,
+    insurancePurchased,
+    comprehensiveReportReady,
+    comprehensivePurchased: comprehensivePurchased || flowType === "policy-comprehensive",
+  });
 
   return (
     <motion.div variants={stagger} initial="hidden" animate="visible" className="py-4 lg:py-6 space-y-5">
@@ -263,7 +135,7 @@ const OverviewDashboard = ({
         </motion.div>
       )}
 
-      {/* ROW 1: Score Meter + User Identity | CTA */}
+      {/* ROW 1: Score Meter + User Identity | Dynamic Status Card */}
       <motion.div variants={fadeIn} className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         <div className="lg:col-span-8 card-surface !p-6 flex flex-col sm:flex-row items-center gap-6">
           <div className="flex flex-col items-center shrink-0">
@@ -279,9 +151,16 @@ const OverviewDashboard = ({
         </div>
 
         <div className="lg:col-span-4 flex">
-          <div className="bg-foreground text-card p-6 rounded-[20px] flex flex-col justify-center w-full">
-            {renderRightCard()}
-          </div>
+          <DynamicStatusCard
+            state={cardState}
+            onUnlock={onUnlock}
+            onCheckStatus={() => onNavigate("comprehensive-report")}
+            onViewPurchases={onViewPurchases}
+            onExploreInsurance={onExploreInsurance}
+            onDownloadPolicy={onDownloadPolicy}
+            onRetryPayment={onRetryPayment}
+            onSimulateReportReady={onSimulateReportReady}
+          />
         </div>
       </motion.div>
 

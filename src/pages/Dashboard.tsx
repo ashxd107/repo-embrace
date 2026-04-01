@@ -31,6 +31,9 @@ const Dashboard = () => {
   const [riskScore, setRiskScore] = useState(82);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const [comprehensiveReportReady, setComprehensiveReportReady] = useState(false);
+  const [insurancePurchased, setInsurancePurchased] = useState(false);
+  const [policyReady, setPolicyReady] = useState(false);
+  const [paymentFailed, setPaymentFailed] = useState(false);
 
   // Whether the user has paid / is entitled to comprehensive
   const [comprehensivePurchased, setComprehensivePurchased] = useState(
@@ -113,6 +116,13 @@ const Dashboard = () => {
             comprehensiveReportReady={comprehensiveReportReady}
             comprehensivePurchased={comprehensivePurchased}
             onSimulateReportReady={handleReportReady}
+            insurancePurchased={insurancePurchased}
+            policyReady={policyReady}
+            paymentFailed={paymentFailed}
+            onRetryPayment={() => { setPaymentFailed(false); setPaymentModalOpen(true); }}
+            onExploreInsurance={() => setActiveItem("call-assistance")}
+            onDownloadPolicy={() => window.open("#", "_blank")}
+            onViewPurchases={() => setActiveItem("call-assistance")}
           />
         );
       case "exposure":
