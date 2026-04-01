@@ -34,7 +34,7 @@ const StickyCTA = ({ onClick }: StickyCTAProps) => {
             <Button
               onClick={onClick}
               size="sm"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 font-semibold text-xs h-8"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 font-semibold text-xs h-8"
             >
               Unlock for ₹99
               <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
