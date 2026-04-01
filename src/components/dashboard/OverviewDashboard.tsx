@@ -92,7 +92,6 @@ const OverviewDashboard = ({
   insurancePurchased = false,
   policyReady = false,
   onExploreInsurance,
-  onExploreInsurance,
   onDownloadPolicy,
   onViewPurchases,
 }: OverviewDashboardProps) => {
