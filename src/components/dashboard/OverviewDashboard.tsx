@@ -35,7 +35,6 @@ interface OverviewDashboardProps {
   insurancePurchased?: boolean;
   policyReady?: boolean;
   onExploreInsurance?: () => void;
-  onExploreInsurance?: () => void;
   onDownloadPolicy?: () => void;
   onViewPurchases?: () => void;
 }
