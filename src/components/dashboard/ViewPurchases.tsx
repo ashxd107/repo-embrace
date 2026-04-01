@@ -118,7 +118,7 @@ const InsuranceCard = ({ purchase }: { purchase: InsurancePurchase }) => (
     </div>
 
     {purchase.status === "Active" && purchase.policyReady && (
-      <Button size="sm" className="w-full rounded-xl text-xs h-9 gap-2">
+      <Button size="sm" className="w-full text-xs h-9 gap-2">
         <Download className="h-3.5 w-3.5" />
         Download Policy
       </Button>
