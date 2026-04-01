@@ -115,7 +115,6 @@ const OverviewDashboard = ({
 
   // Resolve dynamic card state using priority logic
   const cardState: CardState = resolveCardState({
-    paymentFailed,
     policyReady,
     insurancePurchased,
     comprehensiveReportReady,
