@@ -80,8 +80,6 @@ const stateConfig: Record<
     support: "For queries, contact contact@mitigata.com",
     primaryLabel: "View Purchases",
     primaryAction: "onViewPurchases",
-    secondaryLabel: "Check Status",
-    secondaryAction: "onCheckStatus",
   },
   "download-policy": {
     badge: "Ready",
