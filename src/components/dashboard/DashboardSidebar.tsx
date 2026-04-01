@@ -112,7 +112,7 @@ const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolea
       <div className="p-2 flex justify-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="h-9 w-9 rounded-xl bg-secondary/40 flex items-center justify-center transition-colors hover:bg-secondary/60">
+            <button className="h-9 w-9 rounded-full bg-secondary/40 flex items-center justify-center transition-colors hover:bg-secondary/60">
               <Avatar className="h-7 w-7">
                 <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">RS</AvatarFallback>
               </Avatar>
