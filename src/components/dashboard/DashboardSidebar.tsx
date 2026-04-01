@@ -1,5 +1,4 @@
 import { Eye, Lightbulb, LayoutDashboard, X, PhoneCall, MoreHorizontal, LogOut, UserRound, FileSearch, FileText, Database, Key, Clock, ArrowLeft, ShoppingBag } from "lucide-react";
-import ViewPurchases from "@/components/dashboard/ViewPurchases";
 import mitigataLogo from "@/assets/mitigata-logo.png";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
