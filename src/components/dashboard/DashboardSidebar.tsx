@@ -112,7 +112,7 @@ const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolea
       <div className="p-2 flex justify-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="h-9 w-9 rounded-xl bg-secondary/40 flex items-center justify-center transition-colors hover:bg-secondary/60">
+            <button className="h-9 w-9 rounded-full bg-secondary/40 flex items-center justify-center transition-colors hover:bg-secondary/60">
               <Avatar className="h-7 w-7">
                 <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">RS</AvatarFallback>
               </Avatar>
@@ -193,7 +193,7 @@ const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolea
           <span className="text-display text-sm flex-1 truncate">{userData.name}</span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="h-7 w-7 rounded-lg hover:bg-secondary/60 flex items-center justify-center shrink-0 transition-colors">
+              <button className="h-7 w-7 rounded-full hover:bg-secondary/60 flex items-center justify-center shrink-0 transition-colors">
                 <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
               </button>
             </DropdownMenuTrigger>
@@ -406,7 +406,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between p-4">
               <img src={mitigataLogo} alt="Mitigata" className="h-7 w-auto" />
-              <button onClick={onMobileClose} className="h-8 w-8 rounded-lg bg-secondary/60 flex items-center justify-center">
+              <button onClick={onMobileClose} className="h-8 w-8 rounded-full bg-secondary/60 flex items-center justify-center">
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
             </div>

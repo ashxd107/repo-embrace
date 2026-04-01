@@ -52,7 +52,7 @@ const InsuranceSuccess = ({ onGoToDashboard }: InsuranceSuccessProps) => (
     {/* CTA */}
     <Button
       onClick={onGoToDashboard}
-      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-2.5 h-auto font-semibold text-sm w-full sm:w-auto"
+      className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 h-auto font-semibold text-sm w-full sm:w-auto"
     >
       Go to Dashboard
       <ArrowRight className="ml-2 h-4 w-4" />
