@@ -66,7 +66,7 @@ const StickyCTA = ({ onClick }: StickyCTAProps) => {
           <Button
             onClick={onClick}
             size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-3 font-semibold text-xs h-8 shrink-0"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 font-semibold text-xs h-8 shrink-0"
           >
             ₹99
           </Button>
