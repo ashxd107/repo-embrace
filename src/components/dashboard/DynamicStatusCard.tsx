@@ -57,8 +57,6 @@ const stateConfig: Record<
     support: "This may take up to 8 hours.\nFor queries, contact contact@mitigata.com",
     primaryLabel: "Check Status",
     primaryAction: "onCheckStatus",
-    secondaryLabel: "View Purchases",
-    secondaryAction: "onViewPurchases",
   },
   "buy-insurance": {
     badge: "Active",
