@@ -32,6 +32,13 @@ interface OverviewDashboardProps {
   comprehensiveReportReady?: boolean;
   comprehensivePurchased?: boolean;
   onSimulateReportReady?: () => void;
+  insurancePurchased?: boolean;
+  policyReady?: boolean;
+  paymentFailed?: boolean;
+  onRetryPayment?: () => void;
+  onExploreInsurance?: () => void;
+  onDownloadPolicy?: () => void;
+  onViewPurchases?: () => void;
 }
 
 const EXPOSURE_COUNT = 24;
