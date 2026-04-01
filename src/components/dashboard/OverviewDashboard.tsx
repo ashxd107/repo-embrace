@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import {
-  ArrowRight, AlertTriangle, Key, Database, ShieldX,
-  ShieldCheck, ShieldAlert, CheckCircle2, Lock, Eye, Clock, FileSearch,
+  AlertTriangle, Key, Database, ShieldX,
+  ShieldCheck, CheckCircle2, Lock, Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiskScoreMeter from "./RiskScoreMeter";
