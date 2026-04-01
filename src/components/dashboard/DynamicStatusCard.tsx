@@ -146,7 +146,7 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
           <Button
             onClick={onSimulateReportReady}
             size="sm"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-3 w-fit font-semibold text-[10px]"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 w-fit font-semibold text-[10px]"
           >
             Simulate Ready
           </Button>
