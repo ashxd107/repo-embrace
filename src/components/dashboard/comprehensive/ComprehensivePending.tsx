@@ -141,7 +141,7 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
         <Button
           onClick={onGoToDashboard}
           variant="outline"
-          className="rounded-xl px-5 text-sm font-semibold"
+          className="px-5 text-sm font-semibold"
         >
           <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
           Back to Dashboard

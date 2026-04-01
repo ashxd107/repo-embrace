@@ -169,7 +169,7 @@ const ReportCard = ({ purchase }: { purchase: ReportPurchase }) => (
         </Button>
       )}
       {purchase.reportReady && (
-        <Button size="sm" className="flex-1 rounded-xl text-xs h-9 gap-2">
+        <Button size="sm" className="flex-1 text-xs h-9 gap-2">
           <ExternalLink className="h-3.5 w-3.5" />
           Open Report
         </Button>
