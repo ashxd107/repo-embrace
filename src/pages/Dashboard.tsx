@@ -33,7 +33,7 @@ const Dashboard = () => {
   const [comprehensiveReportReady, setComprehensiveReportReady] = useState(false);
   const [insurancePurchased, setInsurancePurchased] = useState(false);
   const [policyReady, setPolicyReady] = useState(false);
-  const [paymentFailed, setPaymentFailed] = useState(false);
+  
 
   // Whether the user has paid / is entitled to comprehensive
   const [comprehensivePurchased, setComprehensivePurchased] = useState(
