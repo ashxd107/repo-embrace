@@ -153,7 +153,7 @@ const OverviewDashboard = ({
             onViewPurchases={onViewPurchases}
             onExploreInsurance={onExploreInsurance}
             onDownloadPolicy={onDownloadPolicy}
-            onRetryPayment={onRetryPayment}
+            
             onSimulateReportReady={onSimulateReportReady}
           />
         </div>
