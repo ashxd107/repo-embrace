@@ -170,19 +170,16 @@ export default DynamicStatusCard;
  * 6. No purchase → Pay ₹99
  */
 export function resolveCardState({
-  paymentFailed,
   policyReady,
   insurancePurchased,
   comprehensiveReportReady,
   comprehensivePurchased,
 }: {
-  paymentFailed: boolean;
   policyReady: boolean;
   insurancePurchased: boolean;
   comprehensiveReportReady: boolean;
   comprehensivePurchased: boolean;
 }): CardState {
-  if (paymentFailed) return "payment-failed";
   if (policyReady) return "download-policy";
   if (insurancePurchased && !policyReady) return "policy-in-progress";
   if (comprehensivePurchased && !comprehensiveReportReady) return "report-in-progress";
