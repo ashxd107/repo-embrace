@@ -124,7 +124,7 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
         <Button
           onClick={primaryHandler}
           size="sm"
-          className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 w-fit font-semibold text-xs"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 w-fit font-semibold text-xs"
         >
           {config.primaryLabel}
           <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
