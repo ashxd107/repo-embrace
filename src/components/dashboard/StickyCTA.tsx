@@ -41,7 +41,7 @@ const StickyCTA = ({ onClick }: StickyCTAProps) => {
             </Button>
             <button
               onClick={() => setDismissed(true)}
-              className="h-7 w-7 rounded-lg hover:bg-secondary/60 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+              className="h-7 w-7 rounded-full hover:bg-secondary/60 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
             >
               <X className="h-3.5 w-3.5" />
             </button>
