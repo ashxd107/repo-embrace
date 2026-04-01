@@ -392,7 +392,7 @@ const NavList = ({ menuItems, activeItem, onNavigate, onItemClick }: {
   );
 };
 
-const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, riskScore = 82, onRiskScoreChange, flowType = "free", comprehensivePurchased = false, comprehensiveReportReady = false }: DashboardSidebarProps) => {
+const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, riskScore = 82, onRiskScoreChange, flowType = "free", comprehensivePurchased = false, comprehensiveReportReady = false, onOpenPurchases }: DashboardSidebarProps) => {
   const isMobile = useIsMobile();
   const isCompReportActive =
     (activeItem === "comprehensive-report" || activeItem.startsWith("comp-")) &&
