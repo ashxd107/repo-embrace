@@ -70,7 +70,7 @@ const CallAssistance = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               asChild
-              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 font-semibold flex-1 h-12 text-base"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 font-semibold flex-1 h-12 text-base"
             >
               <a href="tel:+919876543210">
                 <Phone className="mr-2 h-4 w-4" />
