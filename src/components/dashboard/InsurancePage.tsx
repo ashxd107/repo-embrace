@@ -122,7 +122,7 @@ const InsurancePage = ({ onGetStarted }: InsurancePageProps) => {
 
               <Button
                 onClick={onGetStarted}
-                className="mt-8 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 font-semibold w-full"
+                className="mt-8 bg-primary hover:bg-primary/90 text-primary-foreground px-6 font-semibold w-full"
               >
                 Continue to secure checkout
                 <ArrowRight className="ml-2 h-4 w-4" />

@@ -24,7 +24,7 @@ const UnlockCTA = ({ onUnlock }: UnlockCTAProps) => (
     </div>
     <Button
       onClick={onUnlock}
-      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-2.5 h-auto font-semibold text-sm shrink-0"
+      className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 h-auto font-semibold text-sm shrink-0"
     >
       Unlock for ₹99
       <ArrowRight className="ml-2 h-4 w-4" />
