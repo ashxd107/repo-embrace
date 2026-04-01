@@ -258,7 +258,7 @@ const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolea
         </AlertDialogContent>
       </AlertDialog>
 
-      <ViewPurchases open={purchasesOpen} onOpenChange={setPurchasesOpen} flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+      
     </>
   );
 };
