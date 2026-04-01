@@ -91,6 +91,13 @@ const OverviewDashboard = ({
   comprehensiveReportReady = false,
   comprehensivePurchased = false,
   onSimulateReportReady,
+  insurancePurchased = false,
+  policyReady = false,
+  paymentFailed = false,
+  onRetryPayment,
+  onExploreInsurance,
+  onDownloadPolicy,
+  onViewPurchases,
 }: OverviewDashboardProps) => {
   const riskContent = getRiskContent(RISK_SCORE);
   const hasExposures = EXPOSURE_COUNT > 0;
