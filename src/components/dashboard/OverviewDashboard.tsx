@@ -34,8 +34,7 @@ interface OverviewDashboardProps {
   onSimulateReportReady?: () => void;
   insurancePurchased?: boolean;
   policyReady?: boolean;
-  paymentFailed?: boolean;
-  onRetryPayment?: () => void;
+  onExploreInsurance?: () => void;
   onExploreInsurance?: () => void;
   onDownloadPolicy?: () => void;
   onViewPurchases?: () => void;
