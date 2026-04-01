@@ -470,7 +470,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
           <nav className="flex-1 px-2 py-4">
             <CollapsedNavList menuItems={menuItems} activeItem={activeItem} onNavigate={onNavigate} />
           </nav>
-          <ProfileRow collapsed flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+          <ProfileRow collapsed flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} onOpenPurchases={onOpenPurchases} />
         </aside>
 
         <CompSubNavPanel
