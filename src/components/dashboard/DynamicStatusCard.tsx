@@ -9,8 +9,7 @@ export type CardState =
   | "report-in-progress"
   | "buy-insurance"
   | "policy-in-progress"
-  | "download-policy"
-  | "payment-failed";
+  | "download-policy";
 
 interface DynamicStatusCardProps {
   state: CardState;
