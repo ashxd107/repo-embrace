@@ -183,6 +183,49 @@ const Dashboard = () => {
         {renderContent()}
       </main>
 
+      {/* Debug Simulation Panel */}
+      <div className={`fixed bottom-0 right-0 z-50 bg-foreground text-card p-3 rounded-tl-xl shadow-2xl text-[11px] space-y-2 max-w-[280px] ${mainMarginClass}`}>
+        <p className="font-semibold text-xs opacity-80 mb-1">🛠 Simulate Card States</p>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            onClick={() => { setComprehensivePurchased(false); setComprehensiveReportReady(false); setInsurancePurchased(false); setPolicyReady(false); setPaymentFailed(false); setActiveItem("overview"); }}
+            className="px-2 py-1 rounded bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
+          >
+            Pay ₹99
+          </button>
+          <button
+            onClick={() => { setComprehensivePurchased(true); setComprehensiveReportReady(false); setInsurancePurchased(false); setPolicyReady(false); setPaymentFailed(false); setActiveItem("overview"); }}
+            className="px-2 py-1 rounded bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
+          >
+            Report In Progress
+          </button>
+          <button
+            onClick={() => { setComprehensivePurchased(true); setComprehensiveReportReady(true); setInsurancePurchased(false); setPolicyReady(false); setPaymentFailed(false); setActiveItem("overview"); }}
+            className="px-2 py-1 rounded bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
+          >
+            Buy Insurance
+          </button>
+          <button
+            onClick={() => { setComprehensivePurchased(true); setComprehensiveReportReady(true); setInsurancePurchased(true); setPolicyReady(false); setPaymentFailed(false); setActiveItem("overview"); }}
+            className="px-2 py-1 rounded bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
+          >
+            Policy In Progress
+          </button>
+          <button
+            onClick={() => { setComprehensivePurchased(true); setComprehensiveReportReady(true); setInsurancePurchased(true); setPolicyReady(true); setPaymentFailed(false); setActiveItem("overview"); }}
+            className="px-2 py-1 rounded bg-primary/20 text-primary hover:bg-primary/30 transition-colors"
+          >
+            Download Policy
+          </button>
+          <button
+            onClick={() => { setPaymentFailed(true); setActiveItem("overview"); }}
+            className="px-2 py-1 rounded bg-destructive/20 text-destructive hover:bg-destructive/30 transition-colors"
+          >
+            Payment Failed
+          </button>
+        </div>
+      </div>
+
       {/* Sticky CTA only for free users who haven't paid */}
       {shouldShowUnlockPrompts && !isCompReportActive && (
         <StickyCTA onClick={handleUnlock} />
