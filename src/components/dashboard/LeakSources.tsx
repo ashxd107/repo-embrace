@@ -11,12 +11,20 @@ interface LeakField {
   freeVisible?: boolean;
 }
 
+interface AffectedPerson {
+  relation: string;
+  name: string;
+  fields: LeakField[];
+}
+
 interface LeakSource {
   id: number;
   title: string;
   risk: "Critical" | "High" | "Medium" | "Low";
-  contextLine: string;
-  fields: LeakField[];
+  date: string;
+  summary: string;
+  affectedPeople: AffectedPerson[];
+  freeVisible?: boolean;
 }
 
 const leakSources: LeakSource[] = [
@@ -24,70 +32,111 @@ const leakSources: LeakSource[] = [
     id: 1,
     title: "HiTeckGroop.in — JIO Karnataka (Cellular Operator)",
     risk: "Critical",
-    contextLine: "Leak Details — Early 2025 • 1.8B records (300M unique) from Indian cellular operators",
-    fields: [
-      { label: "Full Name", value: "Rahul Sharma", freeVisible: false },
-      { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
-      { label: "Password", value: "••••••••••", freeVisible: true, sensitive: true },
-      { label: "Phone 1", value: "+91 93810XXXXX", freeVisible: false, sensitive: true },
-      { label: "Phone 2", value: "+91 88005XXXXX", freeVisible: false, sensitive: true },
-      { label: "Region", value: "JIO Karnataka", freeVisible: false },
-      { label: "Aadhaar Card", value: "XXXX XXXX 6042", freeVisible: false, sensitive: true },
-      { label: "Source Date", value: "Early 2025", freeVisible: false },
-      { label: "Address", value: "C/O T V S P Sekhar, NO-001 1ST FLOOR KRISHNA REDDY ENCLAVE, SHANABUGH LAYOUT, Bengaluru, Karnataka", fullWidth: true, freeVisible: false },
+    date: "Early 2025",
+    summary: "Aadhaar, phone, address and account credentials were found in this telecom breach.",
+    freeVisible: true,
+    affectedPeople: [
+      {
+        relation: "Self",
+        name: "Rahul Sharma",
+        fields: [
+          { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
+          { label: "Password", value: "••••••••••", sensitive: true, freeVisible: true },
+          { label: "Phone 1", value: "+91 93810XXXXX", sensitive: true, freeVisible: false },
+          { label: "Phone 2", value: "+91 88005XXXXX", sensitive: true, freeVisible: false },
+          { label: "Region", value: "JIO Karnataka", freeVisible: false },
+          { label: "Aadhaar Card", value: "XXXX XXXX 6042", sensitive: true, freeVisible: false },
+          { label: "Source Date", value: "Early 2025", freeVisible: false },
+          { label: "Address", value: "C/O T V S P Sekhar, NO-001 1ST FLOOR KRISHNA REDDY ENCLAVE, SHANABUGH LAYOUT, Bengaluru, Karnataka", fullWidth: true, freeVisible: false },
+        ],
+      },
     ],
   },
   {
     id: 2,
     title: "Alien TxtBase — Stealer Log Combolist",
     risk: "High",
-    contextLine: "Leak Details — Early 2025 • 2.8B unique records from stealer logs (browser-stored credentials)",
-    fields: [
-      { label: "Full Name", value: "Rahul Sharma", freeVisible: false },
-      { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
-      { label: "Password", value: "••••••••••", freeVisible: true, sensitive: true },
-      { label: "Phone 1", value: "+91 93810XXXXX", freeVisible: false, sensitive: true },
-      { label: "Source Type", value: "Stealer Log", freeVisible: false },
-      { label: "Source Date", value: "Early 2025", freeVisible: false },
-      { label: "Region", value: "India", freeVisible: false },
+    date: "Early 2025",
+    summary: "Browser-stored credentials harvested via infostealer malware.",
+    freeVisible: true,
+    affectedPeople: [
+      {
+        relation: "Self",
+        name: "Rahul Sharma",
+        fields: [
+          { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
+          { label: "Password", value: "••••••••••", sensitive: true, freeVisible: true },
+          { label: "Phone 1", value: "+91 93810XXXXX", sensitive: true, freeVisible: false },
+          { label: "Source Type", value: "Stealer Log", freeVisible: false },
+          { label: "Source Date", value: "Early 2025", freeVisible: false },
+          { label: "Region", value: "India", freeVisible: false },
+        ],
+      },
     ],
   },
   {
     id: 3,
     title: "DarkForums Dump — Financial Services Platform",
     risk: "Critical",
-    contextLine: "Leak Details — Late 2024 • 450M records from financial and banking platforms",
-    fields: [
-      { label: "Full Name", value: "Rahul Sharma", freeVisible: false },
-      { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
-      { label: "Password", value: "••••••••••", freeVisible: true, sensitive: true },
-      { label: "Phone 1", value: "+91 93810XXXXX", freeVisible: false, sensitive: true },
-      { label: "PAN Card", value: "ABCDE12XXF", freeVisible: false, sensitive: true },
-      { label: "Source Type", value: "Database Dump", freeVisible: false },
-      { label: "Source Date", value: "Late 2024", freeVisible: false },
-      { label: "Region", value: "India", freeVisible: false },
-      { label: "Address", value: "HSR Layout, Bengaluru, Karnataka 560102", fullWidth: true, freeVisible: false },
+    date: "Late 2024",
+    summary: "PAN, banking credentials and address from a financial platform database dump.",
+    affectedPeople: [
+      {
+        relation: "Self",
+        name: "Rahul Sharma",
+        fields: [
+          { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
+          { label: "Password", value: "••••••••••", sensitive: true, freeVisible: true },
+          { label: "Phone 1", value: "+91 93810XXXXX", sensitive: true, freeVisible: false },
+          { label: "PAN Card", value: "ABCDE12XXF", sensitive: true, freeVisible: false },
+          { label: "Source Type", value: "Database Dump", freeVisible: false },
+          { label: "Source Date", value: "Late 2024", freeVisible: false },
+          { label: "Region", value: "India", freeVisible: false },
+          { label: "Address", value: "HSR Layout, Bengaluru, Karnataka 560102", fullWidth: true, freeVisible: false },
+        ],
+      },
     ],
   },
   {
     id: 4,
     title: "BreachDB — Social Media Credential Dump",
     risk: "Medium",
-    contextLine: "Leak Details — Mid 2024 • 800M records from social media platform breaches",
-    fields: [
-      { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
-      { label: "Password", value: "••••••••••", freeVisible: true, sensitive: true },
-      { label: "Source Type", value: "Credential Dump", freeVisible: false },
-      { label: "Source Date", value: "Mid 2024", freeVisible: false },
+    date: "Mid 2024",
+    summary: "Credentials from social media platform breaches.",
+    affectedPeople: [
+      {
+        relation: "Self",
+        name: "Rahul Sharma",
+        fields: [
+          { label: "Email", value: "rahul****@gmail.com", freeVisible: true },
+          { label: "Password", value: "••••••••••", sensitive: true, freeVisible: true },
+          { label: "Source Type", value: "Credential Dump", freeVisible: false },
+          { label: "Source Date", value: "Mid 2024", freeVisible: false },
+        ],
+      },
     ],
   },
 ];
 
-const riskStyles: Record<string, string> = {
+const riskBadgeStyles: Record<string, string> = {
   Critical: "bg-destructive/10 text-destructive border-destructive/20",
   High: "bg-risk-mid/10 text-risk-mid border-risk-mid/20",
   Medium: "bg-primary/10 text-primary border-primary/20",
   Low: "bg-muted text-muted-foreground border-border",
+};
+
+const riskAccentColor: Record<string, string> = {
+  Critical: "bg-destructive",
+  High: "bg-risk-mid",
+  Medium: "bg-primary",
+  Low: "bg-muted-foreground",
+};
+
+const sensitiveFieldDot: Record<string, string> = {
+  Critical: "bg-destructive/60",
+  High: "bg-risk-mid/60",
+  Medium: "bg-primary/60",
+  Low: "bg-muted-foreground/40",
 };
 
 interface LeakSourcesProps {
@@ -95,53 +144,22 @@ interface LeakSourcesProps {
   onUnlock?: () => void;
 }
 
-const FieldCard = ({ label, value, locked, sensitive }: { label: string; value: string; locked: boolean; sensitive?: boolean }) => (
-  <div className="bg-secondary/50 rounded-2xl px-5 py-4">
-    <p className="text-caps mb-1.5">{label}</p>
-    {locked ? (
-      <div className="flex items-center gap-2">
-        <span
-          className="text-display text-sm select-none text-transparent bg-muted/80 rounded px-1"
-          style={{ filter: "blur(5px)" }}
-        >
-          {value}
-        </span>
-        <Lock className="h-3 w-3 text-muted-foreground" strokeWidth={1.5} />
-      </div>
-    ) : (
-      <p className={`text-display text-sm ${sensitive ? "text-destructive" : ""}`}>{value}</p>
-    )}
-  </div>
-);
-
 const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
-  const visibleSources = isUnlocked ? leakSources : leakSources.slice(0, 2);
+  const visibleSources = isUnlocked ? leakSources : leakSources.filter((s) => s.freeVisible);
   const totalCount = leakSources.length;
 
   return (
     <section>
       <p className="text-caps mb-2">Leak Source Details — {totalCount} Sources</p>
-      <h2 className="text-display text-2xl mb-1.5">Where your data was found</h2>
+      <h2 className="text-display text-xl mb-1.5">Where your data was found</h2>
       <p className="text-body text-sm mb-6">
         {isUnlocked
-          ? "Each source below represents a distinct breach or exposure event where your information was identified."
+          ? "Each source below shows exactly what was exposed and whose data was involved."
           : "You're viewing a limited preview. Unlock the full report to see all sources and complete details."}
       </p>
 
-      <div className="space-y-5">
+      <div className="space-y-6">
         {visibleSources.map((source, i) => {
-          const visibleFields = isUnlocked
-            ? source.fields
-            : source.fields.filter((f) => f.freeVisible);
-
-          const lockedFields = isUnlocked
-            ? []
-            : source.fields.filter((f) => !f.freeVisible);
-
-          const regularFields = visibleFields.filter((f) => !f.fullWidth);
-          const fullWidthFields = visibleFields.filter((f) => f.fullWidth);
-          const lockedRegular = lockedFields.filter((f) => !f.fullWidth);
-
           return (
             <motion.div
               key={source.id}
@@ -151,74 +169,117 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
               transition={{ delay: i * 0.08, duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
               className="card-surface !p-0 overflow-hidden"
             >
-              {/* Header */}
-              <div className="flex items-center gap-4 px-6 py-5 border-b border-border/30">
-                <div className="h-8 w-8 rounded-xl bg-secondary flex items-center justify-center shrink-0">
-                  <span className="text-display text-xs">{source.id}</span>
+              {/* Source header with risk accent bar */}
+              <div className="flex items-stretch">
+                <div className={`w-1 shrink-0 ${riskAccentColor[source.risk]} rounded-l-[20px]`} />
+                <div className="flex items-center gap-4 px-5 py-4 border-b border-border/20 flex-1 min-w-0">
+                  <div className="h-7 w-7 rounded-lg bg-secondary/60 flex items-center justify-center shrink-0">
+                    <span className="text-xs font-medium text-muted-foreground">{source.id}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-semibold text-foreground leading-snug">{source.title}</h3>
+                    <p className="text-xs font-normal text-muted-foreground mt-0.5 leading-relaxed">{source.summary}</p>
+                  </div>
+                  <div className="flex items-center gap-2.5 shrink-0">
+                    <span className="text-[10px] font-normal text-muted-foreground tracking-wide uppercase">{source.date}</span>
+                    <Badge variant="outline" className={`text-[10px] font-medium ${riskBadgeStyles[source.risk]}`}>
+                      {source.risk}
+                    </Badge>
+                  </div>
                 </div>
-                <h3 className="text-display text-sm flex-1 min-w-0">{source.title}</h3>
-                <Badge variant="outline" className={`text-[10px] font-medium shrink-0 ${riskStyles[source.risk]}`}>
-                  {source.risk}
-                </Badge>
               </div>
 
-              {/* Context line */}
-              <div className="px-6 pt-4 pb-2">
-                <p className="text-caps text-[9px]">{source.contextLine}</p>
-              </div>
+              {/* Affected people */}
+              <div className="px-6 py-5 space-y-5">
+                {source.affectedPeople.map((person, pi) => {
+                  const visibleFields = isUnlocked
+                    ? person.fields
+                    : person.fields.filter((f) => f.freeVisible);
+                  const lockedFields = isUnlocked
+                    ? []
+                    : person.fields.filter((f) => !f.freeVisible);
 
-              {/* Detail grid */}
-              <div className="px-6 pb-5 pt-2">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {regularFields.map((field) => (
-                    <FieldCard
-                      key={field.label}
-                      label={field.label}
-                      value={field.value}
-                      locked={false}
-                      sensitive={field.sensitive}
-                    />
-                  ))}
-                  {/* Show locked previews for non-free fields */}
-                  {!isUnlocked && lockedRegular.slice(0, 3).map((field) => (
-                    <FieldCard
-                      key={field.label}
-                      label={field.label}
-                      value={field.value}
-                      locked={true}
-                      sensitive={field.sensitive}
-                    />
-                  ))}
-                </div>
-
-                {/* Full-width fields */}
-                {isUnlocked && fullWidthFields.map((field) => (
-                  <div key={field.label} className="mt-3">
-                    <FieldCard
-                      label={field.label}
-                      value={field.value}
-                      locked={false}
-                    />
-                  </div>
-                ))}
-
-                {/* Locked full-width preview */}
-                {!isUnlocked && source.fields.filter(f => f.fullWidth).length > 0 && (
-                  <div className="mt-3">
-                    <FieldCard
-                      label="Address"
-                      value="Full address available in complete report"
-                      locked={true}
-                    />
-                  </div>
-                )}
+                  return (
+                    <div key={`${source.id}-${person.name}-${pi}`}>
+                      {pi > 0 && <div className="border-t border-border/15 -mx-6 mb-5" />}
+                      <div className="flex items-center gap-2 mb-3.5">
+                        <Badge variant="outline" className="text-[10px] font-medium bg-primary/6 text-primary border-primary/15 px-2 py-0.5">
+                          {person.relation}
+                        </Badge>
+                        <span className="text-sm font-medium text-foreground">{person.name}</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                        {visibleFields.filter(f => !f.fullWidth).map((field) => (
+                          <div
+                            key={field.label}
+                            className={`rounded-xl px-4 py-3 flex items-start gap-3 ${
+                              field.sensitive ? "bg-secondary/50" : "bg-secondary/30"
+                            }`}
+                          >
+                            {field.sensitive && (
+                              <div className={`h-1.5 w-1.5 rounded-full mt-[7px] shrink-0 ${sensitiveFieldDot[source.risk]}`} />
+                            )}
+                            <div className="min-w-0">
+                              <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{field.label}</p>
+                              <p className={`text-[13px] font-normal leading-snug text-foreground ${field.sensitive ? "text-destructive" : ""}`}>
+                                {field.value}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                        {/* Locked field previews */}
+                        {!isUnlocked && lockedFields.filter(f => !f.fullWidth).slice(0, 3).map((field) => (
+                          <div
+                            key={field.label}
+                            className="rounded-xl px-4 py-3 flex items-start gap-3 bg-secondary/30"
+                          >
+                            <div className="min-w-0 flex-1">
+                              <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{field.label}</p>
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className="text-[13px] select-none text-transparent bg-muted/80 rounded px-1"
+                                  style={{ filter: "blur(5px)" }}
+                                >
+                                  {field.value}
+                                </span>
+                                <Lock className="h-3 w-3 text-muted-foreground" strokeWidth={1.5} />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {/* Full-width visible fields */}
+                      {isUnlocked && visibleFields.filter(f => f.fullWidth).map((field) => (
+                        <div key={field.label} className="mt-2.5 rounded-xl px-4 py-3 bg-secondary/30">
+                          <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{field.label}</p>
+                          <p className="text-[13px] font-normal leading-snug text-foreground">{field.value}</p>
+                        </div>
+                      ))}
+                      {/* Locked full-width preview */}
+                      {!isUnlocked && person.fields.filter(f => f.fullWidth).length > 0 && (
+                        <div className="mt-2.5 rounded-xl px-4 py-3 bg-secondary/30">
+                          <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">Address</p>
+                          <div className="flex items-center gap-2">
+                            <span
+                              className="text-[13px] select-none text-transparent bg-muted/80 rounded px-1"
+                              style={{ filter: "blur(5px)" }}
+                            >
+                              Full address available in complete report
+                            </span>
+                            <Lock className="h-3 w-3 text-muted-foreground" strokeWidth={1.5} />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* Remaining sources locked indicator + CTA */}
+      {/* Locked sources + CTA for free users */}
       {!isUnlocked && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -226,28 +287,26 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
           transition={{ delay: 0.3, duration: 0.4 }}
           className="mt-5 space-y-4"
         >
-          {/* Locked source previews */}
-          {leakSources.slice(2).map((source) => (
+          {leakSources.filter((s) => !s.freeVisible).map((source) => (
             <div key={source.id} className="card-surface relative overflow-hidden">
               <div className="absolute inset-0 bg-card/70 backdrop-blur-[6px] z-10 flex items-center justify-center rounded-[20px]">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Lock className="h-4 w-4" strokeWidth={1.5} />
-                  <span className="text-display text-xs">Locked</span>
+                  <span className="text-xs font-medium">Locked</span>
                 </div>
               </div>
               <div className="flex items-center gap-4 opacity-40">
-                <div className="h-8 w-8 rounded-xl bg-secondary flex items-center justify-center shrink-0">
-                  <span className="text-display text-xs">{source.id}</span>
+                <div className="h-7 w-7 rounded-lg bg-secondary/60 flex items-center justify-center shrink-0">
+                  <span className="text-xs font-medium text-muted-foreground">{source.id}</span>
                 </div>
-                <h3 className="text-display text-sm flex-1">{source.title}</h3>
-                <Badge variant="outline" className={`text-[10px] font-medium ${riskStyles[source.risk]}`}>
+                <h3 className="text-sm font-medium text-foreground flex-1">{source.title}</h3>
+                <Badge variant="outline" className={`text-[10px] font-medium ${riskBadgeStyles[source.risk]}`}>
                   {source.risk}
                 </Badge>
               </div>
             </div>
           ))}
 
-          {/* Unlock CTA */}
           {onUnlock && (
             <div className="card-surface !p-6 flex flex-col sm:flex-row items-center gap-5">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
@@ -261,7 +320,7 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
               </div>
               <Button
                 onClick={onUnlock}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-6 py-2.5 h-auto font-semibold text-sm shrink-0"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2.5 h-auto font-semibold text-sm shrink-0"
               >
                 Unlock for ₹99
                 <ArrowRight className="ml-2 h-4 w-4" />

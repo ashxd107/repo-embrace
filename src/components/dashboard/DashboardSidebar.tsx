@@ -1,5 +1,4 @@
 import { Eye, Lightbulb, LayoutDashboard, X, PhoneCall, MoreHorizontal, LogOut, UserRound, FileSearch, FileText, Database, Key, Clock, ArrowLeft, ShoppingBag } from "lucide-react";
-import ViewPurchases from "@/components/dashboard/ViewPurchases";
 import mitigataLogo from "@/assets/mitigata-logo.png";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -30,8 +29,11 @@ const getMenuItems = (flowType: FlowType, comprehensivePurchased: boolean, compr
   }
 
   if (flowType === "policy-basic") {
-    // Always show Leak Sources, never Comprehensive Report
-    base.push({ id: "leak-sources", label: "Leak Sources", icon: Database });
+    if (comprehensivePurchased) {
+      base.push({ id: "comprehensive-report", label: "Comprehensive Report", icon: FileSearch });
+    } else {
+      base.push({ id: "leak-sources", label: "Leak Sources", icon: Database });
+    }
   }
 
   if (flowType === "policy-comprehensive") {
@@ -76,6 +78,7 @@ interface DashboardSidebarProps {
   isUnlocked?: boolean;
   comprehensivePurchased?: boolean;
   comprehensiveReportReady?: boolean;
+  onOpenPurchases?: () => void;
 }
 
 const RiskScoreControl = ({ score, onChange }: { score: number; onChange: (v: number) => void }) => (
@@ -100,10 +103,9 @@ const RiskScoreControl = ({ score, onChange }: { score: number; onChange: (v: nu
   </div>
 );
 
-const ProfileRow = ({ collapsed = false, flowType = "free" as FlowType, comprehensivePurchased = false, comprehensiveReportReady = false }: { collapsed?: boolean; flowType?: FlowType; comprehensivePurchased?: boolean; comprehensiveReportReady?: boolean }) => {
+const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolean; flowType?: FlowType; comprehensivePurchased?: boolean; comprehensiveReportReady?: boolean; onOpenPurchases?: () => void }) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
-  const [purchasesOpen, setPurchasesOpen] = useState(false);
 
   if (collapsed) {
     return (
@@ -121,7 +123,7 @@ const ProfileRow = ({ collapsed = false, flowType = "free" as FlowType, comprehe
               <UserRound className="h-4 w-4 mr-2" />
               View Profile
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setPurchasesOpen(true)} className="rounded-lg text-sm cursor-pointer">
+            <DropdownMenuItem onClick={() => onOpenPurchases?.()} className="rounded-lg text-sm cursor-pointer">
               <ShoppingBag className="h-4 w-4 mr-2" />
               View Purchases
             </DropdownMenuItem>
@@ -175,7 +177,6 @@ const ProfileRow = ({ collapsed = false, flowType = "free" as FlowType, comprehe
           </AlertDialogContent>
         </AlertDialog>
 
-        <ViewPurchases open={purchasesOpen} onOpenChange={setPurchasesOpen} flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
       </div>
     );
   }
@@ -201,7 +202,7 @@ const ProfileRow = ({ collapsed = false, flowType = "free" as FlowType, comprehe
                 <UserRound className="h-4 w-4 mr-2" />
                 View Profile
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setPurchasesOpen(true)} className="rounded-lg text-sm cursor-pointer">
+              <DropdownMenuItem onClick={() => onOpenPurchases?.()} className="rounded-lg text-sm cursor-pointer">
                 <ShoppingBag className="h-4 w-4 mr-2" />
                 View Purchases
               </DropdownMenuItem>
@@ -257,7 +258,7 @@ const ProfileRow = ({ collapsed = false, flowType = "free" as FlowType, comprehe
         </AlertDialogContent>
       </AlertDialog>
 
-      <ViewPurchases open={purchasesOpen} onOpenChange={setPurchasesOpen} flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+      
     </>
   );
 };
@@ -391,7 +392,7 @@ const NavList = ({ menuItems, activeItem, onNavigate, onItemClick }: {
   );
 };
 
-const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, riskScore = 82, onRiskScoreChange, flowType = "free", comprehensivePurchased = false, comprehensiveReportReady = false }: DashboardSidebarProps) => {
+const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, riskScore = 82, onRiskScoreChange, flowType = "free", comprehensivePurchased = false, comprehensiveReportReady = false, onOpenPurchases }: DashboardSidebarProps) => {
   const isMobile = useIsMobile();
   const isCompReportActive =
     (activeItem === "comprehensive-report" || activeItem.startsWith("comp-")) &&
@@ -449,7 +450,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
               )}
             </nav>
             {onRiskScoreChange && !isCompReportActive && <RiskScoreControl score={riskScore} onChange={onRiskScoreChange} />}
-            <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+            <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} onOpenPurchases={onOpenPurchases} />
           </div>
         </SheetContent>
       </Sheet>
@@ -469,7 +470,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
           <nav className="flex-1 px-2 py-4">
             <CollapsedNavList menuItems={menuItems} activeItem={activeItem} onNavigate={onNavigate} />
           </nav>
-          <ProfileRow collapsed flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+          <ProfileRow collapsed flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} onOpenPurchases={onOpenPurchases} />
         </aside>
 
         <CompSubNavPanel
@@ -492,7 +493,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
         <NavList menuItems={menuItems} activeItem={activeItem} onNavigate={onNavigate} />
       </nav>
       {onRiskScoreChange && <RiskScoreControl score={riskScore} onChange={onRiskScoreChange} />}
-      <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+      <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} onOpenPurchases={onOpenPurchases} />
     </aside>
   );
 };

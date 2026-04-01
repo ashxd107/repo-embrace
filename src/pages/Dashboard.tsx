@@ -13,6 +13,8 @@ import UnlockPaymentModal from "@/components/dashboard/UnlockPaymentModal";
 import InsuranceBanner from "@/components/dashboard/InsuranceBanner";
 import ComprehensiveReport from "@/components/dashboard/comprehensive/ComprehensiveReport";
 import ComprehensivePending from "@/components/dashboard/comprehensive/ComprehensivePending";
+import ViewPurchases from "@/components/dashboard/ViewPurchases";
+import { ReportPaymentFailureModal, InsurancePaymentFailureModal } from "@/components/dashboard/PaymentFailureModals";
 import type { FlowType } from "@/types/flow";
 
 const Dashboard = () => {
@@ -33,29 +35,35 @@ const Dashboard = () => {
   const [comprehensiveReportReady, setComprehensiveReportReady] = useState(false);
   const [insurancePurchased, setInsurancePurchased] = useState(false);
   const [policyReady, setPolicyReady] = useState(false);
-  
+
+  // View Purchases sheet state (lifted so sidebar + cards can open it)
+  const [purchasesOpen, setPurchasesOpen] = useState(false);
+
+  // Demo failure modals
+  const [reportFailureOpen, setReportFailureOpen] = useState(false);
+  const [insuranceFailureOpen, setInsuranceFailureOpen] = useState(false);
 
   // Whether the user has paid / is entitled to comprehensive
   const [comprehensivePurchased, setComprehensivePurchased] = useState(
     flowType === "policy-comprehensive"
   );
 
-  // Free user: preview is partially locked until payment. After payment, the basic report unlocks
-  // immediately while the comprehensive report remains in the pending/ready lifecycle.
-  // policy-basic: basic report fully unlocked. No comprehensive.
-  // policy-comprehensive: basic report fully unlocked. Comprehensive is requested (pending until ready).
+  // Basic unlocked for policy-basic always, or after purchasing comprehensive
   const isBasicUnlocked = flowType !== "free" || comprehensivePurchased || comprehensiveReportReady;
 
   const isCompReportActive =
     (activeItem === "comprehensive-report" || activeItem.startsWith("comp-")) &&
     (flowType !== "policy-comprehensive" || comprehensiveReportReady);
-  const shouldShowUnlockPrompts = flowType === "free" && !comprehensivePurchased;
-  const shouldShowPendingLocks = flowType === "free" && comprehensivePurchased && !comprehensiveReportReady && !isBasicUnlocked;
+
+  // Show unlock prompts for free users AND policy-basic users who haven't purchased comprehensive
+  const shouldShowUnlockPrompts =
+    (flowType === "free" && !comprehensivePurchased) ||
+    (flowType === "policy-basic" && !comprehensivePurchased);
+
+  const shouldShowPendingLocks = (flowType === "free" || flowType === "policy-basic") && comprehensivePurchased && !comprehensiveReportReady && !isBasicUnlocked;
 
   const handleUnlock = () => {
-    if (flowType === "free") {
-      setPaymentModalOpen(true);
-    }
+    setPaymentModalOpen(true);
   };
 
   const handlePaymentSuccess = () => {
@@ -76,8 +84,8 @@ const Dashboard = () => {
   const renderContent = () => {
     // Comprehensive Report section
     if (activeItem === "comprehensive-report" || activeItem.startsWith("comp-")) {
-      // Free user who hasn't paid yet — show locked overlay
-      if (flowType === "free" && !comprehensivePurchased) {
+      // User who hasn't paid yet — show locked overlay
+      if (!comprehensivePurchased && flowType !== "policy-comprehensive") {
         return (
           <div className="py-4 lg:py-8 relative">
             <LockedOverlay onUnlock={handleUnlock} />
@@ -120,7 +128,7 @@ const Dashboard = () => {
             policyReady={policyReady}
             onExploreInsurance={() => { setInsurancePurchased(true); }}
             onDownloadPolicy={() => window.open("#", "_blank")}
-            onViewPurchases={() => setActiveItem("call-assistance")}
+            onViewPurchases={() => setPurchasesOpen(true)}
           />
         );
       case "exposure":
@@ -175,6 +183,7 @@ const Dashboard = () => {
         isUnlocked={isBasicUnlocked}
         comprehensivePurchased={comprehensivePurchased}
         comprehensiveReportReady={comprehensiveReportReady}
+        onOpenPurchases={() => setPurchasesOpen(true)}
       />
 
       <main className={`pt-16 lg:pt-0 ${mainMarginClass} px-4 sm:px-6 lg:px-8 xl:px-12 py-4 pb-24 max-w-[1200px] transition-all duration-300`}>
@@ -216,9 +225,24 @@ const Dashboard = () => {
             Download Policy
           </button>
         </div>
+        <p className="font-semibold text-xs opacity-80 mt-2 mb-1">🧪 Demo Failure Modals</p>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            onClick={() => setReportFailureOpen(true)}
+            className="px-2 py-1 rounded bg-destructive/20 text-destructive hover:bg-destructive/30 transition-colors"
+          >
+            ₹99 Payment Fail
+          </button>
+          <button
+            onClick={() => setInsuranceFailureOpen(true)}
+            className="px-2 py-1 rounded bg-destructive/20 text-destructive hover:bg-destructive/30 transition-colors"
+          >
+            Insurance Payment Fail
+          </button>
+        </div>
       </div>
 
-      {/* Sticky CTA only for free users who haven't paid */}
+      {/* Sticky CTA only for users who haven't paid */}
       {shouldShowUnlockPrompts && !isCompReportActive && (
         <StickyCTA onClick={handleUnlock} />
       )}
@@ -226,6 +250,27 @@ const Dashboard = () => {
       {shouldShowUnlockPrompts && (
         <UnlockPaymentModal open={paymentModalOpen} onClose={() => setPaymentModalOpen(false)} onSuccess={handlePaymentSuccess} />
       )}
+
+      {/* View Purchases sheet */}
+      <ViewPurchases
+        open={purchasesOpen}
+        onOpenChange={setPurchasesOpen}
+        flowType={flowType}
+        comprehensivePurchased={comprehensivePurchased}
+        comprehensiveReportReady={comprehensiveReportReady}
+      />
+
+      {/* Demo failure modals */}
+      <ReportPaymentFailureModal
+        open={reportFailureOpen}
+        onClose={() => setReportFailureOpen(false)}
+        onRetry={() => setReportFailureOpen(false)}
+      />
+      <InsurancePaymentFailureModal
+        open={insuranceFailureOpen}
+        onClose={() => setInsuranceFailureOpen(false)}
+        onRetry={() => setInsuranceFailureOpen(false)}
+      />
     </div>
   );
 };
