@@ -119,7 +119,7 @@ const OverviewDashboard = ({
     policyReady,
     insurancePurchased,
     comprehensiveReportReady,
-    comprehensivePurchased: comprehensivePurchased || flowType === "policy-comprehensive",
+    comprehensivePurchased,
   });
 
   return (
