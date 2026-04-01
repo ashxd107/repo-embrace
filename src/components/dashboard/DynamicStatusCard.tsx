@@ -1,5 +1,5 @@
 import {
-  Lock, Clock, ShieldCheck, FileText, Download, AlertCircle, ArrowRight,
+  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
