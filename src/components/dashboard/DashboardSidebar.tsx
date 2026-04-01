@@ -202,7 +202,7 @@ const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolea
                 <UserRound className="h-4 w-4 mr-2" />
                 View Profile
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setPurchasesOpen(true)} className="rounded-lg text-sm cursor-pointer">
+              <DropdownMenuItem onClick={() => onOpenPurchases?.()} className="rounded-lg text-sm cursor-pointer">
                 <ShoppingBag className="h-4 w-4 mr-2" />
                 View Purchases
               </DropdownMenuItem>
