@@ -29,8 +29,11 @@ const getMenuItems = (flowType: FlowType, comprehensivePurchased: boolean, compr
   }
 
   if (flowType === "policy-basic") {
-    // Always show Leak Sources, never Comprehensive Report
-    base.push({ id: "leak-sources", label: "Leak Sources", icon: Database });
+    if (comprehensivePurchased) {
+      base.push({ id: "comprehensive-report", label: "Comprehensive Report", icon: FileSearch });
+    } else {
+      base.push({ id: "leak-sources", label: "Leak Sources", icon: Database });
+    }
   }
 
   if (flowType === "policy-comprehensive") {
