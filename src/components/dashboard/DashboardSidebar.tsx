@@ -78,6 +78,7 @@ interface DashboardSidebarProps {
   isUnlocked?: boolean;
   comprehensivePurchased?: boolean;
   comprehensiveReportReady?: boolean;
+  onOpenPurchases?: () => void;
 }
 
 const RiskScoreControl = ({ score, onChange }: { score: number; onChange: (v: number) => void }) => (
