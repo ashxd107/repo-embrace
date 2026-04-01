@@ -120,7 +120,7 @@ const Dashboard = () => {
             policyReady={policyReady}
             paymentFailed={paymentFailed}
             onRetryPayment={() => { setPaymentFailed(false); setPaymentModalOpen(true); }}
-            onExploreInsurance={() => setActiveItem("call-assistance")}
+            onExploreInsurance={() => { setInsurancePurchased(true); }}
             onDownloadPolicy={() => window.open("#", "_blank")}
             onViewPurchases={() => setActiveItem("call-assistance")}
           />
