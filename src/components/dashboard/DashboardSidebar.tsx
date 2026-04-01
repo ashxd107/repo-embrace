@@ -450,7 +450,7 @@ const DashboardSidebar = ({ activeItem, onNavigate, mobileOpen, onMobileClose, r
               )}
             </nav>
             {onRiskScoreChange && !isCompReportActive && <RiskScoreControl score={riskScore} onChange={onRiskScoreChange} />}
-            <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} />
+            <ProfileRow flowType={flowType} comprehensivePurchased={comprehensivePurchased} comprehensiveReportReady={comprehensiveReportReady} onOpenPurchases={onOpenPurchases} />
           </div>
         </SheetContent>
       </Sheet>
