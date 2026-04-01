@@ -116,6 +116,13 @@ const Dashboard = () => {
             comprehensiveReportReady={comprehensiveReportReady}
             comprehensivePurchased={comprehensivePurchased}
             onSimulateReportReady={handleReportReady}
+            insurancePurchased={insurancePurchased}
+            policyReady={policyReady}
+            paymentFailed={paymentFailed}
+            onRetryPayment={() => { setPaymentFailed(false); setPaymentModalOpen(true); }}
+            onExploreInsurance={() => setActiveItem("call-assistance")}
+            onDownloadPolicy={() => window.open("#", "_blank")}
+            onViewPurchases={() => setActiveItem("call-assistance")}
           />
         );
       case "exposure":
