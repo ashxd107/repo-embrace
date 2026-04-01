@@ -193,7 +193,7 @@ const ProfileRow = ({ collapsed = false, onOpenPurchases }: { collapsed?: boolea
           <span className="text-display text-sm flex-1 truncate">{userData.name}</span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="h-7 w-7 rounded-lg hover:bg-secondary/60 flex items-center justify-center shrink-0 transition-colors">
+              <button className="h-7 w-7 rounded-full hover:bg-secondary/60 flex items-center justify-center shrink-0 transition-colors">
                 <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
               </button>
             </DropdownMenuTrigger>
