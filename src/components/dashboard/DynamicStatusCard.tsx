@@ -93,18 +93,6 @@ const stateConfig: Record<
     secondaryLabel: "View Purchases",
     secondaryAction: "onViewPurchases",
   },
-  "payment-failed": {
-    badge: "Failed",
-    badgeClass: "bg-destructive/20 text-destructive border-destructive/30",
-    icon: AlertCircle,
-    title: "Payment failed",
-    body: "Your payment could not be completed. Please try again.",
-    support: "For queries, contact contact@mitigata.com",
-    primaryLabel: "Try Again",
-    primaryAction: "onRetryPayment",
-    secondaryLabel: "View Purchases",
-    secondaryAction: "onViewPurchases",
-  },
 };
 
 const DynamicStatusCard = (props: DynamicStatusCardProps) => {
