@@ -57,6 +57,7 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "caution",
     lockedHeadline: "Your data may appear in limited breach sources",
     lockedBody: "Unlock the comprehensive report to review deeper source details and hidden exposed records.",
+    lockedScoreLine: "The full report may reveal hidden supporting details",
   },
   medium: {
     band: "medium",
