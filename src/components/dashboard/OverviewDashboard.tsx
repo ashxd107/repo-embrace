@@ -39,6 +39,7 @@ interface OverviewDashboardProps {
   onExploreInsurance?: () => void;
   onDownloadPolicy?: () => void;
   onViewPurchases?: () => void;
+  onViewComprehensive?: () => void;
 }
 
 const EXPOSURE_COUNT = 24;
