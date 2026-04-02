@@ -73,6 +73,7 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "warning",
     lockedHeadline: "Important personal details may be exposed",
     lockedBody: "Unlock the comprehensive report to see source-level details and affected records.",
+    lockedScoreLine: "Important source-level findings may still be hidden",
   },
   critical: {
     band: "critical",
