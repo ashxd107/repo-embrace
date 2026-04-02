@@ -89,6 +89,7 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "danger",
     lockedHeadline: "Your PAN or Aadhaar may be exposed",
     lockedBody: "Unlock the comprehensive report to see where high-risk identity data was found.",
+    lockedScoreLine: "Aadhaar, PAN, or hidden source records may still be exposed",
   },
 };
 
