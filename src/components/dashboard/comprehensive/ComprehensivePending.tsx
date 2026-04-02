@@ -117,15 +117,9 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
         {/* Info rows */}
         <div className="card-surface !p-4 !bg-secondary/20 !border-border/10 mb-6 space-y-2.5">
           <div className="flex items-center gap-3 justify-center">
-            <Clock className="h-4 w-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
-            <p className="text-body text-xs">
-              This may take up to <span className="text-display text-xs">8 hours</span>
-            </p>
-          </div>
-          <div className="flex items-center gap-3 justify-center">
             <Mail className="h-4 w-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
             <p className="text-body text-xs">
-              We will email you once your report is ready.
+              We will notify you by email once your report is ready.
             </p>
           </div>
         </div>
