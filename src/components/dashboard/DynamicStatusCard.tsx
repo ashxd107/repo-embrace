@@ -44,7 +44,7 @@ const stateConfig: Record<
     icon: Lock,
     title: "Unlock comprehensive report",
     body: "Request deeper identity, document, breach-source, and password intelligence.",
-    support: "Your comprehensive report will be prepared within 8 hours after payment.",
+    support: "Your comprehensive report will be prepared after payment.",
     primaryLabel: "Unlock for ₹99",
     primaryAction: "onUnlock",
   },
