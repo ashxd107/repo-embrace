@@ -131,7 +131,7 @@ const InsuranceCard = ({ purchase }: { purchase: InsurancePurchase }) => (
     {purchase.status === "Failed" && (
       <p className="text-body text-xs text-center pt-1">
         Purchase unsuccessful. Please try again or contact{" "}
-        <a href="mailto:contact@mitigata.com" className="text-primary font-medium hover:underline">contact@mitigata.com</a>
+        <a href="mailto:care@mitigata.com" className="text-primary font-medium hover:underline">care@mitigata.com</a>
       </p>
     )}
   </Card>
