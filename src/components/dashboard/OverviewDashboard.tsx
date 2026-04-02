@@ -166,8 +166,12 @@ const OverviewDashboard = ({
           riskContent.band === "medium" ? "bg-risk-mid" : "bg-primary"
         }`} />
         <div className="min-w-0">
-          <h2 className="text-display text-sm">{riskContent.headline}</h2>
-          <p className="text-body text-xs mt-0.5 opacity-70">{riskContent.body}</p>
+          <h2 className="text-display text-sm">
+            {isLocked ? riskContent.lockedHeadline : riskContent.headline}
+          </h2>
+          <p className="text-body text-xs mt-0.5 opacity-70">
+            {isLocked ? riskContent.lockedBody : riskContent.body}
+          </p>
         </div>
       </motion.div>
 
