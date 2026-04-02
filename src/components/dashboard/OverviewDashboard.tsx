@@ -148,6 +148,27 @@ const OverviewDashboard = ({
             <p className="text-body text-sm mt-1">rahul****@gmail.com</p>
             <p className="text-body text-sm mt-0.5">+91 98XXXXXX10</p>
             <p className="text-body text-xs mt-3 leading-relaxed">{summaryLine}</p>
+
+            {/* Locked-state urgency line */}
+            {isLocked && (
+              <p className="text-xs mt-2 font-medium text-destructive/80 leading-snug">
+                {riskContent.lockedScoreLine}
+              </p>
+            )}
+
+            {/* View Comprehensive Report CTA for locked users */}
+            {isLocked && onViewComprehensive && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                <Button
+                  onClick={onViewComprehensive}
+                  size="sm"
+                  variant="outline"
+                  className="text-xs font-semibold px-4 border-border text-foreground hover:bg-secondary/60"
+                >
+                  View Comprehensive Report
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
