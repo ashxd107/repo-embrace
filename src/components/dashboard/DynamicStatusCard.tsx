@@ -54,7 +54,7 @@ const stateConfig: Record<
     icon: Clock,
     title: "Comprehensive report in progress",
     body: "We're preparing your deeper exposure report. We'll notify you by email once it is ready.",
-    support: "This may take up to 8 hours.\nFor queries, contact contact@mitigata.com",
+    support: "For queries, contact care@mitigata.com",
     primaryLabel: "Check Status",
     primaryAction: "onCheckStatus",
   },
