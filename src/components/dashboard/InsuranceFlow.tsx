@@ -521,7 +521,7 @@ const InsuranceFlow = ({ open, onClose, onSuccess }: InsuranceFlowProps) => {
                 {paymentFailed && (
                   <div className="flex items-start gap-2 justify-center bg-destructive/10 text-destructive rounded-xl px-4 py-3 mb-6 text-sm max-w-sm mx-auto text-left">
                     <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                    <span>Payment failed. Please try again or contact <strong>contact@mitigata.com</strong> for support.</span>
+                    <span>Payment failed. Please try again or contact <strong>care@mitigata.com</strong> for support.</span>
                   </div>
                 )}
 
