@@ -1,8 +1,9 @@
 import {
-  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight,
+  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight, ShieldAlert,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { RiskContent } from "@/lib/riskContent";
 
 export type CardState =
   | "pay"
@@ -21,6 +22,8 @@ interface DynamicStatusCardProps {
   onRetryPayment?: () => void;
   /** Dev-only: simulate report ready */
   onSimulateReportReady?: () => void;
+  /** Risk content for dynamic locked-state copy */
+  riskContent?: RiskContent;
 }
 
 const stateConfig: Record<
