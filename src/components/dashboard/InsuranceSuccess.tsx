@@ -36,8 +36,8 @@ const InsuranceSuccess = ({ onGoToDashboard }: InsuranceSuccessProps) => (
       <div className="space-y-3">
         <div className="flex items-center gap-3">
           <Mail className="h-4 w-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
-          <a href="mailto:contact@mitigata.com" className="text-display text-sm hover:text-primary transition-colors">
-            contact@mitigata.com
+          <a href="mailto:care@mitigata.com" className="text-display text-sm hover:text-primary transition-colors">
+            care@mitigata.com
           </a>
         </div>
         <div className="flex items-center gap-3">

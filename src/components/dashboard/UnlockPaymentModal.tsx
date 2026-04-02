@@ -131,7 +131,7 @@ const UnlockPaymentModal = ({ open, onClose, onSuccess }: UnlockPaymentModalProp
               <p className="text-body text-sm max-w-[280px] mb-2">
                 Your report request could not be processed. Please try again or contact support.
               </p>
-              <p className="text-body text-xs mb-6">contact@mitigata.com</p>
+              <p className="text-body text-xs mb-6">care@mitigata.com</p>
               <div className="flex gap-3">
                 <Button
                   variant="outline"
