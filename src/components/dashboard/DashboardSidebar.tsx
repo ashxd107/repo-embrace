@@ -13,17 +13,20 @@ import type { FlowType } from "@/types/flow";
 
 // Nav items differ by flow + entitlement state
 const getMenuItems = (flowType: FlowType, comprehensivePurchased: boolean, comprehensiveReportReady: boolean) => {
-  const base = [
+  const base: { id: string; label: string; icon: typeof LayoutDashboard }[] = [
     { id: "overview", label: "Overview", icon: LayoutDashboard },
-    { id: "exposure", label: "Exposure", icon: Eye },
   ];
+
+  // Exposure tab only for basic report flows (not comprehensive)
+  const isComprehensiveFlow = flowType === "policy-comprehensive" || comprehensivePurchased;
+  if (!isComprehensiveFlow) {
+    base.push({ id: "exposure", label: "Exposure", icon: Eye });
+  }
 
   if (flowType === "free") {
     if (comprehensivePurchased) {
-      // After payment: show Comprehensive Report nav
       base.push({ id: "comprehensive-report", label: "Comprehensive Report", icon: FileSearch });
     } else {
-      // Before payment: show Leak Sources
       base.push({ id: "leak-sources", label: "Leak Sources", icon: Database });
     }
   }

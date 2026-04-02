@@ -74,7 +74,7 @@ const stateConfig: Record<
     icon: FileText,
     title: "Policy preparation in progress",
     body: "Your cyber insurance policy is being prepared and will be shared once ready.",
-    support: "For queries, contact contact@mitigata.com",
+    support: "For queries, contact care@mitigata.com",
     primaryLabel: "View Purchases",
     primaryAction: "onViewPurchases",
   },

@@ -97,6 +97,8 @@ const OverviewDashboard = ({
 }: OverviewDashboardProps) => {
   const riskContent = getRiskContent(RISK_SCORE);
   const hasExposures = EXPOSURE_COUNT > 0;
+  // Locked = comprehensive report not purchased (clickbait copy mode)
+  const isLocked = !comprehensivePurchased;
 
   const metrics = [
     { label: "Total Exposures", value: String(EXPOSURE_COUNT), icon: AlertTriangle, risk: EXPOSURE_COUNT > 10 ? "high" as const : EXPOSURE_COUNT > 0 ? "mid" as const : "low" as const },

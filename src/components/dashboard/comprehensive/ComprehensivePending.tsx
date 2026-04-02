@@ -127,8 +127,8 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
         {/* Support line */}
         <p className="text-body text-[11px] opacity-60 mb-6">
           For queries, contact{" "}
-          <a href="mailto:contact@mitigata.com" className="text-primary hover:underline">
-            contact@mitigata.com
+          <a href="mailto:care@mitigata.com" className="text-primary hover:underline">
+            care@mitigata.com
           </a>
         </p>
 

@@ -37,6 +37,8 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     ctaCardTitle: "Stay protected",
     ctaCardBody: "Prepare for future digital risk with proactive coverage.",
     meterEmphasis: "safe",
+    lockedHeadline: "Some personal records may still be exposed",
+    lockedBody: "Unlock the comprehensive report to check document, source, and password-level findings.",
   },
   low: {
     band: "low",
@@ -50,6 +52,8 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     ctaCardTitle: "Reduce your risk",
     ctaCardBody: "Minor exposure was found. Consider coverage to stay ahead.",
     meterEmphasis: "caution",
+    lockedHeadline: "Your data may appear in limited breach sources",
+    lockedBody: "Unlock the comprehensive report to review deeper source details and hidden exposed records.",
   },
   medium: {
     band: "medium",
@@ -63,6 +67,8 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     ctaCardTitle: "Reduce your risk",
     ctaCardBody: "Your exposed data could be used for fraud or identity misuse.",
     meterEmphasis: "warning",
+    lockedHeadline: "Important personal details may be exposed",
+    lockedBody: "Unlock the comprehensive report to see source-level details and affected records.",
   },
   critical: {
     band: "critical",
@@ -76,6 +82,8 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     ctaCardTitle: "Reduce your risk",
     ctaCardBody: "Your exposed data can be used for fraud or identity misuse.",
     meterEmphasis: "danger",
+    lockedHeadline: "Your PAN or Aadhaar may be exposed",
+    lockedBody: "Unlock the comprehensive report to see where high-risk identity data was found.",
   },
 };
 
