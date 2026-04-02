@@ -11,6 +11,8 @@ import { getRiskContent, emptyStates } from "@/lib/riskContent";
 import LockedOverlay from "./LockedOverlay";
 import InsuranceBanner from "./InsuranceBanner";
 import DynamicStatusCard, { resolveCardState, type CardState } from "./DynamicStatusCard";
+import WhatYouMayBeMissing from "./WhatYouMayBeMissing";
+import UnlockValuePanel from "./UnlockValuePanel";
 import type { FlowType } from "@/types/flow";
 
 const fadeIn = {
