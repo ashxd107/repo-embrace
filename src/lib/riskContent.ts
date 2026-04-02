@@ -12,6 +12,9 @@ export interface RiskContent {
   ctaCardTitle: string;
   ctaCardBody: string;
   meterEmphasis: "safe" | "caution" | "warning" | "danger";
+  // Locked-state clickbait copy (used only when comprehensive report is locked)
+  lockedHeadline: string;
+  lockedBody: string;
 }
 
 export function getRiskBand(score: number): RiskBand {
