@@ -41,6 +41,7 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "safe",
     lockedHeadline: "Some personal records may still be exposed",
     lockedBody: "Unlock the comprehensive report to check document, source, and password-level findings.",
+    lockedScoreLine: "Additional source-level findings may still be available",
   },
   low: {
     band: "low",
