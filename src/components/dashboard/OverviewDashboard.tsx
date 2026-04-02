@@ -11,6 +11,8 @@ import { getRiskContent, emptyStates } from "@/lib/riskContent";
 import LockedOverlay from "./LockedOverlay";
 import InsuranceBanner from "./InsuranceBanner";
 import DynamicStatusCard, { resolveCardState, type CardState } from "./DynamicStatusCard";
+import WhatYouMayBeMissing from "./WhatYouMayBeMissing";
+import UnlockValuePanel from "./UnlockValuePanel";
 import type { FlowType } from "@/types/flow";
 
 const fadeIn = {
@@ -37,6 +39,7 @@ interface OverviewDashboardProps {
   onExploreInsurance?: () => void;
   onDownloadPolicy?: () => void;
   onViewPurchases?: () => void;
+  onViewComprehensive?: () => void;
 }
 
 const EXPOSURE_COUNT = 24;
@@ -94,6 +97,7 @@ const OverviewDashboard = ({
   onExploreInsurance,
   onDownloadPolicy,
   onViewPurchases,
+  onViewComprehensive,
 }: OverviewDashboardProps) => {
   const riskContent = getRiskContent(RISK_SCORE);
   const hasExposures = EXPOSURE_COUNT > 0;
@@ -144,6 +148,27 @@ const OverviewDashboard = ({
             <p className="text-body text-sm mt-1">rahul****@gmail.com</p>
             <p className="text-body text-sm mt-0.5">+91 98XXXXXX10</p>
             <p className="text-body text-xs mt-3 leading-relaxed">{summaryLine}</p>
+
+            {/* Locked-state urgency line */}
+            {isLocked && (
+              <p className="text-xs mt-2 font-medium text-destructive/80 leading-snug">
+                {riskContent.lockedScoreLine}
+              </p>
+            )}
+
+            {/* View Comprehensive Report CTA for locked users */}
+            {isLocked && onViewComprehensive && (
+              <div className="flex flex-wrap gap-2 mt-3">
+                <Button
+                  onClick={onViewComprehensive}
+                  size="sm"
+                  variant="outline"
+                  className="text-xs font-semibold px-4 border-border text-foreground hover:bg-secondary/60"
+                >
+                  View Comprehensive Report
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -176,6 +201,18 @@ const OverviewDashboard = ({
           </p>
         </div>
       </motion.div>
+
+      {/* Conversion blocks — locked/basic only */}
+      {isLocked && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <motion.div variants={fadeIn} className="lg:col-span-8">
+            <WhatYouMayBeMissing onUnlock={onUnlock} onViewComprehensive={onViewComprehensive} />
+          </motion.div>
+          <motion.div variants={fadeIn} className="lg:col-span-4">
+            <UnlockValuePanel onUnlock={onUnlock} />
+          </motion.div>
+        </div>
+      )}
 
       {/* ROW 2: Metric Cards */}
       <motion.div variants={fadeIn} className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
