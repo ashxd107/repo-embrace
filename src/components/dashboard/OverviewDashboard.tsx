@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import {
   AlertTriangle, Key, Database, ShieldX,
-  ShieldCheck, CheckCircle2, Lock, Eye,
+  ShieldCheck, CheckCircle2, Lock, Eye, ShieldAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiskScoreMeter from "./RiskScoreMeter";
@@ -144,6 +144,14 @@ const OverviewDashboard = ({
             <p className="text-body text-sm mt-1">rahul****@gmail.com</p>
             <p className="text-body text-sm mt-0.5">+91 98XXXXXX10</p>
             <p className="text-body text-xs mt-3 leading-relaxed">{summaryLine}</p>
+            {isLocked && (
+              <div className="flex items-center gap-1.5 mt-2">
+                <ShieldAlert className="h-3.5 w-3.5 text-destructive/70 shrink-0" strokeWidth={1.5} />
+                <p className="text-destructive/70 text-[11px] font-medium leading-snug">
+                  {riskContent.lockedScoreLine}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -155,8 +163,8 @@ const OverviewDashboard = ({
             onViewPurchases={onViewPurchases}
             onExploreInsurance={onExploreInsurance}
             onDownloadPolicy={onDownloadPolicy}
-            
             onSimulateReportReady={onSimulateReportReady}
+            riskContent={isLocked ? riskContent : undefined}
           />
         </div>
       </motion.div>
