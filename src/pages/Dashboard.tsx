@@ -129,6 +129,7 @@ const Dashboard = () => {
             onExploreInsurance={() => { setInsurancePurchased(true); }}
             onDownloadPolicy={() => window.open("#", "_blank")}
             onViewPurchases={() => setPurchasesOpen(true)}
+            onViewComprehensive={shouldShowUnlockPrompts ? () => setActiveItem("comprehensive-report") : undefined}
           />
         );
       case "exposure":
