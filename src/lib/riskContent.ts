@@ -15,6 +15,8 @@ export interface RiskContent {
   // Locked-state clickbait copy (used only when comprehensive report is locked)
   lockedHeadline: string;
   lockedBody: string;
+  // Locked-state urgency line shown under score card
+  lockedScoreLine: string;
 }
 
 export function getRiskBand(score: number): RiskBand {
