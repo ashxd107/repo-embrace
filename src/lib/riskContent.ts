@@ -47,6 +47,10 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "safe",
     lockedHeadline: "Some personal records may still be exposed",
     lockedBody: "Unlock the comprehensive report to check document, source, and password-level findings.",
+    lockedScoreLine: "Additional source records may still be hidden",
+    lockedCardTitle: "Hidden findings may exist",
+    lockedCardBody: "The full report may reveal supporting identity details and source-level records not shown in this preview.",
+    lockedCardSupport: "Includes source records, password findings, and document exposure checks.",
   },
   low: {
     band: "low",
@@ -62,6 +66,10 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "caution",
     lockedHeadline: "Your data may appear in limited breach sources",
     lockedBody: "Unlock the comprehensive report to review deeper source details and hidden exposed records.",
+    lockedScoreLine: "The full report may reveal deeper identity and record exposure",
+    lockedCardTitle: "Hidden breach records may exist",
+    lockedCardBody: "Source-level identity records and password findings may still be locked. Unlock to see the full picture.",
+    lockedCardSupport: "Includes source records, password findings, and document exposure checks.",
   },
   medium: {
     band: "medium",
@@ -77,6 +85,10 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "warning",
     lockedHeadline: "Important personal details may be exposed",
     lockedBody: "Unlock the comprehensive report to see source-level details and affected records.",
+    lockedScoreLine: "Important source-level findings may still be hidden",
+    lockedCardTitle: "Sensitive records may be exposed",
+    lockedCardBody: "Aadhaar, PAN, password, or source-level identity records may still be hidden. Unlock to see the exact sources and exposed records.",
+    lockedCardSupport: "Includes source records, password findings, and document exposure checks.",
   },
   critical: {
     band: "critical",
@@ -92,6 +104,10 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "danger",
     lockedHeadline: "Your PAN or Aadhaar may be exposed",
     lockedBody: "Unlock the comprehensive report to see where high-risk identity data was found.",
+    lockedScoreLine: "Aadhaar, PAN, or hidden breach records may still be exposed",
+    lockedCardTitle: "Your deeper report may reveal critical exposure",
+    lockedCardBody: "Aadhaar, PAN, password, or source-level identity records may still be hidden. Unlock to see the exact sources linked to your scan.",
+    lockedCardSupport: "Includes source records, password findings, and document exposure checks.",
   },
 };
 
