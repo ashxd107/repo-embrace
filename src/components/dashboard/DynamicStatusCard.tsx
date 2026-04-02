@@ -96,9 +96,15 @@ const stateConfig: Record<
 };
 
 const DynamicStatusCard = (props: DynamicStatusCardProps) => {
-  const { state, onSimulateReportReady } = props;
+  const { state, onSimulateReportReady, riskContent } = props;
   const config = stateConfig[state];
-  const Icon = config.icon;
+
+  // Override pay-state copy with dynamic risk-based locked copy
+  const isLockedPay = state === "pay" && riskContent;
+  const Icon = isLockedPay ? ShieldAlert : config.icon;
+  const title = isLockedPay ? riskContent.lockedCardTitle : config.title;
+  const body = isLockedPay ? riskContent.lockedCardBody : config.body;
+  const support = isLockedPay ? riskContent.lockedCardSupport : config.support;
 
   const primaryHandler = props[config.primaryAction] as (() => void) | undefined;
   const secondaryHandler = config.secondaryAction
@@ -116,11 +122,11 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
       </Badge>
 
       <Icon className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-      <h3 className="text-sm font-semibold mb-1">{config.title}</h3>
-      <p className="text-xs opacity-60 mb-3 leading-relaxed">{config.body}</p>
+      <h3 className="text-sm font-semibold mb-1">{title}</h3>
+      <p className="text-xs opacity-60 mb-3 leading-relaxed">{body}</p>
 
-      {config.support && (
-        <p className="text-[10px] opacity-40 mb-4 whitespace-pre-line">{config.support}</p>
+      {support && (
+        <p className="text-[10px] opacity-40 mb-4 whitespace-pre-line">{support}</p>
       )}
 
       <div className="flex gap-2 flex-wrap">
