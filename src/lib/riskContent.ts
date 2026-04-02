@@ -15,8 +15,6 @@ export interface RiskContent {
   // Locked-state clickbait copy (used only when comprehensive report is locked)
   lockedHeadline: string;
   lockedBody: string;
-  // Locked-state urgency line shown under score card
-  lockedScoreLine: string;
 }
 
 export function getRiskBand(score: number): RiskBand {
@@ -41,7 +39,6 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "safe",
     lockedHeadline: "Some personal records may still be exposed",
     lockedBody: "Unlock the comprehensive report to check document, source, and password-level findings.",
-    lockedScoreLine: "Additional source-level findings may still be available",
   },
   low: {
     band: "low",
@@ -57,7 +54,6 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "caution",
     lockedHeadline: "Your data may appear in limited breach sources",
     lockedBody: "Unlock the comprehensive report to review deeper source details and hidden exposed records.",
-    lockedScoreLine: "The full report may reveal hidden supporting details",
   },
   medium: {
     band: "medium",
@@ -73,7 +69,6 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "warning",
     lockedHeadline: "Important personal details may be exposed",
     lockedBody: "Unlock the comprehensive report to see source-level details and affected records.",
-    lockedScoreLine: "Important source-level findings may still be hidden",
   },
   critical: {
     band: "critical",
@@ -89,7 +84,6 @@ const riskContentMap: Record<RiskBand, RiskContent> = {
     meterEmphasis: "danger",
     lockedHeadline: "Your PAN or Aadhaar may be exposed",
     lockedBody: "Unlock the comprehensive report to see where high-risk identity data was found.",
-    lockedScoreLine: "Aadhaar, PAN, or hidden source records may still be exposed",
   },
 };
 

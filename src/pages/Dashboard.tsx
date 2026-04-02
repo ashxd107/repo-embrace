@@ -84,14 +84,13 @@ const Dashboard = () => {
   const renderContent = () => {
     // Comprehensive Report section
     if (activeItem === "comprehensive-report" || activeItem.startsWith("comp-")) {
-      // User who hasn't paid yet — show locked teaser preview (no overlay, ComprehensiveReport handles it)
+      // User who hasn't paid yet — show locked overlay
       if (!comprehensivePurchased && flowType !== "policy-comprehensive") {
         return (
-          <ComprehensiveReport
-            activeSection={activeItem === "comprehensive-report" ? "comp-documents" : activeItem}
-            isUnlocked={false}
-            onUnlock={handleUnlock}
-          />
+          <div className="py-4 lg:py-8 relative">
+            <LockedOverlay onUnlock={handleUnlock} />
+            <ComprehensiveReport activeSection={activeItem === "comprehensive-report" ? "comp-documents" : activeItem} isUnlocked={false} />
+          </div>
         );
       }
 
@@ -130,7 +129,6 @@ const Dashboard = () => {
             onExploreInsurance={() => { setInsurancePurchased(true); }}
             onDownloadPolicy={() => window.open("#", "_blank")}
             onViewPurchases={() => setPurchasesOpen(true)}
-            onViewComprehensive={shouldShowUnlockPrompts ? () => setActiveItem("comprehensive-report") : undefined}
           />
         );
       case "exposure":
