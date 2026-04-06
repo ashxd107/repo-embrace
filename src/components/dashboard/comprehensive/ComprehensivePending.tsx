@@ -27,48 +27,70 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
       className="py-16 lg:py-24 max-w-md mx-auto flex flex-col items-center text-center"
     >
       {/* Animated icon */}
-      <div className="relative h-28 w-28 mb-10">
-        {/* Outer ring */}
+      <div className="relative h-32 w-32 mb-10">
+        {/* Outermost ripple */}
+        <motion.div
+          className="absolute -inset-4 rounded-full border border-primary/10"
+          animate={{ scale: [1, 1.5], opacity: [0.15, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }}
+        />
+        {/* Second ripple - staggered */}
+        <motion.div
+          className="absolute -inset-2 rounded-full border border-primary/10"
+          animate={{ scale: [1, 1.4], opacity: [0.2, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeOut", delay: 1 }}
+        />
+        {/* Third ripple - staggered */}
         <motion.div
           className="absolute inset-0 rounded-full border border-primary/10"
-          animate={{ scale: [1, 1.35, 1], opacity: [0.2, 0, 0.2] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ scale: [1, 1.3], opacity: [0.25, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeOut", delay: 2 }}
         />
-        {/* Middle ring */}
+        {/* Static outer ring */}
+        <div className="absolute inset-2 rounded-full border border-primary/[0.08]" />
+        {/* Inner soft glow */}
         <motion.div
-          className="absolute inset-3 rounded-full border border-primary/8"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.25, 0.05, 0.25] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-        />
-        {/* Soft glow */}
-        <motion.div
-          className="absolute inset-5 rounded-full bg-primary/[0.04]"
-          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          className="absolute inset-6 rounded-full bg-primary/[0.05]"
+          animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.05, 1] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
-        {/* Center icon */}
+        {/* Center icon container */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-14 w-14 rounded-2xl bg-primary/[0.07] flex items-center justify-center">
-            <Shield className="h-7 w-7 text-primary" strokeWidth={1.5} />
-          </div>
+          <motion.div
+            className="h-16 w-16 rounded-2xl bg-primary/[0.08] flex items-center justify-center backdrop-blur-sm"
+            animate={{ rotate: [0, 3, -3, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Shield className="h-8 w-8 text-primary" strokeWidth={1.5} />
+          </motion.div>
         </div>
+        {/* Orbiting dot */}
+        <motion.div
+          className="absolute h-1.5 w-1.5 rounded-full bg-primary/40"
+          style={{ top: "50%", left: "50%", marginTop: -3, marginLeft: -3 }}
+          animate={{
+            x: [0, 48, 0, -48, 0],
+            y: [-48, 0, 48, 0, -48],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
         {/* Scan line */}
         <motion.div
-          className="absolute left-1/2 -translate-x-1/2 w-14 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
-          animate={{ top: ["25%", "75%", "25%"] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-1/2 -translate-x-1/2 w-16 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+          animate={{ top: ["20%", "80%", "20%"] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
       {/* Status chip */}
-      <span className="inline-flex items-center text-[11px] font-medium tracking-wide uppercase text-primary/70 mb-5">
-        <span className="relative mr-2 flex h-1.5 w-1.5">
+      <span className="inline-flex items-center text-[11px] font-medium tracking-widest uppercase text-primary/80 mb-5">
+        <span className="relative mr-2 flex h-2 w-2">
           <motion.span
-            className="absolute inline-flex h-full w-full rounded-full bg-primary/40"
-            animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
+            className="absolute inline-flex h-full w-full rounded-full bg-primary/30"
+            animate={{ scale: [1, 2, 1], opacity: [0.5, 0, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary/60" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-primary/60" />
         </span>
         Report in progress
       </span>
@@ -84,38 +106,65 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
       </p>
 
       {/* Animated steps */}
-      <div className="flex items-center gap-6 mb-10">
-        {steps.map((step, i) => (
-          <div key={step} className="flex flex-col items-center gap-2">
-            <motion.div
-              className={`h-1.5 w-1.5 rounded-full ${
-                i === activeStep ? "bg-primary" : "bg-border"
-              }`}
-              animate={i === activeStep ? { scale: [1, 1.4, 1] } : {}}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            <motion.span
-              className="text-[11px]"
-              animate={{ opacity: i === activeStep ? 1 : 0.3 }}
-              transition={{ duration: 0.4 }}
-              style={{ color: i === activeStep ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))" }}
-            >
-              {step}
-            </motion.span>
-          </div>
-        ))}
+      <div className="flex items-center gap-8 mb-10">
+        {steps.map((step, i) => {
+          const isActive = i === activeStep;
+          return (
+            <div key={step} className="flex flex-col items-center gap-2.5">
+              <div className="relative flex items-center justify-center h-3 w-3">
+                {isActive && (
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-primary/20"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: [1, 1.8], opacity: [0.4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  />
+                )}
+                <motion.div
+                  className="rounded-full"
+                  animate={{
+                    width: isActive ? 8 : 5,
+                    height: isActive ? 8 : 5,
+                    backgroundColor: isActive
+                      ? "hsl(var(--primary))"
+                      : "hsl(var(--border))",
+                  }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                />
+              </div>
+              <motion.span
+                className="text-[11px] font-medium"
+                animate={{
+                  opacity: isActive ? 1 : 0.3,
+                  y: isActive ? 0 : 2,
+                }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                style={{
+                  color: isActive
+                    ? "hsl(var(--foreground))"
+                    : "hsl(var(--muted-foreground))",
+                }}
+              >
+                {step}
+              </motion.span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Email notification line */}
-      <div className="flex items-center gap-2 text-muted-foreground/60 text-xs mb-1.5">
+      <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1.5">
         <Mail className="h-3.5 w-3.5" strokeWidth={1.5} />
         <span>We'll email you when it's ready.</span>
       </div>
 
       {/* Support */}
-      <p className="text-muted-foreground/40 text-[11px] mb-10">
+      <p className="text-muted-foreground text-[11px] mb-10">
         For help:{" "}
-        <a href="mailto:care@mitigata.com" className="text-primary/50 hover:text-primary transition-colors">
+        <a
+          href="mailto:care@mitigata.com"
+          className="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
+        >
           care@mitigata.com
         </a>
       </p>
