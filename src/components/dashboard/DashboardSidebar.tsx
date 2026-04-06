@@ -59,8 +59,8 @@ const getMenuItems = (flowType: FlowType, comprehensivePurchased: boolean, compr
 
 const compSubNavItems = [
   { id: "comp-documents", label: "Documents", icon: FileText },
-  { id: "comp-leak-sources", label: "Leak Sources", icon: Database },
   { id: "comp-passwords", label: "Passwords", icon: Key },
+  { id: "comp-leak-sources", label: "Leak Sources", icon: Database },
   { id: "comp-timeline", label: "Timeline", icon: Clock },
 ];
 
