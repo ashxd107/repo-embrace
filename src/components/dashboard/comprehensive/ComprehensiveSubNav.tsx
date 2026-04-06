@@ -2,8 +2,8 @@ import { FileText, Database, Key, Clock } from "lucide-react";
 
 const subNavItems = [
   { id: "comp-documents", label: "Documents", icon: FileText },
-  { id: "comp-leak-sources", label: "Leak Sources", icon: Database },
   { id: "comp-passwords", label: "Passwords", icon: Key },
+  { id: "comp-leak-sources", label: "Leak Sources", icon: Database },
   { id: "comp-timeline", label: "Timeline", icon: Clock },
 ];
 
