@@ -27,8 +27,8 @@ export interface RiskContent {
 
 export function getRiskBand(score: number): RiskBand {
   if (score === 0) return "none";
-  if (score <= 40) return "low";
-  if (score <= 70) return "medium";
+  if (score <= 20) return "low";
+  if (score <= 50) return "medium";
   return "critical";
 }
 
