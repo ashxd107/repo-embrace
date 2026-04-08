@@ -17,11 +17,7 @@ interface DynamicStatusCardProps {
   onViewPurchases?: () => void;
   onExploreInsurance?: () => void;
   onDownloadPolicy?: () => void;
-  onRetryPayment?: () => void;
-  /** Dev-only: simulate report ready */
   onSimulateReportReady?: () => void;
-  /** Risk content for dynamic locked-state copy */
-  riskContent?: RiskContent;
 }
 
 const stateConfig: Record<
