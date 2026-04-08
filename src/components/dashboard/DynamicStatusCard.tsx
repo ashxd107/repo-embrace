@@ -1,9 +1,7 @@
 import {
-  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight, ShieldAlert,
+  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { RiskContent } from "@/lib/riskContent";
 
 export type CardState =
   | "pay"
@@ -19,22 +17,14 @@ interface DynamicStatusCardProps {
   onViewPurchases?: () => void;
   onExploreInsurance?: () => void;
   onDownloadPolicy?: () => void;
-  onRetryPayment?: () => void;
-  /** Dev-only: simulate report ready */
   onSimulateReportReady?: () => void;
-  /** Risk content for dynamic locked-state copy */
-  riskContent?: RiskContent;
 }
 
 const stateConfig: Record<
   CardState,
   {
-    badge: string;
-    badgeClass: string;
     icon: React.ElementType;
     title: string;
-    body: string;
-    support?: string;
     primaryLabel: string;
     primaryAction: keyof DynamicStatusCardProps;
     secondaryLabel?: string;
@@ -42,52 +32,32 @@ const stateConfig: Record<
   }
 > = {
   pay: {
-    badge: "Payment Required",
-    badgeClass: "bg-primary/20 text-primary border-primary/30",
     icon: Lock,
-    title: "Unlock comprehensive report",
-    body: "Request deeper identity, document, breach-source, and password intelligence.",
-    support: "Your comprehensive report will be prepared after payment.",
+    title: "Unlock full report",
     primaryLabel: "Unlock for ₹99",
     primaryAction: "onUnlock",
   },
   "report-in-progress": {
-    badge: "In Progress",
-    badgeClass: "bg-primary/20 text-primary border-primary/30",
     icon: Clock,
-    title: "Comprehensive report in progress",
-    body: "We're preparing your deeper exposure report. We'll notify you by email once it is ready.",
-    support: "For queries, contact care@mitigata.com",
+    title: "Report in progress",
     primaryLabel: "Check Status",
     primaryAction: "onCheckStatus",
   },
   "buy-insurance": {
-    badge: "Active",
-    badgeClass: "bg-primary/20 text-primary border-primary/30",
     icon: ShieldCheck,
     title: "Get cyber insurance",
-    body: "Add protection against digital fraud, identity misuse, and financial loss.",
-    support: "Stay protected beyond exposure monitoring.",
-    primaryLabel: "Explore Cyber Insurance",
+    primaryLabel: "Explore Insurance",
     primaryAction: "onExploreInsurance",
   },
   "policy-in-progress": {
-    badge: "In Progress",
-    badgeClass: "bg-primary/20 text-primary border-primary/30",
     icon: FileText,
-    title: "Policy preparation in progress",
-    body: "Your cyber insurance policy is being prepared and will be shared once ready.",
-    support: "For queries, contact care@mitigata.com",
+    title: "Policy in progress",
     primaryLabel: "View Purchases",
     primaryAction: "onViewPurchases",
   },
   "download-policy": {
-    badge: "Ready",
-    badgeClass: "bg-primary/20 text-primary border-primary/30",
     icon: Download,
-    title: "Your policy is ready",
-    body: "Your cyber insurance policy has been issued and is ready to download.",
-    support: "Policy shared successfully.",
+    title: "Policy ready",
     primaryLabel: "Download Policy",
     primaryAction: "onDownloadPolicy",
     secondaryLabel: "View Purchases",
@@ -96,15 +66,9 @@ const stateConfig: Record<
 };
 
 const DynamicStatusCard = (props: DynamicStatusCardProps) => {
-  const { state, onSimulateReportReady, riskContent } = props;
+  const { state, onSimulateReportReady } = props;
   const config = stateConfig[state];
-
-  // Override pay-state copy with dynamic risk-based locked copy
-  const isLockedPay = state === "pay" && riskContent;
-  const Icon = isLockedPay ? ShieldAlert : config.icon;
-  const title = isLockedPay ? riskContent.lockedCardTitle : config.title;
-  const body = isLockedPay ? riskContent.lockedCardBody : config.body;
-  const support = isLockedPay ? riskContent.lockedCardSupport : config.support;
+  const Icon = config.icon;
 
   const primaryHandler = props[config.primaryAction] as (() => void) | undefined;
   const secondaryHandler = config.secondaryAction
@@ -112,28 +76,15 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
     : undefined;
 
   return (
-    <div className="bg-foreground text-card p-6 rounded-[20px] flex flex-col justify-center w-full h-full">
-      {/* Status badge */}
-      <Badge
-        variant="outline"
-        className={`text-[9px] font-semibold px-2 py-0.5 w-fit mb-3 ${config.badgeClass}`}
-      >
-        {config.badge}
-      </Badge>
+    <div className="bg-foreground text-card p-6 rounded-[20px] flex flex-col justify-center items-start w-full h-full">
+      <Icon className="h-7 w-7 mb-4 text-primary" strokeWidth={1.5} />
+      <h3 className="text-base font-semibold mb-5">{config.title}</h3>
 
-      <Icon className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-      <h3 className="text-sm font-semibold mb-1">{title}</h3>
-      <p className="text-xs opacity-60 mb-3 leading-relaxed">{body}</p>
-
-      {support && (
-        <p className="text-[10px] opacity-40 mb-4 whitespace-pre-line">{support}</p>
-      )}
-
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 flex-wrap mt-auto">
         <Button
           onClick={primaryHandler}
           size="sm"
-          className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 w-fit font-semibold text-xs"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 w-fit font-semibold text-xs"
         >
           {config.primaryLabel}
           <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -150,7 +101,6 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
           </Button>
         )}
 
-        {/* Dev simulate button */}
         {state === "report-in-progress" && onSimulateReportReady && (
           <Button
             onClick={onSimulateReportReady}
