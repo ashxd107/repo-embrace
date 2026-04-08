@@ -25,6 +25,7 @@ const stateConfig: Record<
   {
     icon: React.ElementType;
     title: string;
+    subtitle: string;
     primaryLabel: string;
     primaryAction: keyof DynamicStatusCardProps;
     secondaryLabel?: string;
@@ -34,30 +35,35 @@ const stateConfig: Record<
   pay: {
     icon: Lock,
     title: "Unlock full report",
+    subtitle: "See exposed passwords, documents & breach sources.",
     primaryLabel: "Unlock for ₹99",
     primaryAction: "onUnlock",
   },
   "report-in-progress": {
     icon: Clock,
     title: "Report in progress",
+    subtitle: "We'll notify you once your report is ready.",
     primaryLabel: "Check Status",
     primaryAction: "onCheckStatus",
   },
   "buy-insurance": {
     icon: ShieldCheck,
     title: "Get cyber insurance",
+    subtitle: "Protect against fraud, identity theft & financial loss.",
     primaryLabel: "Explore Insurance",
     primaryAction: "onExploreInsurance",
   },
   "policy-in-progress": {
     icon: FileText,
     title: "Policy in progress",
+    subtitle: "Your policy is being prepared and will be shared soon.",
     primaryLabel: "View Purchases",
     primaryAction: "onViewPurchases",
   },
   "download-policy": {
     icon: Download,
     title: "Policy ready",
+    subtitle: "Your cyber insurance policy is ready to download.",
     primaryLabel: "Download Policy",
     primaryAction: "onDownloadPolicy",
     secondaryLabel: "View Purchases",
@@ -76,11 +82,16 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
     : undefined;
 
   return (
-    <div className="bg-foreground text-card p-6 rounded-[20px] flex flex-col justify-center items-start w-full h-full">
-      <Icon className="h-7 w-7 mb-4 text-primary" strokeWidth={1.5} />
-      <h3 className="text-base font-semibold mb-5">{config.title}</h3>
+    <div className="bg-foreground text-card p-6 rounded-[20px] flex flex-col justify-between w-full h-full min-h-[180px]">
+      <div>
+        <Icon className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
+        <h3 className="text-sm font-semibold mb-1.5">{config.title}</h3>
+        <p className="text-xs leading-relaxed" style={{ color: 'hsla(0,0%,100%,0.5)' }}>
+          {config.subtitle}
+        </p>
+      </div>
 
-      <div className="flex gap-2 flex-wrap mt-auto">
+      <div className="flex gap-2 flex-wrap mt-5">
         <Button
           onClick={primaryHandler}
           size="sm"
