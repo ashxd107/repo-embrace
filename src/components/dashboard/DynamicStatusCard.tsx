@@ -1,9 +1,7 @@
 import {
-  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight, ShieldAlert,
+  Lock, Clock, ShieldCheck, FileText, Download, ArrowRight,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { RiskContent } from "@/lib/riskContent";
 
 export type CardState =
   | "pay"
