@@ -141,6 +141,16 @@ const OverviewDashboard = ({
             <p className="text-body text-sm mt-1">rahul****@gmail.com</p>
             <p className="text-body text-sm mt-0.5">+91 98XXXXXX10</p>
             <p className="text-body text-xs mt-3 leading-relaxed">{summaryLine}</p>
+            {comprehensiveReportReady && (
+              <Button
+                onClick={() => onNavigate("comprehensive-report")}
+                size="sm"
+                className="mt-3 w-fit bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs px-5"
+              >
+                View Comprehensive Report
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+              </Button>
+            )}
           </div>
         </div>
 
