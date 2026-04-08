@@ -243,110 +243,212 @@ const OTPStep = ({
   );
 };
 
+const scanFacts = [
+  "1 in 3 users has been exposed in a data breach",
+  "Leaked data is often misused within hours",
+  "Emails can be linked to passwords, phone numbers, and IDs",
+  "Data breaches happen silently without user awareness",
+  "Over 12 billion records were leaked in 2024 alone",
+];
+
+const scanStepsLabels = [
+  "Checking email…",
+  "Matching breach databases…",
+  "Analyzing risk patterns…",
+];
+
 const ScanningStep = ({ onComplete }: { onComplete: () => void }) => {
   const [activeStage, setActiveStage] = useState(0);
+  const [activeFact, setActiveFact] = useState(0);
   const [completed, setCompleted] = useState(false);
 
-  useState; // just to keep hook order
-  // Use effect to animate stages
-  const startScan = () => {
-    let stage = 0;
-    const interval = setInterval(() => {
-      stage++;
-      if (stage >= scanStages.length) {
-        clearInterval(interval);
-        setCompleted(true);
-        setTimeout(onComplete, 1200);
-      } else {
-        setActiveStage(stage);
-      }
-    }, 1500);
-    return () => clearInterval(interval);
-  };
-
-  // Start on mount
   const [started, setStarted] = useState(false);
   if (!started) {
     setStarted(true);
-    setTimeout(() => startScan(), 300);
+    setTimeout(() => {
+      let stage = 0;
+      const interval = setInterval(() => {
+        stage++;
+        if (stage >= scanStepsLabels.length) {
+          clearInterval(interval);
+          setCompleted(true);
+          setTimeout(onComplete, 1200);
+        } else {
+          setActiveStage(stage);
+        }
+      }, 2200);
+    }, 300);
   }
 
+  // Rotate facts every 3.5s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveFact((prev) => (prev + 1) % scanFacts.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <motion.div key="scanning" variants={fadeIn} initial="hidden" animate="visible" exit="exit" className="text-center">
-      <div className="relative mx-auto w-28 h-28 sm:w-32 sm:h-32 mb-8">
-        {/* Outer pulsing ring */}
-        <motion.div
-          className="absolute inset-0 rounded-full border-2 border-primary/20"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0, 0.3] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute inset-2 rounded-full border-2 border-primary/30"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.1, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        />
-        {/* Center circle */}
-        <div className="absolute inset-4 rounded-full bg-primary/10 flex items-center justify-center">
-          {completed ? (
-            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200 }}>
-              <CheckCircle2 className="h-10 w-10 text-primary" />
-            </motion.div>
-          ) : (
+    <motion.div
+      key="scanning"
+      variants={fadeIn}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="text-center -mx-4 sm:-mx-6 lg:-mx-10 -my-4 lg:-my-0"
+    >
+      {/* Dark cyber-themed container */}
+      <div className="min-h-[80vh] lg:min-h-[600px] bg-[hsl(160,15%,6%)] rounded-none lg:rounded-3xl flex flex-col items-center justify-center px-6 py-16 relative overflow-hidden">
+        {/* Animated grid background */}
+        <div className="absolute inset-0 opacity-[0.06]" style={{
+          backgroundImage: `linear-gradient(hsl(155,96%,44%) 1px, transparent 1px), linear-gradient(90deg, hsl(155,96%,44%) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+        }} />
+
+        {/* Subtle radial glow */}
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse 600px 400px at 50% 40%, hsla(155,96%,44%,0.06) 0%, transparent 70%)',
+        }} />
+
+        {/* Radar sweep animation */}
+        <div className="relative h-40 w-40 sm:h-48 sm:w-48 mb-10">
+          {/* Concentric rings */}
+          {[0, 1, 2].map((i) => (
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            >
-              <Loader2 className="h-10 w-10 text-primary" />
-            </motion.div>
-          )}
-        </div>
-      </div>
+              key={i}
+              className="absolute rounded-full border"
+              style={{
+                inset: `${i * 20}px`,
+                borderColor: `hsla(155, 96%, 44%, ${0.08 + i * 0.04})`,
+              }}
+              animate={{ opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+            />
+          ))}
 
-      <h1 className="text-display text-xl sm:text-2xl mb-1.5">
-        {completed ? "Scan complete" : "Scanning for exposed data"}
-      </h1>
-      <p className="text-body text-sm mb-8">
-        {completed
-          ? "Your exposure report is ready."
-          : "We're checking breach, leak, and exposure sources linked to your information."}
-      </p>
-
-      <div className="max-w-sm mx-auto space-y-3 text-left">
-        {scanStages.map((stage, i) => (
+          {/* Radar sweep line */}
           <motion.div
-            key={stage}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.1 + 0.2 }}
-            className="flex items-center gap-3"
-          >
-            <div className="shrink-0">
-              {i < activeStage || completed ? (
-                <CheckCircle2 className="h-4.5 w-4.5 text-primary" />
-              ) : i === activeStage && !completed ? (
-                <motion.div animate={{ rotate: 360 }} transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}>
-                  <Loader2 className="h-4.5 w-4.5 text-primary" />
-                </motion.div>
-              ) : (
-                <div className="h-4.5 w-4.5 rounded-full border border-border" />
-              )}
-            </div>
-            <span
-              className={`text-sm ${
-                i <= activeStage || completed
-                  ? "text-foreground font-medium"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {stage}
-            </span>
-          </motion.div>
-        ))}
-      </div>
+            className="absolute top-1/2 left-1/2 w-1/2 h-px origin-left"
+            style={{
+              background: 'linear-gradient(90deg, hsla(155,96%,44%,0.6), transparent)',
+            }}
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          />
 
-      {!completed && (
-        <p className="text-xs text-muted-foreground mt-8">This may take a few moments.</p>
-      )}
+          {/* Sweep trail / cone */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 w-1/2 h-1/2 origin-top-left"
+            style={{
+              background: 'conic-gradient(from 0deg, hsla(155,96%,44%,0.08), transparent 60deg)',
+            }}
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          />
+
+          {/* Center dot */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {completed ? (
+              <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200 }}>
+                <CheckCircle2 className="h-10 w-10" style={{ color: 'hsl(155,96%,44%)' }} />
+              </motion.div>
+            ) : (
+              <motion.div
+                className="h-4 w-4 rounded-full"
+                style={{ backgroundColor: 'hsl(155,96%,44%)' }}
+                animate={{ scale: [1, 1.4, 1], opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            )}
+          </div>
+
+          {/* Random blip dots */}
+          {[
+            { top: '25%', left: '70%', delay: 1 },
+            { top: '60%', left: '30%', delay: 2.5 },
+            { top: '40%', left: '80%', delay: 0.5 },
+          ].map((dot, i) => (
+            <motion.div
+              key={i}
+              className="absolute h-1.5 w-1.5 rounded-full"
+              style={{ top: dot.top, left: dot.left, backgroundColor: 'hsl(155,96%,44%)' }}
+              animate={{ opacity: [0, 1, 0], scale: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, delay: dot.delay }}
+            />
+          ))}
+        </div>
+
+        {/* Headline */}
+        <h1 className="text-xl sm:text-2xl font-semibold tracking-tight mb-2" style={{ color: 'hsl(0,0%,95%)' }}>
+          {completed ? "Scan complete" : "Scanning billions of leaked records…"}
+        </h1>
+        <p className="text-sm mb-10 max-w-xs" style={{ color: 'hsla(0,0%,95%,0.5)' }}>
+          {completed
+            ? "Your exposure report is ready."
+            : "Cross-referencing your data across known breach databases."}
+        </p>
+
+        {/* Step-based progress */}
+        <div className="w-full max-w-xs space-y-3 mb-10">
+          {scanStepsLabels.map((step, i) => (
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.15 + 0.2 }}
+              className="flex items-center gap-3"
+            >
+              <div className="shrink-0">
+                {i < activeStage || completed ? (
+                  <CheckCircle2 className="h-4 w-4" style={{ color: 'hsl(155,96%,44%)' }} />
+                ) : i === activeStage && !completed ? (
+                  <motion.div
+                    className="h-4 w-4 rounded-full border-2"
+                    style={{ borderColor: 'hsl(155,96%,44%)', borderTopColor: 'transparent' }}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  />
+                ) : (
+                  <div className="h-4 w-4 rounded-full" style={{ border: '1px solid hsla(0,0%,100%,0.15)' }} />
+                )}
+              </div>
+              <span
+                className="text-sm font-medium"
+                style={{
+                  color: i <= activeStage || completed
+                    ? 'hsl(0,0%,95%)'
+                    : 'hsla(0,0%,95%,0.3)',
+                }}
+              >
+                {step}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Rotating facts */}
+        {!completed && (
+          <div className="h-12 flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={activeFact}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4 }}
+                className="text-xs max-w-sm text-center leading-relaxed px-4 py-2 rounded-full"
+                style={{
+                  color: 'hsla(155,96%,44%,0.8)',
+                  backgroundColor: 'hsla(155,96%,44%,0.06)',
+                  border: '1px solid hsla(155,96%,44%,0.1)',
+                }}
+              >
+                💡 {scanFacts[activeFact]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 };

@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   AlertTriangle, Key, Database, ShieldX,
-  ShieldCheck, CheckCircle2, Lock, Eye, ShieldAlert,
+  ShieldCheck, CheckCircle2, Lock, ShieldAlert,
+  ArrowRight, Mail, Phone, FileText, Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import RiskScoreMeter from "./RiskScoreMeter";
-import ExposureBreakdownChart from "./ExposureBreakdownChart";
 import { getRiskContent, emptyStates } from "@/lib/riskContent";
-import LockedOverlay from "./LockedOverlay";
-import InsuranceBanner from "./InsuranceBanner";
 import DynamicStatusCard, { resolveCardState, type CardState } from "./DynamicStatusCard";
 import type { FlowType } from "@/types/flow";
 
@@ -43,41 +43,17 @@ const EXPOSURE_COUNT = 24;
 const PASSWORD_COUNT = 8;
 const LEAK_SOURCE_COUNT = 5;
 
-const riskColors = { high: "bg-risk-high", mid: "bg-risk-mid", low: "bg-risk-low" };
-
-const topLeaks = [
-  { source: "Malware Log", impact: "Password exposed", risk: "Critical" },
-  { source: "Social Platform", impact: "Credential breach", risk: "High" },
-  { source: "Shopping Site", impact: "Session hijack risk", risk: "High" },
+const alertHeadlines = [
+  "Your Aadhaar may be exposed",
+  "Your email is linked to leaked credentials",
+  "Your personal data could be at risk",
 ];
 
-const recommendations = [
-  { icon: Key, label: "Change compromised passwords" },
-  { icon: ShieldCheck, label: "Enable two-factor authentication" },
-  { icon: Eye, label: "Monitor financial activity" },
-];
-
-const riskBadge: Record<string, string> = {
-  Critical: "bg-destructive/10 text-destructive border-destructive/20",
-  High: "bg-risk-mid/10 text-risk-mid border-risk-mid/20",
-  Medium: "bg-primary/10 text-primary border-primary/20",
-};
-
-const EmptyState = ({ message, icon: Icon }: { message: string; icon: React.ElementType }) => (
-  <div className="flex flex-col items-center justify-center py-8 text-center">
-    <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-      <Icon className="h-5 w-5 text-primary" strokeWidth={1.5} />
-    </div>
-    <p className="text-body text-sm max-w-xs">{message}</p>
-  </div>
-);
-
-const readySummaryItems = [
-  "Aadhaar found in 1 source",
-  "PAN found in 1 source",
-  "3 passwords exposed",
-  "Address found in 2 records",
-  "Family-linked identity exposure detected",
+const featureCards = [
+  { id: "exposure", title: "Exposure Details", icon: AlertTriangle, cta: "View Details" },
+  { id: "leak-sources", title: "Leak Sources", icon: Database, cta: "View Details" },
+  { id: "recommendations", title: "Recommendations", icon: ShieldCheck, cta: "View Details" },
+  { id: "call-assistance", title: "Call Assistance", icon: Phone, cta: "View Details" },
 ];
 
 const OverviewDashboard = ({
@@ -97,27 +73,25 @@ const OverviewDashboard = ({
 }: OverviewDashboardProps) => {
   const riskContent = getRiskContent(RISK_SCORE);
   const hasExposures = EXPOSURE_COUNT > 0;
-  // Locked = comprehensive report not purchased (clickbait copy mode)
   const isLocked = !comprehensivePurchased;
-
-  const metrics = [
-    { label: "Total Exposures", value: String(EXPOSURE_COUNT), icon: AlertTriangle, risk: EXPOSURE_COUNT > 10 ? "high" as const : EXPOSURE_COUNT > 0 ? "mid" as const : "low" as const },
-    { label: "Passwords Exposed", value: isUnlocked ? String(PASSWORD_COUNT) : "—", icon: Key, risk: PASSWORD_COUNT > 5 ? "high" as const : PASSWORD_COUNT > 0 ? "mid" as const : "low" as const },
-    { label: "Leak Sources", value: isUnlocked ? String(LEAK_SOURCE_COUNT) : "—", icon: Database, risk: LEAK_SOURCE_COUNT > 3 ? "mid" as const : "low" as const },
-    { label: "Risk Level", value: riskContent.band === "none" ? "Safe" : riskContent.band.charAt(0).toUpperCase() + riskContent.band.slice(1), icon: ShieldX, risk: riskContent.band === "critical" ? "high" as const : riskContent.band === "medium" ? "mid" as const : "low" as const },
-  ];
 
   const summaryLine = hasExposures
     ? `${EXPOSURE_COUNT} exposures found across ${LEAK_SOURCE_COUNT} leak sources`
     : "No active exposures detected";
 
-  // Resolve dynamic card state using priority logic
   const cardState: CardState = resolveCardState({
     policyReady,
     insurancePurchased,
     comprehensiveReportReady,
     comprehensivePurchased,
   });
+
+  // Pick a contextual alert headline based on risk
+  const alertHeadline = riskContent.band === "critical"
+    ? alertHeadlines[0]
+    : riskContent.band === "medium"
+      ? alertHeadlines[1]
+      : alertHeadlines[2];
 
   return (
     <motion.div variants={stagger} initial="hidden" animate="visible" className="py-4 lg:py-6 space-y-5">
@@ -132,7 +106,7 @@ const OverviewDashboard = ({
         </motion.div>
       )}
 
-      {/* ROW 1: Score Meter + User Identity | Dynamic Status Card */}
+      {/* ROW 1: Score + Dynamic Status Card */}
       <motion.div variants={fadeIn} className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
         <div className="lg:col-span-8 card-surface !p-6 flex flex-col sm:flex-row items-center gap-6">
           <div className="flex flex-col items-center shrink-0">
@@ -169,128 +143,144 @@ const OverviewDashboard = ({
         </div>
       </motion.div>
 
-      {/* Alert Banner */}
-      <motion.div variants={fadeIn} className="card-surface !px-5 !py-3 flex items-center gap-3">
-        <div className={`h-2 w-2 rounded-full shrink-0 ${
-          riskContent.band === "critical" ? "bg-destructive" :
-          riskContent.band === "medium" ? "bg-risk-mid" : "bg-primary"
-        }`} />
-        <div className="min-w-0">
-          <h2 className="text-display text-sm">
-            {isLocked ? riskContent.lockedHeadline : riskContent.headline}
-          </h2>
-          <p className="text-body text-xs mt-0.5 opacity-70">
-            {isLocked ? riskContent.lockedBody : riskContent.body}
-          </p>
-        </div>
+      {/* TABBED SECTION: Score Tab + Alert Tab */}
+      <motion.div variants={fadeIn}>
+        <Tabs defaultValue="score" className="w-full">
+          <TabsList className="bg-secondary/60 rounded-2xl p-1 h-auto">
+            <TabsTrigger value="score" className="rounded-xl px-5 py-2.5 text-xs font-semibold data-[state=active]:bg-card data-[state=active]:shadow-sm">
+              Score Overview
+            </TabsTrigger>
+            <TabsTrigger value="alert" className="rounded-xl px-5 py-2.5 text-xs font-semibold data-[state=active]:bg-card data-[state=active]:shadow-sm">
+              <span className="flex items-center gap-1.5">
+                Alert
+                {hasExposures && (
+                  <span className="h-2 w-2 rounded-full bg-destructive animate-pulse" />
+                )}
+              </span>
+            </TabsTrigger>
+          </TabsList>
+
+          {/* SCORE TAB (Trust Layer) */}
+          <TabsContent value="score" className="mt-4">
+            <div className="card-surface !p-6 space-y-6">
+              {/* Risk summary */}
+              <div className="flex items-center gap-3">
+                <div className={`h-3 w-3 rounded-full shrink-0 ${
+                  riskContent.band === "critical" ? "bg-destructive" :
+                  riskContent.band === "medium" ? "bg-risk-mid" : "bg-primary"
+                }`} />
+                <div>
+                  <h3 className="text-display text-base">
+                    {isLocked ? riskContent.lockedHeadline : riskContent.headline}
+                  </h3>
+                  <p className="text-body text-xs mt-0.5 opacity-70">
+                    {isLocked ? riskContent.lockedBody : riskContent.body}
+                  </p>
+                </div>
+              </div>
+
+              {/* CTA block */}
+              {isLocked && onUnlock && (
+                <div className="bg-secondary/50 rounded-2xl p-5 border border-border/30">
+                  <h4 className="text-display text-sm mb-3">See exactly what's exposed</h4>
+                  <ul className="space-y-2 mb-5">
+                    {[
+                      { icon: Mail, text: "Emails & passwords found" },
+                      { icon: Phone, text: "Linked phone numbers" },
+                      { icon: Database, text: "Breach sources" },
+                      { icon: ShieldX, text: "Risk severity breakdown" },
+                    ].map((item) => (
+                      <li key={item.text} className="flex items-center gap-2.5 text-body text-xs">
+                        <item.icon className="h-3.5 w-3.5 text-primary shrink-0" strokeWidth={1.5} />
+                        {item.text}
+                      </li>
+                    ))}
+                  </ul>
+                  <Button
+                    onClick={onUnlock}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm px-6"
+                  >
+                    Unlock Full Report – ₹99
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+
+              {/* Metric summary row */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                {[
+                  { label: "Exposures", value: String(EXPOSURE_COUNT), icon: AlertTriangle, risk: EXPOSURE_COUNT > 10 ? "high" as const : "low" as const },
+                  { label: "Passwords", value: isUnlocked ? String(PASSWORD_COUNT) : "—", icon: Key, risk: PASSWORD_COUNT > 5 ? "high" as const : "low" as const },
+                  { label: "Leak Sources", value: isUnlocked ? String(LEAK_SOURCE_COUNT) : "—", icon: Database, risk: "mid" as const },
+                  { label: "Risk Level", value: riskContent.band === "none" ? "Safe" : riskContent.band.charAt(0).toUpperCase() + riskContent.band.slice(1), icon: ShieldX, risk: riskContent.band === "critical" ? "high" as const : "low" as const },
+                ].map((m) => (
+                  <div key={m.label} className="bg-secondary/40 rounded-xl p-3.5 flex flex-col">
+                    <div className="flex items-center justify-between mb-2">
+                      <m.icon className="h-3.5 w-3.5 text-muted-foreground" strokeWidth={1.5} />
+                      <div className={`h-2 w-2 rounded-full ${
+                        m.risk === "high" ? "bg-risk-high" : m.risk === "mid" ? "bg-risk-mid" : "bg-risk-low"
+                      }`} />
+                    </div>
+                    <span className="text-display text-lg">{m.value}</span>
+                    <span className="text-body text-[10px] mt-0.5">{m.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* ALERT TAB (Conversion Layer) */}
+          <TabsContent value="alert" className="mt-4">
+            <div
+              className="rounded-[20px] p-6 border"
+              style={{
+                backgroundColor: 'hsl(0 0% 100%)',
+                borderColor: 'hsla(0, 84%, 60%, 0.15)',
+                boxShadow: '0 0 40px -10px hsla(0, 84%, 60%, 0.08), 0 1px 2px rgba(0,0,0,0.03)',
+              }}
+            >
+              <div className="flex items-start gap-4">
+                <div
+                  className="h-12 w-12 rounded-2xl flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: 'hsla(0, 84%, 60%, 0.08)' }}
+                >
+                  <ShieldAlert className="h-6 w-6 text-destructive" strokeWidth={1.5} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-display text-base mb-1">{alertHeadline}</h3>
+                  <p className="text-body text-sm leading-relaxed mb-5">
+                    This data can be used for fraud, SIM swaps, or unauthorized access.
+                  </p>
+                  <Button
+                    onClick={onUnlock}
+                    className="bg-foreground hover:bg-foreground/90 text-background font-semibold text-sm px-6"
+                  >
+                    Get Full Exposure Report – ₹99
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
       </motion.div>
 
-      {/* ROW 2: Metric Cards */}
+      {/* FEATURE CARDS (Minimal, dark) */}
       <motion.div variants={fadeIn} className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
-        {metrics.map((m) => (
-          <div key={m.label} className="card-surface !p-4 flex flex-col">
-            <div className="flex items-center justify-between mb-3">
-              <m.icon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-              <div className={`h-2 w-2 rounded-full ${riskColors[m.risk]}`} />
-            </div>
-            <span className="text-display text-xl lg:text-2xl">{m.value}</span>
-            <span className="text-body text-[11px] mt-0.5">{m.label}</span>
-          </div>
+        {featureCards.map((card) => (
+          <button
+            key={card.id}
+            onClick={() => onNavigate(card.id)}
+            className="bg-foreground text-card rounded-[16px] p-5 flex flex-col items-start text-left transition-all duration-200 hover:scale-[1.02] hover:shadow-lg group"
+          >
+            <card.icon className="h-5 w-5 text-primary mb-4" strokeWidth={1.5} />
+            <h4 className="text-sm font-semibold mb-3">{card.title}</h4>
+            <span className="text-[11px] font-medium text-primary flex items-center gap-1 mt-auto opacity-70 group-hover:opacity-100 transition-opacity">
+              {card.cta} <ArrowRight className="h-3 w-3" />
+            </span>
+          </button>
         ))}
       </motion.div>
-
-      {/* ROW 3: Locked grid for free users, full for unlocked */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 lg:gap-5 relative">
-        {!isUnlocked && flowType === "free" && (
-          comprehensivePurchased && !comprehensiveReportReady ? (
-            <LockedOverlay variant="pending" compact />
-          ) : onUnlock ? (
-            <LockedOverlay onUnlock={onUnlock} compact />
-          ) : null
-        )}
-
-        <motion.div variants={fadeIn} className="md:col-span-1 lg:col-span-4">
-          <ExposureBreakdownChart />
-        </motion.div>
-
-        <motion.div variants={fadeIn} className="md:col-span-1 lg:col-span-4">
-          <div className="card-surface !p-5 h-full">
-            <div className="flex items-center justify-between mb-1">
-              <h3 className="text-display text-sm">Top Risk Sources</h3>
-              <button
-                onClick={() => onNavigate("leak-sources")}
-                className="text-[11px] text-muted-foreground hover:text-foreground transition-colors font-medium"
-              >
-                View all →
-              </button>
-            </div>
-            <p className="text-body text-[11px] mb-4">Most significant breach sources found.</p>
-            {hasExposures ? (
-              <div className="space-y-3">
-                {topLeaks.map((leak) => (
-                  <div key={leak.source} className="flex items-center justify-between gap-2">
-                    <div className="min-w-0">
-                      <p className="text-display text-xs">{leak.source}</p>
-                      <p className="text-body text-[11px] truncate">{leak.impact}</p>
-                    </div>
-                    <Badge variant="outline" className={`text-[9px] font-medium shrink-0 ${riskBadge[leak.risk]}`}>
-                      {leak.risk}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <EmptyState message={emptyStates.leakSources} icon={CheckCircle2} />
-            )}
-          </div>
-        </motion.div>
-
-        <motion.div variants={fadeIn} className="md:col-span-2 lg:col-span-4">
-          <div className="card-surface !p-5 h-full">
-            <div className="flex items-center justify-between mb-1">
-              <h3 className="text-display text-sm">Recommendations</h3>
-              <button
-                onClick={() => onNavigate("recommendations")}
-                className="text-[11px] text-muted-foreground hover:text-foreground transition-colors font-medium"
-              >
-                View all →
-              </button>
-            </div>
-            <p className="text-body text-[11px] mb-3">Most relevant next steps based on findings.</p>
-            {hasExposures ? (
-              <div className="space-y-3">
-                {recommendations.map((rec) => (
-                  <div key={rec.label} className="flex items-center gap-2.5">
-                    <div className="h-7 w-7 rounded-lg bg-secondary flex items-center justify-center shrink-0">
-                      <rec.icon className="h-3.5 w-3.5 text-foreground" strokeWidth={1.5} />
-                    </div>
-                    <span className="text-body text-xs leading-snug">{rec.label}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <EmptyState message={emptyStates.recommendations} icon={CheckCircle2} />
-            )}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Insurance Banner — Flow 2 always, Flow 1 & 3 after report ready */}
-      {flowType === "policy-basic" && (
-        <motion.div variants={fadeIn}>
-          <InsuranceBanner variant="no-cyber" />
-        </motion.div>
-      )}
-      {flowType === "free" && comprehensivePurchased && comprehensiveReportReady && (
-        <motion.div variants={fadeIn}>
-          <InsuranceBanner variant="default" />
-        </motion.div>
-      )}
-      {flowType === "policy-comprehensive" && comprehensiveReportReady && (
-        <motion.div variants={fadeIn}>
-          <InsuranceBanner variant="post-report" />
-        </motion.div>
-      )}
     </motion.div>
   );
 };
