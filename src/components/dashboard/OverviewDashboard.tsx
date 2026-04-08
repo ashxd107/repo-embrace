@@ -167,48 +167,56 @@ const OverviewDashboard = ({
         </div>
       </motion.div>
 
-      {/* Alert Banner */}
-      <motion.div variants={fadeIn} className="card-surface !px-5 !py-3 flex items-center gap-3">
-        <div className={`h-2 w-2 rounded-full shrink-0 ${
-          riskContent.band === "critical" ? "bg-destructive" :
-          riskContent.band === "medium" ? "bg-risk-mid" : "bg-primary"
-        }`} />
-        <div className="min-w-0">
-          <h2 className="text-display text-sm">
-            {isLocked ? riskContent.lockedHeadline : riskContent.headline}
-          </h2>
-          <p className="text-body text-xs mt-0.5 opacity-70">
-            {isLocked ? riskContent.lockedBody : riskContent.body}
-          </p>
+      {/* Merged Alert + CTA Block */}
+      <motion.div variants={fadeIn} className="card-surface !p-5">
+        <div className="flex items-start gap-4">
+          {/* Dynamic danger icon */}
+          <div className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 ${
+            riskContent.band === "critical" ? "bg-destructive/10" :
+            riskContent.band === "medium" ? "bg-risk-mid/10" : "bg-primary/10"
+          }`}>
+            <ShieldAlert className={`h-5 w-5 ${
+              riskContent.band === "critical" ? "text-destructive" :
+              riskContent.band === "medium" ? "text-risk-mid" : "text-primary"
+            }`} strokeWidth={1.5} />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <h2 className="text-display text-sm leading-tight">
+              {isLocked ? riskContent.lockedHeadline : riskContent.headline}
+            </h2>
+            <p className="text-body text-xs mt-1 opacity-70">
+              {isLocked ? riskContent.lockedBody : riskContent.body}
+            </p>
+
+            {/* Inline CTA items + button when locked */}
+            {isLocked && onUnlock && (
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-end gap-4">
+                <ul className="grid grid-cols-2 gap-x-6 gap-y-2 flex-1">
+                  {[
+                    { icon: Mail, text: "Emails & passwords found" },
+                    { icon: Phone, text: "Linked phone numbers" },
+                    { icon: Database, text: "Breach sources" },
+                    { icon: ShieldX, text: "Risk severity breakdown" },
+                  ].map((item) => (
+                    <li key={item.text} className="flex items-center gap-2 text-body text-xs">
+                      <item.icon className="h-3.5 w-3.5 text-primary shrink-0" strokeWidth={1.5} />
+                      {item.text}
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  onClick={onUnlock}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm px-6 shrink-0"
+                >
+                  Unlock Full Report – ₹99
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </motion.div>
-
-      {/* CTA block - See exactly what's exposed (clickbait) */}
-      {isLocked && onUnlock && (
-        <motion.div variants={fadeIn} className="card-surface !p-5">
-          <h4 className="text-display text-sm mb-3">See exactly what's exposed</h4>
-          <ul className="space-y-2 mb-5">
-            {[
-              { icon: Mail, text: "Emails & passwords found" },
-              { icon: Phone, text: "Linked phone numbers" },
-              { icon: Database, text: "Breach sources" },
-              { icon: ShieldX, text: "Risk severity breakdown" },
-            ].map((item) => (
-              <li key={item.text} className="flex items-center gap-2.5 text-body text-xs">
-                <item.icon className="h-3.5 w-3.5 text-primary shrink-0" strokeWidth={1.5} />
-                {item.text}
-              </li>
-            ))}
-          </ul>
-          <Button
-            onClick={onUnlock}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm px-6"
-          >
-            Unlock Full Report – ₹99
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </motion.div>
-      )}
 
       {/* ROW 2: Metric Cards */}
       <motion.div variants={fadeIn} className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
