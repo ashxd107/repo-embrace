@@ -1,13 +1,11 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   AlertTriangle, Key, Database, ShieldX,
-  ShieldCheck, CheckCircle2, Lock, ShieldAlert,
-  ArrowRight, Mail, Phone, FileText, Eye,
+  ShieldCheck, Lock, ShieldAlert,
+  ArrowRight, Mail, Phone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import RiskScoreMeter from "./RiskScoreMeter";
 import { getRiskContent, emptyStates } from "@/lib/riskContent";
 import DynamicStatusCard, { resolveCardState, type CardState } from "./DynamicStatusCard";
