@@ -130,7 +130,6 @@ const OverviewDashboard = ({
             onExploreInsurance={onExploreInsurance}
             onDownloadPolicy={onDownloadPolicy}
             onSimulateReportReady={onSimulateReportReady}
-            riskContent={isLocked ? riskContent : undefined}
           />
         </div>
       </motion.div>
