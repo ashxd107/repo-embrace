@@ -2,57 +2,17 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import {
   AlertTriangle, Key, Database, ShieldX,
-  ShieldCheck, Lock, ShieldAlert,
-  ArrowRight, Mail, Phone,
+  ShieldCheck, CheckCircle2, Lock, ShieldAlert,
+  ArrowRight, Mail, Phone, Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiskScoreMeter from "./RiskScoreMeter";
+import ExposureBreakdownChart from "./ExposureBreakdownChart";
 import { getRiskContent, emptyStates } from "@/lib/riskContent";
+import LockedOverlay from "./LockedOverlay";
+import InsuranceBanner from "./InsuranceBanner";
 import DynamicStatusCard, { resolveCardState, type CardState } from "./DynamicStatusCard";
 import type { FlowType } from "@/types/flow";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.2, 0.8, 0.2, 1] as const } },
-};
-
-const stagger = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
-};
-
-interface OverviewDashboardProps {
-  onNavigate: (id: string) => void;
-  riskScore?: number;
-  isUnlocked?: boolean;
-  onUnlock?: () => void;
-  flowType?: FlowType;
-  comprehensiveReportReady?: boolean;
-  comprehensivePurchased?: boolean;
-  onSimulateReportReady?: () => void;
-  insurancePurchased?: boolean;
-  policyReady?: boolean;
-  onExploreInsurance?: () => void;
-  onDownloadPolicy?: () => void;
-  onViewPurchases?: () => void;
-}
-
-const EXPOSURE_COUNT = 24;
-const PASSWORD_COUNT = 8;
-const LEAK_SOURCE_COUNT = 5;
-
-const alertHeadlines = [
-  "Your Aadhaar may be exposed",
-  "Your email is linked to leaked credentials",
-  "Your personal data could be at risk",
-];
-
-const featureCards = [
-  { id: "exposure", title: "Exposure Details", icon: AlertTriangle, cta: "View Details" },
-  { id: "leak-sources", title: "Leak Sources", icon: Database, cta: "View Details" },
-  { id: "recommendations", title: "Recommendations", icon: ShieldCheck, cta: "View Details" },
-  { id: "call-assistance", title: "Call Assistance", icon: Phone, cta: "View Details" },
-];
 
 const OverviewDashboard = ({
   onNavigate,
