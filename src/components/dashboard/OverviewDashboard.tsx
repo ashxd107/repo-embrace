@@ -193,8 +193,8 @@ const OverviewDashboard = ({
             {isLocked && (
               <div className="mt-3 flex items-center gap-3 flex-wrap">
                 {["Aadhaar", "PAN", "Passport", "Address"].map((item) => (
-                  <span key={item} className="inline-flex items-center gap-1.5 text-body text-xs px-2.5 py-1 rounded-md bg-secondary border border-border">
-                    <ShieldAlert className="h-3 w-3 text-primary shrink-0" strokeWidth={1.5} />
+                  <span key={item} className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md bg-destructive/10 text-destructive border border-destructive/20">
+                    <ShieldAlert className="h-3 w-3 shrink-0" strokeWidth={1.5} />
                     {item}
                   </span>
                 ))}
