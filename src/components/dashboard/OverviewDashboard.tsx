@@ -189,29 +189,15 @@ const OverviewDashboard = ({
               {isLocked ? riskContent.lockedBody : riskContent.body}
             </p>
 
-            {/* Inline CTA items + button when locked */}
-            {isLocked && onUnlock && (
-              <div className="mt-4 flex flex-col sm:flex-row sm:items-end gap-4">
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-2 flex-1">
-                  {[
-                    { icon: Mail, text: "Emails & passwords found" },
-                    { icon: Phone, text: "Linked phone numbers" },
-                    { icon: Database, text: "Breach sources" },
-                    { icon: ShieldX, text: "Risk severity breakdown" },
-                  ].map((item) => (
-                    <li key={item.text} className="flex items-center gap-2 text-body text-xs">
-                      <item.icon className="h-3.5 w-3.5 text-primary shrink-0" strokeWidth={1.5} />
-                      {item.text}
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  onClick={onUnlock}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm px-6 shrink-0"
-                >
-                  Unlock Full Report – ₹99
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+            {/* Inline exposure tags when locked */}
+            {isLocked && (
+              <div className="mt-3 flex items-center gap-3 flex-wrap">
+                {["Aadhaar", "PAN", "Passport", "Address"].map((item) => (
+                  <span key={item} className="inline-flex items-center gap-1.5 text-body text-xs px-2.5 py-1 rounded-md bg-secondary border border-border">
+                    <ShieldAlert className="h-3 w-3 text-primary shrink-0" strokeWidth={1.5} />
+                    {item}
+                  </span>
+                ))}
               </div>
             )}
           </div>
