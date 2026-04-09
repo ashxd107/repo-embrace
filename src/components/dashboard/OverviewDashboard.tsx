@@ -4,6 +4,7 @@ import {
   AlertTriangle, Key, Database, ShieldX,
   ShieldCheck, CheckCircle2, Lock, ShieldAlert,
   ArrowRight, Mail, Phone, Eye,
+  Fingerprint, CreditCard, BookOpen, MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiskScoreMeter from "./RiskScoreMeter";
@@ -171,14 +172,14 @@ const OverviewDashboard = ({
       <motion.div variants={fadeIn} className="card-surface !p-5">
         <div className="flex items-start gap-4">
           {/* Dynamic danger icon */}
-          <div className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 ${
+          <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 ${
             riskContent.band === "critical" ? "bg-destructive/10" :
             riskContent.band === "medium" ? "bg-risk-mid/10" : "bg-primary/10"
           }`}>
-            <ShieldAlert className={`h-5 w-5 ${
+            <ShieldAlert className={`h-7 w-7 ${
               riskContent.band === "critical" ? "text-destructive" :
               riskContent.band === "medium" ? "text-risk-mid" : "text-primary"
-            }`} strokeWidth={1.5} />
+            }`} strokeWidth={2} />
           </div>
 
           <div className="flex-1 min-w-0">
@@ -192,10 +193,15 @@ const OverviewDashboard = ({
             {/* Inline exposure tags when locked */}
             {isLocked && (
               <div className="mt-3 flex items-center gap-3 flex-wrap">
-                {["Aadhaar", "PAN", "Passport", "Address"].map((item) => (
-                  <span key={item} className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md bg-destructive/10 text-destructive border border-destructive/20">
-                    <ShieldAlert className="h-3 w-3 shrink-0" strokeWidth={1.5} />
-                    {item}
+                {[
+                  { label: "Aadhaar", icon: Fingerprint },
+                  { label: "PAN", icon: CreditCard },
+                  { label: "Passport", icon: BookOpen },
+                  { label: "Address", icon: MapPin },
+                ].map((item) => (
+                  <span key={item.label} className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md bg-destructive/10 text-destructive border border-destructive/20">
+                    <item.icon className="h-3 w-3 shrink-0" strokeWidth={1.5} />
+                    {item.label}
                   </span>
                 ))}
               </div>
