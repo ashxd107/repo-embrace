@@ -4,6 +4,7 @@ import {
   AlertTriangle, Key, Database, ShieldX,
   ShieldCheck, CheckCircle2, Lock, ShieldAlert,
   ArrowRight, Mail, Phone, Eye,
+  Fingerprint, CreditCard, BookOpen, MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RiskScoreMeter from "./RiskScoreMeter";
