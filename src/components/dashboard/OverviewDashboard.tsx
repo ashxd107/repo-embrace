@@ -170,17 +170,11 @@ const OverviewDashboard = ({
 
       {/* Merged Alert + CTA Block */}
       <motion.div variants={fadeIn} className="card-surface !p-5">
-        <div className="flex items-start gap-4">
-          {/* Dynamic danger icon */}
-          <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 ${
-            riskContent.band === "critical" ? "bg-destructive/10" :
-            riskContent.band === "medium" ? "bg-risk-mid/10" : "bg-primary/10"
-          }`}>
-            <ShieldAlert className={`h-7 w-7 ${
-              riskContent.band === "critical" ? "text-destructive" :
-              riskContent.band === "medium" ? "text-risk-mid" : "text-primary"
-            }`} strokeWidth={2} />
-          </div>
+        <div className="flex items-center gap-4">
+          <ShieldAlert className={`h-8 w-8 shrink-0 ${
+            riskContent.band === "critical" ? "text-destructive" :
+            riskContent.band === "medium" ? "text-risk-mid" : "text-primary"
+          }`} strokeWidth={2} />
 
           <div className="flex-1 min-w-0">
             <h2 className="text-display text-sm leading-tight">
