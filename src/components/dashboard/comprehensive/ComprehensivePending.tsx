@@ -146,13 +146,17 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
                     "text-muted-foreground/40"
                   }`} strokeWidth={1.5} />
                 </motion.div>
-                <div className={`h-1 w-full rounded-full overflow-hidden ${isDone || isActive ? "bg-primary/20" : "bg-secondary"}`}>
-                  {(isDone || isActive) && (
+                <div className={`h-1.5 w-full rounded-full overflow-hidden ${isDone || isActive ? "bg-primary/20" : "bg-secondary"}`}>
+                  {isDone && (
+                    <div className="h-full w-full bg-primary rounded-full" />
+                  )}
+                  {isActive && (
                     <motion.div
+                      key={`bar-${i}-${activeStep}`}
                       className="h-full bg-primary rounded-full"
-                      initial={{ width: isDone ? "100%" : "0%" }}
+                      initial={{ width: "0%" }}
                       animate={{ width: "100%" }}
-                      transition={{ duration: isDone ? 0 : 3.5, ease: "linear" }}
+                      transition={{ duration: 3.5, ease: "linear" }}
                     />
                   )}
                 </div>
