@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, ArrowLeft, Scan, Database, FileSearch, ShieldCheck } from "lucide-react";
+import { Shield, ArrowLeft, Globe, Database, FileSearch, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
