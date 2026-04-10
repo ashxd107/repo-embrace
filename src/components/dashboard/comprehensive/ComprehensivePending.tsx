@@ -10,7 +10,7 @@ interface ComprehensivePendingProps {
 const progressSteps = [
   { label: "Verifying records…", icon: FileSearch },
   { label: "Checking breach sources…", icon: Database },
-  { label: "Mapping exposure…", icon: Scan },
+  { label: "Mapping exposure…", icon: Globe },
   { label: "Preparing report…", icon: ShieldCheck },
 ];
 
