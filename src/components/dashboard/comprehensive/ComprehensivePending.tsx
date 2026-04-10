@@ -136,15 +136,15 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
             return (
               <div key={step.label} className="flex flex-col items-center gap-2">
                 <motion.div
-                  className={`h-10 w-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${
-                    isActive ? "bg-primary/15 text-primary" :
-                    isDone ? "bg-primary/10 text-primary/70" :
-                    "bg-secondary text-muted-foreground"
-                  }`}
-                  animate={isActive ? { scale: [1, 1.08, 1] } : {}}
+                  className="flex items-center justify-center"
+                  animate={isActive ? { scale: [1, 1.1, 1] } : {}}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
-                  <StepIcon className="h-4 w-4" strokeWidth={1.5} />
+                  <StepIcon className={`h-5 w-5 transition-colors duration-300 ${
+                    isActive ? "text-primary" :
+                    isDone ? "text-primary/60" :
+                    "text-muted-foreground/40"
+                  }`} strokeWidth={1.5} />
                 </motion.div>
                 <div className={`h-1 w-full rounded-full overflow-hidden ${isDone || isActive ? "bg-primary/20" : "bg-secondary"}`}>
                   {(isDone || isActive) && (
