@@ -104,7 +104,7 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
       </div>
 
       {/* ── Status Chip ── */}
-      <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.12em] uppercase text-primary bg-primary/10 px-3.5 py-1.5 rounded-full mb-5">
+      <span className="inline-flex items-center gap-2 text-caps text-primary bg-primary/10 px-3.5 py-1.5 rounded-full mb-5">
         <span className="relative flex h-2 w-2">
           <motion.span
             className="absolute inline-flex h-full w-full rounded-full bg-primary/60"
@@ -117,12 +117,12 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
       </span>
 
       {/* ── Title ── */}
-      <h2 className="text-foreground text-xl font-bold leading-snug mb-2">
+      <h2 className="text-display text-xl leading-snug mb-2">
         Preparing your comprehensive report
       </h2>
 
       {/* ── Subtitle ── */}
-      <p className="text-muted-foreground text-sm mb-6 max-w-sm leading-relaxed">
+      <p className="text-body text-sm mb-6 max-w-sm">
         We're scanning multiple breach databases and cross-referencing your identity records. This usually takes a few hours.
       </p>
 
@@ -167,7 +167,7 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.3 }}
-            className="text-xs text-foreground/70 font-medium mt-3"
+            className="text-body text-xs font-medium mt-3"
           >
             {progressSteps[activeStep].label}
           </motion.p>
@@ -187,11 +187,11 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-base">{facts[activeFact].icon}</span>
-                <span className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground">
+                <span className="text-caps">
                   Fact {factNumber}
                 </span>
               </div>
-              <p className="text-[13px] text-foreground leading-relaxed text-left">
+              <p className="text-body text-[13px] text-left">
                 {facts[activeFact].text}
               </p>
             </motion.div>
@@ -211,7 +211,7 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
       </div>
 
       {/* ── Support Line ── */}
-      <p className="text-muted-foreground text-xs mb-6 leading-relaxed">
+      <p className="text-body text-xs mb-6">
         We'll notify you when it's ready ·{" "}
         <a
           href="mailto:care@mitigata.com"
