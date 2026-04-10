@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, ArrowLeft, Info } from "lucide-react";
+import { Shield, ArrowLeft, Scan, Database, FileSearch, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
@@ -8,10 +8,10 @@ interface ComprehensivePendingProps {
 }
 
 const progressSteps = [
-  "Verifying records…",
-  "Checking breach sources…",
-  "Mapping exposure…",
-  "Preparing report…",
+  { label: "Verifying records…", icon: FileSearch },
+  { label: "Checking breach sources…", icon: Database },
+  { label: "Mapping exposure…", icon: Scan },
+  { label: "Preparing report…", icon: ShieldCheck },
 ];
 
 const facts = [
@@ -74,72 +74,109 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-      className="py-16 lg:py-24 max-w-md mx-auto flex flex-col items-center text-center px-4"
+      className="py-12 lg:py-20 max-w-lg mx-auto flex flex-col items-center text-center px-4"
     >
-      {/* ── Glow Ring Animation ── */}
-      <div className="relative h-20 w-20 mb-10">
-        {/* Outer glow */}
+      {/* ── Animated Shield ── */}
+      <div className="relative h-24 w-24 mb-8">
+        {/* Pulse rings */}
         <motion.div
-          className="absolute inset-0 rounded-full border border-primary/10"
-          animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0, 0.4] }}
+          className="absolute inset-0 rounded-full border-2 border-primary/20"
+          animate={{ scale: [1, 1.4, 1], opacity: [0.3, 0, 0.3] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
-        {/* Inner ring */}
-        <div className="absolute inset-2 rounded-full border border-primary/[0.08]" />
-        {/* Center */}
+        <motion.div
+          className="absolute inset-0 rounded-full border border-primary/10"
+          animate={{ scale: [1, 1.6, 1], opacity: [0.2, 0, 0.2] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        />
+        {/* Inner circle */}
+        <div className="absolute inset-3 rounded-full border border-primary/15" />
+        {/* Center icon */}
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
-            className="h-12 w-12 rounded-2xl bg-primary/[0.06] flex items-center justify-center border border-primary/[0.08]"
-            animate={{ scale: [1, 1.03, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
-            <Shield className="h-5 w-5 text-primary/70" strokeWidth={1.5} />
+            <Shield className="h-7 w-7 text-primary" strokeWidth={1.5} />
           </motion.div>
         </div>
       </div>
 
       {/* ── Status Chip ── */}
-      <span className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[0.14em] uppercase text-primary/70 mb-4">
-        <span className="relative flex h-1.5 w-1.5">
+      <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.12em] uppercase text-primary bg-primary/10 px-3.5 py-1.5 rounded-full mb-5">
+        <span className="relative flex h-2 w-2">
           <motion.span
-            className="absolute inline-flex h-full w-full rounded-full bg-primary/40"
+            className="absolute inline-flex h-full w-full rounded-full bg-primary/60"
             animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary/50" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
         </span>
         Report in progress
       </span>
 
       {/* ── Title ── */}
-      <h2 className="text-foreground text-lg font-semibold leading-snug mb-1.5">
-        Preparing your report
+      <h2 className="text-foreground text-xl font-bold leading-snug mb-2">
+        Preparing your comprehensive report
       </h2>
 
       {/* ── Subtitle ── */}
-      <p className="text-muted-foreground text-sm mb-3 max-w-xs leading-relaxed">
-        Analyzing exposure across multiple breach sources
+      <p className="text-muted-foreground text-sm mb-6 max-w-sm leading-relaxed">
+        We're scanning multiple breach databases and cross-referencing your identity records. This usually takes a few hours.
       </p>
 
-      {/* ── Inline Progress Step ── */}
-      <div className="mb-12">
+      {/* ── Progress Steps ── */}
+      <div className="w-full max-w-sm mb-8">
+        <div className="grid grid-cols-4 gap-2">
+          {progressSteps.map((step, i) => {
+            const isActive = i === activeStep;
+            const isDone = i < activeStep;
+            const StepIcon = step.icon;
+            return (
+              <div key={step.label} className="flex flex-col items-center gap-2">
+                <motion.div
+                  className={`h-10 w-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${
+                    isActive ? "bg-primary/15 text-primary" :
+                    isDone ? "bg-primary/10 text-primary/70" :
+                    "bg-secondary text-muted-foreground"
+                  }`}
+                  animate={isActive ? { scale: [1, 1.08, 1] } : {}}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <StepIcon className="h-4 w-4" strokeWidth={1.5} />
+                </motion.div>
+                <div className={`h-1 w-full rounded-full overflow-hidden ${isDone || isActive ? "bg-primary/20" : "bg-secondary"}`}>
+                  {(isDone || isActive) && (
+                    <motion.div
+                      className="h-full bg-primary rounded-full"
+                      initial={{ width: isDone ? "100%" : "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: isDone ? 0 : 3.5, ease: "linear" }}
+                    />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
         <AnimatePresence mode="wait">
-          <motion.span
+          <motion.p
             key={activeStep}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.3 }}
-            className="text-xs text-muted-foreground/60 font-medium"
+            className="text-xs text-foreground/70 font-medium mt-3"
           >
-            {progressSteps[activeStep]}
-          </motion.span>
+            {progressSteps[activeStep].label}
+          </motion.p>
         </AnimatePresence>
       </div>
 
       {/* ── Fact Card ── */}
-      <div className="w-full max-w-sm mb-12">
-        <div className="rounded-xl border border-border/50 bg-muted/30 px-5 py-5 min-h-[110px] flex flex-col">
+      <div className="w-full max-w-sm mb-10">
+        <div className="rounded-2xl border border-border bg-card px-6 py-5 min-h-[120px] flex flex-col shadow-sm">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFact}
@@ -149,25 +186,36 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-sm">{facts[activeFact].icon}</span>
-                <span className="text-[10px] font-semibold tracking-[0.1em] uppercase text-muted-foreground/50">
+                <span className="text-base">{facts[activeFact].icon}</span>
+                <span className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground">
                   Fact {factNumber}
                 </span>
               </div>
-              <p className="text-[13px] text-foreground/80 leading-relaxed text-left">
+              <p className="text-[13px] text-foreground leading-relaxed text-left">
                 {facts[activeFact].text}
               </p>
             </motion.div>
           </AnimatePresence>
         </div>
+        {/* Fact indicators */}
+        <div className="flex items-center justify-center gap-1.5 mt-3">
+          {facts.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                i === activeFact ? "w-4 bg-primary" : "w-1 bg-border"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* ── Support Line ── */}
-      <p className="text-muted-foreground/50 text-[11px] mb-8 leading-relaxed">
+      <p className="text-muted-foreground text-xs mb-6 leading-relaxed">
         We'll notify you when it's ready ·{" "}
         <a
           href="mailto:care@mitigata.com"
-          className="text-primary/60 hover:text-primary transition-colors"
+          className="text-primary hover:text-primary/80 font-medium transition-colors"
         >
           care@mitigata.com
         </a>
@@ -176,10 +224,11 @@ const ComprehensivePending = ({ onGoToDashboard }: ComprehensivePendingProps) =>
       {/* ── Back Button ── */}
       <Button
         onClick={onGoToDashboard}
-        variant="ghost"
-        className="text-xs font-medium text-muted-foreground/60 hover:text-foreground"
+        variant="outline"
+        size="sm"
+        className="text-xs font-medium"
       >
-        <ArrowLeft className="mr-1 h-3.5 w-3.5" />
+        <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
         Back to Dashboard
       </Button>
     </motion.div>
