@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { Lock } from "lucide-react";
+import { Lock, FileText } from "lucide-react";
+
+const DOCUMENT_LABELS = new Set(["Aadhaar", "Aadhaar Card", "PAN", "PAN Card", "Driving License", "Passport"]);
 
 interface AffectedPerson {
   relation: string;
@@ -211,39 +213,70 @@ const CompLeakSources = ({ isUnlocked = true }: CompLeakSourcesProps) => {
               </div>
             </div>
 
-            {/* Affected people */}
+            {/* Affected people — non-document fields only */}
             <div className="px-6 py-5 space-y-5">
-              {source.affectedPeople.map((person, pi) => (
-                <div key={`${source.id}-${person.name}`}>
-                  {pi > 0 && <div className="border-t border-border/15 -mx-6 mb-5" />}
-                  <div className="flex items-center gap-2 mb-3.5">
-                    <Badge variant="outline" className="text-[10px] font-medium bg-primary/6 text-primary border-primary/15 px-2 py-0.5">
-                      {person.relation}
-                    </Badge>
-                    <span className="text-sm font-medium text-foreground">{person.name}</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                    {person.fields.map((field) => (
-                      <div
-                        key={field.label}
-                        className={`rounded-xl px-4 py-3 flex items-start gap-3 ${
-                          field.sensitive ? "bg-secondary/50" : "bg-secondary/30"
-                        }`}
-                      >
-                        {field.sensitive && (
-                          <div className={`h-1.5 w-1.5 rounded-full mt-[7px] shrink-0 ${sensitiveFieldDot[source.risk]}`} />
-                        )}
-                        <div className="min-w-0">
-                          <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{field.label}</p>
-                          <p className="text-[13px] font-normal leading-snug text-foreground">
-                            {field.value}
-                          </p>
+              {source.affectedPeople.map((person, pi) => {
+                const nonDocFields = person.fields.filter(f => !DOCUMENT_LABELS.has(f.label));
+                if (nonDocFields.length === 0) return null;
+                return (
+                  <div key={`${source.id}-${person.name}`}>
+                    {pi > 0 && <div className="border-t border-border/15 -mx-6 mb-5" />}
+                    <div className="flex items-center gap-2 mb-3.5">
+                      <Badge variant="outline" className="text-[10px] font-medium bg-primary/6 text-primary border-primary/15 px-2 py-0.5">
+                        {person.relation}
+                      </Badge>
+                      <span className="text-sm font-medium text-foreground">{person.name}</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                      {nonDocFields.map((field) => (
+                        <div
+                          key={field.label}
+                          className={`rounded-xl px-4 py-3 flex items-start gap-3 ${
+                            field.sensitive ? "bg-secondary/50" : "bg-secondary/30"
+                          }`}
+                        >
+                          {field.sensitive && (
+                            <div className={`h-1.5 w-1.5 rounded-full mt-[7px] shrink-0 ${sensitiveFieldDot[source.risk]}`} />
+                          )}
+                          <div className="min-w-0">
+                            <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{field.label}</p>
+                            <p className="text-[13px] font-normal leading-snug text-foreground">
+                              {field.value}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
+
+              {/* Aggregated Documents row */}
+              {(() => {
+                const allDocs = source.affectedPeople.flatMap(p =>
+                  p.fields.filter(f => DOCUMENT_LABELS.has(f.label))
+                );
+                if (allDocs.length === 0) return null;
+                return (
+                  <>
+                    <div className="border-t border-border/15 -mx-6 mb-0" />
+                    <div className="flex items-start gap-3 pt-1">
+                      <FileText className="h-4 w-4 text-destructive/70 shrink-0 mt-0.5" strokeWidth={1.5} />
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">Documents</p>
+                        <p className="text-[13px] font-normal leading-snug text-foreground">
+                          {allDocs.map((d, i) => (
+                            <span key={`${d.label}-${i}`}>
+                              {i > 0 && <span className="text-muted-foreground">, </span>}
+                              <span>{d.label} {d.value.slice(-4).replace(/^[^•\dX]*/, "••••")}</span>
+                            </span>
+                          ))}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </motion.div>
         ))}
