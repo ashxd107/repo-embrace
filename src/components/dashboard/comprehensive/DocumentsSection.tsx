@@ -14,30 +14,12 @@ interface PersonExposure {
   documents: ExposedDocument[];
 }
 
-const exposedPeople: PersonExposure[] = [
-  {
-    relation: "Self",
-    name: "Rahul Sharma",
-    documents: [
-      { type: "Aadhaar", value: "XXXX XXXX 1234", icon: FileText },
-      { type: "PAN", value: "ABCDE12XXF", icon: CreditCard },
-    ],
-  },
-  {
-    relation: "Father",
-    name: "Ramesh Sharma",
-    documents: [
-      { type: "Aadhaar", value: "XXXX XXXX 6042", icon: FileText },
-    ],
-  },
-  {
-    relation: "Spouse",
-    name: "Priya Sharma",
-    documents: [
-      { type: "PAN", value: "FGHIJ34XXK", icon: CreditCard },
-      { type: "Driving License", value: "KA••••••2019", icon: Car },
-    ],
-  },
+const allDocuments: ExposedDocument[] = [
+  { type: "Aadhaar", value: "XXXX XXXX 1234", icon: FileText },
+  { type: "PAN", value: "ABCDE12XXF", icon: CreditCard },
+  { type: "Aadhaar", value: "XXXX XXXX 6042", icon: FileText },
+  { type: "PAN", value: "FGHIJ34XXK", icon: CreditCard },
+  { type: "Driving License", value: "KA••••••2019", icon: Car },
 ];
 
 const documentSummary = [
@@ -56,7 +38,7 @@ const DocumentsSection = () => (
     <p className="text-caps mb-2">Documents</p>
     <h2 className="text-display text-xl mb-1.5">Sensitive document exposure</h2>
     <p className="text-body text-sm mb-6">
-      Overview of exposed identity documents across all affected individuals.
+      Overview of exposed identity documents found across data breaches.
     </p>
 
     {/* Summary strip */}
@@ -86,40 +68,23 @@ const DocumentsSection = () => (
       })}
     </div>
 
-    {/* Person-wise document cards */}
-    <div className="space-y-6">
-      {exposedPeople.map((person, i) => (
+    {/* Flat document list */}
+    <div className="card-surface !p-0 overflow-hidden">
+      {allDocuments.map((doc, i) => (
         <motion.div
-          key={person.name}
-          initial={{ opacity: 0, y: 14 }}
+          key={`${doc.type}-${doc.value}`}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: i * 0.08, duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-          className="card-surface !p-0 overflow-hidden"
+          transition={{ delay: i * 0.05, duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
+          className={`flex items-center gap-4 px-5 py-4 ${
+            i < allDocuments.length - 1 ? "border-b border-border/20" : ""
+          }`}
         >
-          {/* Person header */}
-          <div className="flex items-center gap-2 px-6 py-4 border-b border-border/20">
-            <Badge variant="outline" className="text-[10px] font-medium bg-primary/6 text-primary border-primary/15 px-2 py-0.5">
-              {person.relation}
-            </Badge>
-            <span className="text-sm font-medium text-foreground">{person.name}</span>
-          </div>
-
-          {/* Documents grid */}
-          <div className="px-6 py-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {person.documents.map((doc) => (
-                <div key={doc.type} className="bg-secondary/40 rounded-xl px-4 py-3 flex items-center gap-4">
-                  <div className="h-9 w-9 rounded-lg bg-destructive/[0.06] flex items-center justify-center shrink-0">
-                    <doc.icon className="h-4 w-4 text-destructive/70" strokeWidth={1.5} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-0.5">{doc.type}</p>
-                    <p className="text-[13px] font-normal text-foreground leading-snug">{doc.value}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <doc.icon className="h-4.5 w-4.5 text-destructive/70 shrink-0" strokeWidth={1.5} />
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-0.5">{doc.type}</p>
+            <p className="text-[13px] font-normal text-foreground leading-snug">{doc.value}</p>
           </div>
         </motion.div>
       ))}
