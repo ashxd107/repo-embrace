@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Lock } from "lucide-react";
+import { ArrowRight, Lock, FileText } from "lucide-react";
+
+const DOCUMENT_LABELS = new Set(["Aadhaar", "Aadhaar Card", "PAN", "PAN Card", "Driving License", "Passport"]);
 
 interface LeakField {
   label: string;
@@ -189,15 +191,18 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
                 </div>
               </div>
 
-              {/* Affected people */}
+              {/* Affected people — non-document fields only */}
               <div className="px-6 py-5 space-y-5">
                 {source.affectedPeople.map((person, pi) => {
+                  const nonDocFields = person.fields.filter(f => !DOCUMENT_LABELS.has(f.label));
                   const visibleFields = isUnlocked
-                    ? person.fields
-                    : person.fields.filter((f) => f.freeVisible);
+                    ? nonDocFields
+                    : nonDocFields.filter((f) => f.freeVisible);
                   const lockedFields = isUnlocked
                     ? []
-                    : person.fields.filter((f) => !f.freeVisible);
+                    : nonDocFields.filter((f) => !f.freeVisible);
+
+                  if (visibleFields.length === 0 && lockedFields.length === 0) return null;
 
                   return (
                     <div key={`${source.id}-${person.name}-${pi}`}>
@@ -256,7 +261,7 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
                         </div>
                       ))}
                       {/* Locked full-width preview */}
-                      {!isUnlocked && person.fields.filter(f => f.fullWidth).length > 0 && (
+                      {!isUnlocked && nonDocFields.filter(f => f.fullWidth).length > 0 && (
                         <div className="mt-2.5 rounded-xl px-4 py-3 bg-secondary/30">
                           <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">Address</p>
                           <div className="flex items-center gap-2">
@@ -273,6 +278,54 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
                     </div>
                   );
                 })}
+
+                {/* Aggregated Documents row */}
+                {(() => {
+                  const allDocs = source.affectedPeople.flatMap(p =>
+                    p.fields.filter(f => DOCUMENT_LABELS.has(f.label))
+                  );
+                  if (allDocs.length === 0) return null;
+
+                  if (!isUnlocked) {
+                    return (
+                      <>
+                        <div className="border-t border-border/15 -mx-6 mb-0" />
+                        <div className="flex items-start gap-3 pt-1">
+                          <FileText className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" strokeWidth={1.5} />
+                          <div className="min-w-0">
+                            <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">Documents</p>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[13px] select-none text-transparent bg-muted/80 rounded px-1" style={{ filter: "blur(5px)" }}>
+                                {allDocs.length} documents exposed
+                              </span>
+                              <Lock className="h-3 w-3 text-muted-foreground" strokeWidth={1.5} />
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  }
+
+                  return (
+                    <>
+                      <div className="border-t border-border/15 -mx-6 mb-0" />
+                      <div className="flex items-start gap-3 pt-1">
+                        <FileText className="h-4 w-4 text-destructive/70 shrink-0 mt-0.5" strokeWidth={1.5} />
+                        <div className="min-w-0">
+                          <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">Documents</p>
+                          <p className="text-[13px] font-normal leading-snug text-foreground">
+                            {allDocs.map((d, i) => (
+                              <span key={`${d.label}-${i}`}>
+                                {i > 0 && <span className="text-muted-foreground">, </span>}
+                                <span>{d.label} {d.value.slice(-4).replace(/^[^•\dX]*/, "••••")}</span>
+                              </span>
+                            ))}
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             </motion.div>
           );
