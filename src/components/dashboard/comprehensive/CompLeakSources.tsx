@@ -251,7 +251,7 @@ const CompLeakSources = ({ isUnlocked = true }: CompLeakSourcesProps) => {
                 );
               })}
 
-              {/* Aggregated Documents row */}
+              {/* Aggregated Documents */}
               {(() => {
                 const allDocs = source.affectedPeople.flatMap(p =>
                   p.fields.filter(f => DOCUMENT_LABELS.has(f.label))
@@ -260,19 +260,16 @@ const CompLeakSources = ({ isUnlocked = true }: CompLeakSourcesProps) => {
                 return (
                   <>
                     <div className="border-t border-border/15 -mx-6 mb-0" />
-                    <div className="flex items-start gap-3 pt-1">
-                      <FileText className="h-4 w-4 text-destructive/70 shrink-0 mt-0.5" strokeWidth={1.5} />
-                      <div className="min-w-0">
-                        <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">Documents</p>
-                        <p className="text-[13px] font-normal leading-snug text-foreground">
-                          {allDocs.map((d, i) => (
-                            <span key={`${d.label}-${i}`}>
-                              {i > 0 && <span className="text-muted-foreground">, </span>}
-                              <span>{d.label} {d.value.slice(-4).replace(/^[^•\dX]*/, "••••")}</span>
-                            </span>
-                          ))}
-                        </p>
-                      </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {allDocs.map((d, i) => (
+                        <div key={`${d.label}-${i}`} className="rounded-xl px-4 py-3 flex items-start gap-3 bg-secondary/50">
+                          <div className={`h-1.5 w-1.5 rounded-full mt-[7px] shrink-0 ${sensitiveFieldDot[source.risk]}`} />
+                          <div className="min-w-0">
+                            <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{d.label}</p>
+                            <p className="text-[13px] font-normal leading-snug text-foreground">{d.value}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </>
                 );
