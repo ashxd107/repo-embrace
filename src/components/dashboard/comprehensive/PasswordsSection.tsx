@@ -35,12 +35,51 @@ const PasswordsSection = ({ isUnlocked = true }: PasswordsSectionProps) => {
   return (
     <motion.section variants={fadeIn} initial="hidden" animate="visible">
       <p className="text-caps mb-2">Leaked Passwords — {passwords.length} Found</p>
-      <h2 className="text-display text-xl mb-1.5">Compromised credentials</h2>
-      <p className="text-body text-sm mb-6">
+      <h2 className="text-display text-lg sm:text-xl mb-1.5">Compromised credentials</h2>
+      <p className="text-body text-[13px] sm:text-sm mb-5 sm:mb-6">
         Passwords extracted from breach data linked to your identity. Change these immediately.
       </p>
 
-      <div className="card-surface !p-0 overflow-hidden">
+      {/* ── Mobile: card list ── */}
+      <div className="sm:hidden space-y-2.5">
+        {visiblePasswords.map((pw, i) => (
+          <motion.div
+            key={`${pw.username}-${i}-m`}
+            initial={{ opacity: 0, y: 6 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.04 }}
+            className="card-surface !p-4 space-y-3"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <Key className="h-3.5 w-3.5 text-muted-foreground shrink-0" strokeWidth={1.5} />
+                <span className="text-display text-[13px] truncate">{pw.username}</span>
+              </div>
+              <Badge variant="outline" className={`text-[9px] font-medium shrink-0 ${riskStyles[pw.risk]}`}>
+                {pw.risk}
+              </Badge>
+            </div>
+            <code className="text-xs text-destructive font-mono bg-destructive/5 rounded px-2 py-1 block truncate">
+              {pw.password}
+            </code>
+            <div className="flex items-center justify-between text-[11px]">
+              <span className="text-caps !text-[9px]">Source</span>
+              <span className="text-body !text-[11px] truncate ml-3">{pw.source}</span>
+            </div>
+          </motion.div>
+        ))}
+
+        {!isUnlocked && lockedCount > 0 && (
+          <div className="card-surface !p-4 flex items-center gap-2 text-muted-foreground">
+            <Lock className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} />
+            <span className="text-body text-xs">{lockedCount} more passwords hidden — unlock the full report</span>
+          </div>
+        )}
+      </div>
+
+      {/* ── Desktop: table ── */}
+      <div className="hidden sm:block card-surface !p-0 overflow-hidden">
         {/* Header */}
         <div className="grid grid-cols-12 gap-4 px-6 py-3 border-b border-border/30 bg-secondary/30">
           <span className="col-span-3 text-caps text-[9px]">Username</span>
