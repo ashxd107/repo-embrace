@@ -219,7 +219,7 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
                         {visibleFields.filter(f => !f.fullWidth).map((field) => (
                           <div
                             key={field.label}
-                            className={`rounded-xl px-4 py-3 flex items-start gap-3 ${
+                            className={`rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 flex items-start gap-2.5 sm:gap-3 ${
                               field.sensitive ? "bg-secondary/50" : "bg-secondary/30"
                             }`}
                           >
@@ -238,7 +238,7 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
                         {!isUnlocked && lockedFields.filter(f => !f.fullWidth).slice(0, 3).map((field) => (
                           <div
                             key={field.label}
-                            className="rounded-xl px-4 py-3 flex items-start gap-3 bg-secondary/30"
+                            className="rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 flex items-start gap-2.5 sm:gap-3 bg-secondary/30"
                           >
                             <div className="min-w-0 flex-1">
                               <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{field.label}</p>
@@ -291,10 +291,10 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
                   if (!isUnlocked) {
                     return (
                       <>
-                        <div className="border-t border-border/15 -mx-6 mb-0" />
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div className="border-t border-border/15 -mx-4 sm:-mx-6 mb-0" />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {allDocs.map((d, i) => (
-                            <div key={`${d.label}-${i}`} className="rounded-xl px-4 py-3 flex items-start gap-3 bg-secondary/30">
+                            <div key={`${d.label}-${i}`} className="rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 flex items-start gap-2.5 sm:gap-3 bg-secondary/30">
                               <div className="min-w-0 flex-1">
                                 <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{d.label}</p>
                                 <div className="flex items-center gap-2">
@@ -313,10 +313,10 @@ const LeakSources = ({ isUnlocked = false, onUnlock }: LeakSourcesProps) => {
 
                   return (
                     <>
-                      <div className="border-t border-border/15 -mx-6 mb-0" />
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      <div className="border-t border-border/15 -mx-4 sm:-mx-6 mb-0" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {allDocs.map((d, i) => (
-                          <div key={`${d.label}-${i}`} className="rounded-xl px-4 py-3 flex items-start gap-3 bg-secondary/50">
+                          <div key={`${d.label}-${i}`} className="rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 flex items-start gap-2.5 sm:gap-3 bg-secondary/50">
                             <div className={`h-1.5 w-1.5 rounded-full mt-[7px] shrink-0 ${sensitiveFieldDot[source.risk]}`} />
                             <div className="min-w-0">
                               <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{d.label}</p>
