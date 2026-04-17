@@ -2,13 +2,15 @@ import DocumentsSection from "./DocumentsSection";
 import CompLeakSources from "./CompLeakSources";
 import PasswordsSection from "./PasswordsSection";
 import TimelineSection from "./TimelineSection";
+import ComprehensiveSubNav from "./ComprehensiveSubNav";
 
 interface ComprehensiveReportProps {
   activeSection?: string;
   isUnlocked?: boolean;
+  onNavigate?: (id: string) => void;
 }
 
-const ComprehensiveReport = ({ activeSection = "comp-documents", isUnlocked = true }: ComprehensiveReportProps) => {
+const ComprehensiveReport = ({ activeSection = "comp-documents", isUnlocked = true, onNavigate }: ComprehensiveReportProps) => {
   const renderSection = () => {
     switch (activeSection) {
       case "comp-documents":
@@ -25,7 +27,10 @@ const ComprehensiveReport = ({ activeSection = "comp-documents", isUnlocked = tr
   };
 
   return (
-    <div className="py-4 lg:py-6">
+    <div className="py-3 sm:py-4 lg:py-6">
+      {onNavigate && (
+        <ComprehensiveSubNav activeSection={activeSection} onNavigate={onNavigate} />
+      )}
       {renderSection()}
     </div>
   );
