@@ -36,32 +36,32 @@ const DocumentsSection = () => (
     transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
   >
     <p className="text-caps mb-2">Documents</p>
-    <h2 className="text-display text-xl mb-1.5">Sensitive document exposure</h2>
-    <p className="text-body text-sm mb-6">
+    <h2 className="text-display text-lg sm:text-xl mb-1.5">Sensitive document exposure</h2>
+    <p className="text-body text-[13px] sm:text-sm mb-5 sm:mb-6">
       Overview of exposed identity documents found across data breaches.
     </p>
 
     {/* Summary strip */}
-    <div className="flex flex-wrap gap-2.5 mb-6">
+    <div className="flex flex-wrap gap-2 mb-5 sm:mb-6">
       {documentSummary.map((doc) => {
         const found = doc.count > 0;
         return (
           <div
             key={doc.type}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium border ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-medium border ${
               found
                 ? "bg-destructive/[0.06] border-destructive/15 text-destructive"
                 : "bg-secondary/40 border-border/20 text-muted-foreground"
             }`}
           >
             {found ? (
-              <ShieldX className="h-3.5 w-3.5" strokeWidth={1.5} />
+              <ShieldX className="h-3.5 w-3.5 shrink-0" strokeWidth={1.5} />
             ) : (
-              <ShieldCheck className="h-3.5 w-3.5 text-primary" strokeWidth={1.5} />
+              <ShieldCheck className="h-3.5 w-3.5 text-primary shrink-0" strokeWidth={1.5} />
             )}
             <span className="font-normal">{doc.type}</span>
-            <span className="opacity-70 font-normal">
-              {found ? `found in ${doc.count} record${doc.count > 1 ? "s" : ""}` : "not found"}
+            <span className="opacity-70 font-normal hidden xs:inline">
+              {found ? `· ${doc.count}` : "· safe"}
             </span>
           </div>
         );
@@ -77,14 +77,14 @@ const DocumentsSection = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: i * 0.05, duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-          className={`flex items-center gap-4 px-5 py-4 ${
+          className={`flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-3.5 sm:py-4 ${
             i < allDocuments.length - 1 ? "border-b border-border/20" : ""
           }`}
         >
-          <doc.icon className="h-4.5 w-4.5 text-destructive/70 shrink-0" strokeWidth={1.5} />
+          <doc.icon className="h-4 w-4 sm:h-[18px] sm:w-[18px] text-destructive/70 shrink-0" strokeWidth={1.5} />
           <div className="min-w-0 flex-1">
             <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-0.5">{doc.type}</p>
-            <p className="text-[13px] font-normal text-foreground leading-snug">{doc.value}</p>
+            <p className="text-[13px] font-normal text-foreground leading-snug truncate">{doc.value}</p>
           </div>
         </motion.div>
       ))}

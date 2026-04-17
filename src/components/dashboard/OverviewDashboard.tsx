@@ -118,7 +118,7 @@ const OverviewDashboard = ({
   ];
 
   return (
-    <motion.div variants={stagger} initial="hidden" animate="visible" className="py-4 lg:py-6 space-y-5">
+    <motion.div variants={stagger} initial="hidden" animate="visible" className="py-3 sm:py-4 lg:py-6 space-y-4 sm:space-y-5">
       {/* FREE PREVIEW BADGE */}
       {flowType === "free" && !comprehensivePurchased && (
         <motion.div variants={fadeIn} className="flex items-center gap-2">
@@ -131,22 +131,22 @@ const OverviewDashboard = ({
       )}
 
       {/* ROW 1: Score Meter + User Identity | Dynamic Status Card */}
-      <motion.div variants={fadeIn} className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        <div className="lg:col-span-8 card-surface !p-6 flex flex-col sm:flex-row items-center gap-6">
+      <motion.div variants={fadeIn} className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch">
+        <div className="lg:col-span-8 card-surface !p-5 sm:!p-6 flex flex-col sm:flex-row items-center gap-5 sm:gap-6">
           <div className="flex flex-col items-center shrink-0">
             <RiskScoreMeter score={RISK_SCORE} />
           </div>
-          <div className="flex flex-col justify-center text-center sm:text-left">
+          <div className="flex flex-col justify-center text-center sm:text-left min-w-0">
             <p className="text-caps mb-1.5">Personal Exposure Report</p>
-            <h2 className="text-display text-lg lg:text-xl leading-tight">Rahul Sharma</h2>
-            <p className="text-body text-sm mt-1">rahul****@gmail.com</p>
-            <p className="text-body text-sm mt-0.5">+91 98XXXXXX10</p>
+            <h2 className="text-display text-base sm:text-lg lg:text-xl leading-tight">Rahul Sharma</h2>
+            <p className="text-body text-[13px] sm:text-sm mt-1 break-all">rahul****@gmail.com</p>
+            <p className="text-body text-[13px] sm:text-sm mt-0.5">+91 98XXXXXX10</p>
             <p className="text-body text-xs mt-3 leading-relaxed">{summaryLine}</p>
             {comprehensiveReportReady && (
               <Button
                 onClick={() => onNavigate("comprehensive-report")}
                 size="sm"
-                className="mt-3 w-fit bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs px-5"
+                className="mt-3 mx-auto sm:mx-0 w-fit bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs px-5"
               >
                 View Comprehensive Report
                 <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -169,31 +169,31 @@ const OverviewDashboard = ({
       </motion.div>
 
       {/* Merged Alert + CTA Block */}
-      <motion.div variants={fadeIn} className="card-surface !p-5">
-        <div className="flex items-center gap-4">
-          <ShieldAlert className={`h-8 w-8 shrink-0 ${
+      <motion.div variants={fadeIn} className="card-surface !p-4 sm:!p-5">
+        <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+          <ShieldAlert className={`h-7 w-7 sm:h-8 sm:w-8 shrink-0 mt-0.5 sm:mt-0 ${
             riskContent.band === "critical" ? "text-destructive" :
             riskContent.band === "medium" ? "text-risk-mid" : "text-primary"
           }`} strokeWidth={2} />
 
           <div className="flex-1 min-w-0">
-            <h2 className="text-display text-sm leading-tight">
+            <h2 className="text-display text-[13px] sm:text-sm leading-tight">
               {isLocked ? riskContent.lockedHeadline : riskContent.headline}
             </h2>
-            <p className="text-body text-xs mt-1 opacity-70">
+            <p className="text-body text-[11px] sm:text-xs mt-1 opacity-70">
               {isLocked ? riskContent.lockedBody : riskContent.body}
             </p>
 
             {/* Inline exposure tags when locked */}
             {isLocked && (
-              <div className="mt-3 flex items-center gap-3 flex-wrap">
+              <div className="mt-3 flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 {[
                   { label: "Aadhaar", icon: Fingerprint },
                   { label: "PAN", icon: CreditCard },
                   { label: "Passport", icon: BookOpen },
                   { label: "Address", icon: MapPin },
                 ].map((item) => (
-                  <span key={item.label} className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-md bg-destructive/10 text-destructive border border-destructive/20">
+                  <span key={item.label} className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-medium px-2 sm:px-2.5 py-1 rounded-md bg-destructive/10 text-destructive border border-destructive/20">
                     <item.icon className="h-3 w-3 shrink-0" strokeWidth={1.5} />
                     {item.label}
                   </span>
@@ -205,15 +205,15 @@ const OverviewDashboard = ({
       </motion.div>
 
       {/* ROW 2: Metric Cards */}
-      <motion.div variants={fadeIn} className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+      <motion.div variants={fadeIn} className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4">
         {metrics.map((m) => (
-          <div key={m.label} className="card-surface !p-4 flex flex-col">
-            <div className="flex items-center justify-between mb-3">
+          <div key={m.label} className="card-surface !p-3.5 sm:!p-4 flex flex-col">
+            <div className="flex items-center justify-between mb-2.5 sm:mb-3">
               <m.icon className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
               <div className={`h-2 w-2 rounded-full ${riskColors[m.risk]}`} />
             </div>
-            <span className="text-display text-xl lg:text-2xl">{m.value}</span>
-            <span className="text-body text-[11px] mt-0.5">{m.label}</span>
+            <span className="text-display text-lg sm:text-xl lg:text-2xl">{m.value}</span>
+            <span className="text-body text-[11px] mt-0.5 leading-tight">{m.label}</span>
           </div>
         ))}
       </motion.div>

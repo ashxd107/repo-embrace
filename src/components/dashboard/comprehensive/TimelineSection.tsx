@@ -42,13 +42,13 @@ const events = [
 const TimelineSection = () => (
   <section>
     <p className="text-caps mb-2">Breach Timeline</p>
-    <h2 className="text-display text-xl mb-1.5">Exposure chronology</h2>
-    <p className="text-body text-sm mb-6">
+    <h2 className="text-display text-lg sm:text-xl mb-1.5">Exposure chronology</h2>
+    <p className="text-body text-[13px] sm:text-sm mb-5 sm:mb-6">
       Timeline of breach events where your data was identified, ordered by recency.
     </p>
 
     <div className="relative">
-      <div className="absolute left-[19px] top-0 bottom-0 w-px bg-border/50" />
+      <div className="absolute left-[15px] sm:left-[19px] top-0 bottom-0 w-px bg-border/50" />
 
       <div className="space-y-0">
         {events.map((event, i) => (
@@ -58,19 +58,19 @@ const TimelineSection = () => (
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08, duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-            className="relative pl-12 pb-6 last:pb-0"
+            className="relative pl-9 sm:pl-12 pb-5 sm:pb-6 last:pb-0"
           >
-            <div className="absolute left-[14px] top-1.5 h-[11px] w-[11px] rounded-full border-2 border-primary bg-card z-10" />
+            <div className="absolute left-[10px] sm:left-[14px] top-1.5 h-[11px] w-[11px] rounded-full border-2 border-primary bg-card z-10" />
 
-            <div className="card-surface !p-5">
+            <div className="card-surface !p-4 sm:!p-5">
               <div className="flex items-start justify-between gap-3 mb-2">
-                <div className="min-w-0">
-                  <p className="text-display text-sm">{event.source}</p>
-                  <p className="text-body text-xs mt-0.5 leading-relaxed">{event.description}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-display text-[13px] sm:text-sm leading-snug">{event.source}</p>
+                  <p className="text-body text-[11px] sm:text-xs mt-1 leading-relaxed">{event.description}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1 shrink-0">
-                  <span className="text-caps text-[10px]">{event.date}</span>
-                  <span className="text-[10px] text-muted-foreground">{event.people}</span>
+                  <span className="text-caps text-[10px] whitespace-nowrap">{event.date}</span>
+                  <span className="text-[10px] text-muted-foreground whitespace-nowrap">{event.people}</span>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1.5 mt-3">

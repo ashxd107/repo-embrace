@@ -32,17 +32,19 @@ const InsuranceBanner = ({ variant = "default" }: InsuranceBannerProps) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-      className="card-surface !p-5 flex flex-col sm:flex-row items-center gap-4 sm:gap-5"
+      className="card-surface !p-4 sm:!p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5"
     >
-      <div className="h-11 w-11 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
-        <ShieldCheck className="h-5 w-5 text-primary" strokeWidth={1.5} />
-      </div>
-      <div className="flex-1 text-center sm:text-left min-w-0">
-        <h3 className="text-display text-sm mb-0.5">{c.title}</h3>
-        <p className="text-body text-xs leading-relaxed">{c.body}</p>
+      <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto sm:contents">
+        <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+          <ShieldCheck className="h-5 w-5 text-primary" strokeWidth={1.5} />
+        </div>
+        <div className="flex-1 sm:text-left min-w-0">
+          <h3 className="text-display text-[13px] sm:text-sm mb-0.5 leading-snug">{c.title}</h3>
+          <p className="text-body text-[11px] sm:text-xs leading-relaxed">{c.body}</p>
+        </div>
       </div>
       <Button
-        className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2 h-auto font-semibold text-sm shrink-0"
+        className="bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2 h-10 sm:h-auto font-semibold text-xs sm:text-sm shrink-0 w-full sm:w-auto"
       >
         {c.cta}
         <ArrowRight className="ml-1.5 h-4 w-4" />
