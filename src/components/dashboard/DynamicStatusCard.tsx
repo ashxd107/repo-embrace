@@ -82,11 +82,11 @@ const DynamicStatusCard = (props: DynamicStatusCardProps) => {
     : undefined;
 
   return (
-    <div className="bg-foreground text-card p-6 rounded-[20px] flex flex-col justify-between w-full h-full min-h-[180px]">
+    <div className="bg-foreground text-card p-5 sm:p-6 rounded-[20px] flex flex-col justify-between w-full h-full min-h-[160px] sm:min-h-[180px]">
       <div>
-        <Icon className="h-6 w-6 mb-3 text-primary" strokeWidth={1.5} />
-        <h3 className="text-sm font-semibold mb-1.5">{config.title}</h3>
-        <p className="text-xs leading-relaxed" style={{ color: 'hsla(0,0%,100%,0.5)' }}>
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6 mb-2.5 sm:mb-3 text-primary" strokeWidth={1.5} />
+        <h3 className="text-[13px] sm:text-sm font-semibold mb-1 sm:mb-1.5">{config.title}</h3>
+        <p className="text-[11px] sm:text-xs leading-relaxed" style={{ color: 'hsla(0,0%,100%,0.5)' }}>
           {config.subtitle}
         </p>
       </div>
