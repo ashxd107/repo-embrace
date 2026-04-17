@@ -176,14 +176,14 @@ const CompLeakSources = ({ isUnlocked = true }: CompLeakSourcesProps) => {
   return (
     <section>
       <p className="text-caps mb-2">Leak Source Intelligence — {leakSources.length} Sources</p>
-      <h2 className="text-display text-xl mb-1.5">Detailed breach source analysis</h2>
-      <p className="text-body text-sm mb-6">
+      <h2 className="text-display text-lg sm:text-xl mb-1.5">Detailed breach source analysis</h2>
+      <p className="text-body text-[13px] sm:text-sm mb-5 sm:mb-6">
         {isUnlocked
           ? "Each source below shows exactly what was exposed and whose data was involved."
           : "You're viewing a limited preview. Unlock the full report to see all sources and complete details."}
       </p>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {visibleSources.map((source, i) => (
           <motion.div
             key={source.id}
@@ -196,15 +196,17 @@ const CompLeakSources = ({ isUnlocked = true }: CompLeakSourcesProps) => {
             {/* Source header with risk accent bar */}
             <div className="flex items-stretch">
               <div className={`w-1 shrink-0 ${riskAccentColor[source.risk]} rounded-l-[20px]`} />
-              <div className="flex items-center gap-4 px-5 py-4 border-b border-border/20 flex-1 min-w-0">
-                <div className="h-7 w-7 rounded-lg bg-secondary/60 flex items-center justify-center shrink-0">
-                  <span className="text-xs font-medium text-muted-foreground">{source.id}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 px-4 sm:px-5 py-3.5 sm:py-4 border-b border-border/20 flex-1 min-w-0">
+                <div className="flex items-start gap-3 flex-1 min-w-0">
+                  <div className="h-7 w-7 rounded-lg bg-secondary/60 flex items-center justify-center shrink-0">
+                    <span className="text-xs font-medium text-muted-foreground">{source.id}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-[13px] sm:text-sm font-semibold text-foreground leading-snug">{source.title}</h3>
+                    <p className="text-[11px] sm:text-xs font-normal text-muted-foreground mt-0.5 leading-relaxed">{source.summary}</p>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-semibold text-foreground leading-snug">{source.title}</h3>
-                  <p className="text-xs font-normal text-muted-foreground mt-0.5 leading-relaxed">{source.summary}</p>
-                </div>
-                <div className="flex items-center gap-2.5 shrink-0">
+                <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 pl-10 sm:pl-0">
                   <span className="text-[10px] font-normal text-muted-foreground tracking-wide uppercase">{source.date}</span>
                   <Badge variant="outline" className={`text-[10px] font-medium ${riskBadgeStyles[source.risk]}`}>
                     {source.risk}
@@ -214,24 +216,24 @@ const CompLeakSources = ({ isUnlocked = true }: CompLeakSourcesProps) => {
             </div>
 
             {/* Affected people — non-document fields only */}
-            <div className="px-6 py-5 space-y-5">
+            <div className="px-4 sm:px-6 py-4 sm:py-5 space-y-4 sm:space-y-5">
               {source.affectedPeople.map((person, pi) => {
                 const nonDocFields = person.fields.filter(f => !DOCUMENT_LABELS.has(f.label));
                 if (nonDocFields.length === 0) return null;
                 return (
                   <div key={`${source.id}-${person.name}`}>
-                    {pi > 0 && <div className="border-t border-border/15 -mx-6 mb-5" />}
-                    <div className="flex items-center gap-2 mb-3.5">
+                    {pi > 0 && <div className="border-t border-border/15 -mx-4 sm:-mx-6 mb-4 sm:mb-5" />}
+                    <div className="flex items-center gap-2 mb-3">
                       <Badge variant="outline" className="text-[10px] font-medium bg-primary/6 text-primary border-primary/15 px-2 py-0.5">
                         {person.relation}
                       </Badge>
-                      <span className="text-sm font-medium text-foreground">{person.name}</span>
+                      <span className="text-[13px] sm:text-sm font-medium text-foreground">{person.name}</span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                       {nonDocFields.map((field) => (
                         <div
                           key={field.label}
-                          className={`rounded-xl px-4 py-3 flex items-start gap-3 ${
+                          className={`rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 flex items-start gap-2.5 sm:gap-3 ${
                             field.sensitive ? "bg-secondary/50" : "bg-secondary/30"
                           }`}
                         >
@@ -259,10 +261,10 @@ const CompLeakSources = ({ isUnlocked = true }: CompLeakSourcesProps) => {
                 if (allDocs.length === 0) return null;
                 return (
                   <>
-                    <div className="border-t border-border/15 -mx-6 mb-0" />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="border-t border-border/15 -mx-4 sm:-mx-6 mb-0" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {allDocs.map((d, i) => (
-                        <div key={`${d.label}-${i}`} className="rounded-xl px-4 py-3 flex items-start gap-3 bg-secondary/50">
+                        <div key={`${d.label}-${i}`} className="rounded-xl px-3.5 sm:px-4 py-2.5 sm:py-3 flex items-start gap-2.5 sm:gap-3 bg-secondary/50">
                           <div className={`h-1.5 w-1.5 rounded-full mt-[7px] shrink-0 ${sensitiveFieldDot[source.risk]}`} />
                           <div className="min-w-0">
                             <p className="text-[10px] font-normal text-muted-foreground uppercase tracking-wider mb-1">{d.label}</p>
