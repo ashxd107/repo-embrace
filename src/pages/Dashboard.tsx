@@ -87,9 +87,9 @@ const Dashboard = () => {
       // User who hasn't paid yet — show locked overlay
       if (!comprehensivePurchased && flowType !== "policy-comprehensive") {
         return (
-          <div className="py-4 lg:py-8 relative">
+          <div className="py-3 sm:py-4 lg:py-8 relative">
             <LockedOverlay onUnlock={handleUnlock} />
-            <ComprehensiveReport activeSection={activeItem === "comprehensive-report" ? "comp-documents" : activeItem} isUnlocked={false} />
+            <ComprehensiveReport activeSection={activeItem === "comprehensive-report" ? "comp-documents" : activeItem} isUnlocked={false} onNavigate={setActiveItem} />
           </div>
         );
       }
@@ -105,8 +105,8 @@ const Dashboard = () => {
 
       // Report ready — show with insurance banner
       return (
-        <div className="space-y-5">
-          <ComprehensiveReport activeSection={activeItem === "comprehensive-report" ? "comp-documents" : activeItem} isUnlocked={true} />
+        <div className="space-y-4 sm:space-y-5">
+          <ComprehensiveReport activeSection={activeItem === "comprehensive-report" ? "comp-documents" : activeItem} isUnlocked={true} onNavigate={setActiveItem} />
           <InsuranceBanner variant={flowType === "policy-comprehensive" ? "post-report" : "default"} />
         </div>
       );
@@ -186,12 +186,12 @@ const Dashboard = () => {
         onOpenPurchases={() => setPurchasesOpen(true)}
       />
 
-      <main className={`pt-16 lg:pt-0 ${mainMarginClass} px-4 sm:px-6 lg:px-8 xl:px-12 py-4 pb-24 max-w-[1200px] transition-all duration-300`}>
+      <main className={`pt-16 lg:pt-0 ${mainMarginClass} px-4 sm:px-6 lg:px-8 xl:px-12 py-3 sm:py-4 pb-28 sm:pb-24 max-w-[1200px] transition-all duration-300`}>
         {renderContent()}
       </main>
 
-      {/* Debug Simulation Panel */}
-      <div className={`fixed bottom-0 right-0 z-50 bg-foreground text-card p-3 rounded-tl-xl shadow-2xl text-[11px] space-y-2 max-w-[280px] ${mainMarginClass}`}>
+      {/* Debug Simulation Panel — desktop only to avoid covering mobile content */}
+      <div className={`fixed bottom-0 right-0 z-50 bg-foreground text-card p-3 rounded-tl-xl shadow-2xl text-[11px] space-y-2 max-w-[280px] hidden lg:block ${mainMarginClass}`}>
         <p className="font-semibold text-xs opacity-80 mb-1">🛠 Simulate Card States</p>
         <div className="flex flex-wrap gap-1.5">
           <button
